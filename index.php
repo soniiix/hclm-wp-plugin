@@ -10,6 +10,12 @@ define('NEWSLETTERS_FOLDER', $_SERVER['DOCUMENT_ROOT'] . '/wp-content/uploads/hc
 define("NEWSLETTERS_URL", home_url('/wp-content/uploads/hclm/bulletins/'));
 
 add_shortcode('newsletter_summaries', function () {
+    $newsletter_selected = isset($_GET['newsletter-select']) && !empty($_GET['newsletter-select']);
+
+    $selected_pdf_url = $newsletter_selected 
+        ? esc_url($_GET['newsletter-select'])
+        : NEWSLETTERS_URL . "B0/B0.pdf";
+
     $folders = scandir(NEWSLETTERS_FOLDER);
 
     $options = '';
@@ -20,7 +26,8 @@ add_shortcode('newsletter_summaries', function () {
             $pdf_url = NEWSLETTERS_URL . $folder . '/' . $folder . '.pdf';
 
             if (file_exists($pdf_path)) {
-                $options .= '<option value="' . esc_url($pdf_url) . '">Bulletin n°' . esc_html(str_replace("B", "", $folder)) . '</option>';
+                $is_selected = ($selected_pdf_url === esc_url($pdf_url)) ? 'selected' : '';
+                $options .= '<option value="' . esc_url($pdf_url) . '" ' . $is_selected . '>Bulletin n°' . esc_html(str_replace("B", "", $folder)) . '</option>';
             }
         }
     }
@@ -36,20 +43,18 @@ add_shortcode('newsletter_summaries', function () {
         </form>
     ';
 
-    $newsletter_selected = isset($_GET['newsletter-select']) && !empty($_GET['newsletter-select']);
-
-    $pdf_url = $newsletter_selected 
-        ? esc_url($_GET['newsletter-select'])
-        : NEWSLETTERS_URL . "B0/B0.pdf";
-
     $output .= '
         <div style="margin-top: 30px; height: 600px;">
-            <div id="flipbook_container" style="max-height: 600px !important;  scroll-margin: 90px;" class="_df_book" source="' . $pdf_url . '"></div>
+            <div id="flipbook_container" style="max-height: 600px !important;  scroll-margin: 90px;" class="_df_book" source="' . $selected_pdf_url . '"></div>
         </div>
     ';
 
     if ($newsletter_selected){
-        $output .= '<script>document.getElementById("flipbook_container").scrollIntoView();</script>';
+        $output .= '
+            <script>
+                document.getElementById("flipbook_container").scrollIntoView();
+            </script>
+        ';
     }
 
     return $output;

@@ -14,7 +14,7 @@ add_shortcode('newsletter_summaries', function () {
 
     $selected_pdf_url = $newsletter_selected 
         ? esc_url($_GET['newsletter-select'])
-        : NEWSLETTERS_URL . "B0/B0.pdf";
+        : NEWSLETTERS_URL . "B45/B45_Sommaire.pdf";
 
     $folders = scandir(NEWSLETTERS_FOLDER);
 
@@ -22,8 +22,8 @@ add_shortcode('newsletter_summaries', function () {
 
     foreach ($folders as $folder) {
         if (str_starts_with($folder, "B")){
-            $pdf_path = NEWSLETTERS_FOLDER . $folder . '/' . $folder . '.pdf';
-            $pdf_url = NEWSLETTERS_URL . $folder . '/' . $folder . '.pdf';
+            $pdf_path = NEWSLETTERS_FOLDER . $folder . '/' . $folder . '_Sommaire.pdf';
+            $pdf_url = NEWSLETTERS_URL . $folder . '/' . $folder . '_Sommaire.pdf';
 
             if (file_exists($pdf_path)) {
                 $is_selected = ($selected_pdf_url === esc_url($pdf_url)) ? 'selected' : '';

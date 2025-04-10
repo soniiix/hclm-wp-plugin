@@ -26,19 +26,34 @@ add_shortcode('newsletter_summaries', function () {
     }
 
     $output = '
-        <form id="form-bulletins" onsubmit="event.preventDefault(); window.open(document.getElementById(\'select-bulletins\').value, \'_blank\');">
+        <form method="GET" action="">
             <div style="display: flex; flex-direction: row; align-items: center; gap: 15px;">
-                <span>Sélectionnez un bulletin en particulier ci-contre pour consulter son sommaire :</span>
-                <select style="width: 150px;" id="select-bulletins" name="bulletin">
+                <span>Sélectionnez un bulletin ci-contre pour consulter son son sommaire :</span>
+                <select style="width: 150px;" name="newsletter-select" onchange="this.form.submit()">
                     ' . $options . '
                 </select>
             </div>
-            <button style="margin-top: 5px;" type="submit">Voir le sommaire</button>
         </form>
     ';
 
-    return $output;
-});
+    $newsletter_selected = isset($_GET['newsletter-select']) && !empty($_GET['newsletter-select']);
 
+    $pdf_url = $newsletter_selected 
+        ? esc_url($_GET['newsletter-select'])
+        : NEWSLETTERS_URL . "B0/B0.pdf";
+
+    $output .= '
+        <div style="margin-top: 30px; height: 600px;">
+            <div id="flipbook_container" style="max-height: 600px !important;  scroll-margin: 90px;" class="_df_book" source="' . $pdf_url . '"></div>
+        </div>
+    ';
+
+    if ($newsletter_selected){
+        $output .= '<script>document.getElementById("flipbook_container").scrollIntoView();</script>';
+    }
+
+    return $output;
+
+});
 
 ?>

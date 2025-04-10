@@ -33,7 +33,7 @@ add_shortcode('newsletter_summaries', function () {
                     ' . $options . '
                 </select>
             </div>
-            <button style="margin-top: 5px;" type="submit">Voir</button>
+            <button style="margin-top: 5px;" type="submit">Voir le sommaire</button>
         </form>
     ';
 

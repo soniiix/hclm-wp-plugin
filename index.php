@@ -19,4 +19,29 @@ add_filter('show_admin_bar', function ($show) {
     return $show;
 });
 
+add_action('template_redirect', function () {
+    if (is_user_logged_in() && is_page('adherer')) {
+        wp_redirect(home_url('/accueil'));
+        exit;
+    }
+});
+
+add_filter('wp_nav_menu_objects', function($items, $args) {
+    foreach ($items as $key => $item) {
+        if ($item->title === 'Adhérer' && is_user_logged_in()) {
+            unset($items[$key]);
+        }
+    }
+    return $items;
+}, 10, 2);
+
+function hclm_login_button_shortcode() {
+    if (is_user_logged_in()) {
+        return '<a href="/espace-adherent" class="btn btn-primary">Espace Adhérent</a>';
+    } else {
+        return '<a href="/connexion" class="btn btn-outline">Me connecter</a>';
+    }
+}
+add_shortcode('hclm_login_button', 'hclm_login_button_shortcode');
+
 ?>

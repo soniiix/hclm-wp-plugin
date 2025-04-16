@@ -37,9 +37,9 @@ add_filter('wp_nav_menu_objects', function($items, $args) {
 
 function hclm_login_button_shortcode() {
     if (is_user_logged_in()) {
-        return '<a href="/espace-adherent" class="btn btn-primary">Espace Adhérent</a>';
+        return '<a href="/espace-adherent" style="padding: 15px 25px 15px 25px; color: #FFF; background-color: #e76f51; border-radius: 10px; font-size: 16px; font-weight: 500;">Espace Adhérent</a>';
     } else {
-        return '<a href="/connexion" class="btn btn-outline">Me connecter</a>';
+        return '<a href="/connexion" style="padding: 15px 25px 15px 25px; color: #FFF; background-color: #e76f51; border-radius: 10px; font-size: 16px; font-weight: 500;">Me connecter</a>';
     }
 }
 add_shortcode('hclm_login_button', 'hclm_login_button_shortcode');

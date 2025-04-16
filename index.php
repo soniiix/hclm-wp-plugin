@@ -12,4 +12,11 @@ include 'shortcodes/member_sign_up.php';
 add_shortcode('newsletter_summaries', 'newsletters_summaries');
 add_shortcode('member_sign_up', 'member_sign_up');
 
+add_filter('show_admin_bar', function ($show) {
+    if (!current_user_can('administrator')) {
+        return false;
+    }
+    return $show;
+});
+
 ?>

@@ -3,7 +3,7 @@
 define('NEWSLETTERS_FOLDER', $_SERVER['DOCUMENT_ROOT'] . '/wp-content/uploads/hclm/bulletins/');
 define("NEWSLETTERS_URL", home_url('/wp-content/uploads/hclm/bulletins/'));
 
-function newsletters_summaries() {
+function hclm_newsletters_summaries() {
     $newsletter_selected = isset($_GET['newsletter-select']) && !empty($_GET['newsletter-select']);
 
     $selected_pdf_url = $newsletter_selected 

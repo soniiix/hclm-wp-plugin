@@ -1,0 +1,8 @@
+#sign_up_form input {
+    width: 100%;
+    border-radius: 10px;
+}
+
+#sign_up_form input:focus {
+    border: 1px solid #e76f51;
+}

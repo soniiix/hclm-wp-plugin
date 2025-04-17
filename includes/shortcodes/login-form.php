@@ -12,25 +12,11 @@ function hclm_login_form_shortcode() {
 
     $error = '';
 
-    if (isset($_POST['hclm_login_submit'])) {
-        $creds = array(
-            'user_login'    => sanitize_email($_POST['user_email']),
-            'user_password' => $_POST['user_password'],
-            'remember'      => isset($_POST['remember_me']),
-        );
-
-        $user = wp_signon($creds, false);
-
-        var_dump(is_wp_error($user));
-
-        if (is_wp_error($user)) {
-            $error = '<p class="hclm_error">Identifiants incorrects. Veuillez réessayer.</p>';
-        } else {
-            wp_redirect(home_url('/accueil'));
-            exit;
-        }
+    if (!empty($_GET['login_error'])) {
+        $error = '<p class="hclm_error">Identifiants incorrects. Veuillez réessayer.</p>';
     }
 
+    // Load CSS style
     wp_enqueue_style('hclm-signup-style', plugin_dir_url(__FILE__) . '../../assets/css/forms.css');
 
     return $error . '

@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
 require_once plugin_dir_path(__FILE__) . 'includes/hooks/filters.php';
 require_once plugin_dir_path(__FILE__) . 'includes/hooks/actions.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/login-button.php';
-require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/registration.php';
+require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/registration-form.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/newsletters-summaries.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/login-form.php';
 

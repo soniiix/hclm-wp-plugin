@@ -1,15 +1,16 @@
 <?php
 
 /**
- * Displays the sign-up form for members.
+ * Displays the registration form for members.
  *
- * @return string HTLM sign-up form.
+ * @return string HTLM registration form.
  */
 function registration_form_shortcode() {
     if (is_user_logged_in()) {
         return '<p>Vous êtes déjà connecté.</p>';
     }
 
+    // Load CSS style
     wp_enqueue_style('hclm-signup-style', plugin_dir_url(__FILE__) . '../../assets/css/forms.css');
 
     ob_start();

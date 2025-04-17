@@ -5,7 +5,7 @@
  *
  * @return string HTML login form.
  */
-function hclm_login_form_shortcode() {
+function login_form_shortcode() {
     if (is_user_logged_in()) {
         return '<p>Vous êtes déjà connecté.</p>';
     }

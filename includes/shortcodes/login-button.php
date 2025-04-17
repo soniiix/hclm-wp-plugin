@@ -5,7 +5,7 @@
  *
  * @return string HTLM button.
  */
-function hclm_login_button_shortcode() {
+function login_button_shortcode() {
     wp_enqueue_style('hclm-login-button-style', plugin_dir_url(__FILE__) . '../../assets/css/login-button.css');
     
     $label = is_user_logged_in() ? 'Espace Adhérent' : 'Me connecter';

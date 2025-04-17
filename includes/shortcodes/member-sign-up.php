@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Displays the sign-up form for members.
+ *
+ * @return string HTLM sign-up form.
+ */
 function hclm_member_sign_up() {
     if (is_user_logged_in()) {
         return '<p>Vous êtes déjà connecté.</p>';

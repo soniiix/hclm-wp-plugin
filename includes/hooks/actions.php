@@ -31,4 +31,12 @@ function hclm_handle_login_form() {
     }
 }
 
+// Redirect to home if user is logged in and visits login page
+add_action('template_redirect', function () {
+    if (is_user_logged_in() && is_page('connexion')) {
+        wp_redirect(home_url('/accueil'));
+        exit;
+    }
+});
+
 ?>

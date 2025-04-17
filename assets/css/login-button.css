@@ -1,9 +1,13 @@
 .hclm-login-button {
     padding: 15px 25px;
-    color: #FFF;
+    color: #FFF !important;
     background-color: #e76f51;
     border-radius: 10px;
     font-size: 16px;
     font-weight: 500;
-    text-decoration: none;
+}
+
+.hclm-login-button:hover {
+    background-color: #D76245;
+    color: #FFF !important;
 }

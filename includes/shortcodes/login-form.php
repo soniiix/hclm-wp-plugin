@@ -21,21 +21,25 @@ function hclm_login_form_shortcode() {
 
         $user = wp_signon($creds, false);
 
+        var_dump(is_wp_error($user));
+
         if (is_wp_error($user)) {
-            $error = '<p class="hclm-error">Identifiants incorrects. Veuillez réessayer.</p>';
+            $error = '<p class="hclm_error">Identifiants incorrects. Veuillez réessayer.</p>';
         } else {
-            wp_redirect(home_url('/espace-adherent'));
+            wp_redirect(home_url('/accueil'));
             exit;
         }
     }
 
-    wp_enqueue_style('hclm-login-form-style', plugin_dir_url(__FILE__) . '../assets/css/login_form.css');
+    wp_enqueue_style('hclm-signup-style', plugin_dir_url(__FILE__) . '../../assets/css/forms.css');
 
     return $error . '
-        <form method="post" class="hclm-login-form">
+        <form method="post" class="hclm_form">
             <p><label>Email :<br><input type="email" name="user_email" required></label></p>
             <p><label>Mot de passe :<br><input type="password" name="user_password" required></label></p>
-            <p><label><input type="checkbox" name="remember_me"> Se souvenir de moi</label></p>
+            <p class="checkbox"><input type="checkbox" id="remember_me" name="remember_me" class="hclm_checkbox">
+                <label for="remember_me"> Se souvenir de moi</label>
+            </p>
             <p><input type="submit" name="hclm_login_submit" value="Me connecter"></p>
         </form>
     ';

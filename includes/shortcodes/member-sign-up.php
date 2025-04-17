@@ -10,17 +10,17 @@ function hclm_member_sign_up() {
         return '<p>Vous êtes déjà connecté.</p>';
     }
 
-    wp_enqueue_style('hclm-signup-style', plugin_dir_url(__FILE__) . '../../assets/css/signup-form.css');
+    wp_enqueue_style('hclm-signup-style', plugin_dir_url(__FILE__) . '../../assets/css/forms.css');
 
     ob_start();
     ?>
-    <form method="post" id="sign_up_form">
-        <p><label>Nom :<br><input type="text" name="member_lastname" required></label></p>
-        <p><label>Prénom :<br><input type="text" name="member_firstname" required></label></p>
-        <p><label>Adresse :<br><input type="text" name="member_address" required></label></p>
-        <p><label>Téléphone :<br><input type="tel" name="member_phone" required></label></p>
-        <p><label>Email :<br><input type="email" name="member_email" required></label></p>
-        <p><label>Mot de passe :<br><input type="password" name="member_password" required></label></p>
+    <form method="post" class="hclm_form">
+        <p><label>Nom :</label><br><input type="text" name="member_lastname" required></p>
+        <p><label>Prénom :</label><br><input type="text" name="member_firstname" required></p>
+        <p><label>Adresse :</label><br><textarea rows="2" type="text" name="member_address" required></textarea></p>
+        <p><label>Téléphone :</label><br><input type="tel" name="member_phone" required></p>
+        <p><label>Email :</label><br><input type="email" name="member_email" required></p>
+        <p><label>Mot de passe :</label><br><input type="password" name="member_password" required></p>
         <p><input type="submit" name="sign_up_submit" value="Créer mon compte"></p>
     </form>
     <?php

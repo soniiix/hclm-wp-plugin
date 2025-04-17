@@ -9,6 +9,14 @@ add_action('template_redirect', 'handle_login');
 // Handle registration form submission
 add_action('init', 'handle_registration');
 
+// Redirect to home if user is not logged in and visits "Espace adhérent" page
+add_action('template_redirect', function () {
+    if (!is_user_logged_in() && is_page('espace-adherent')) {
+        wp_redirect(home_url('/accueil'));
+        exit;
+    }
+});
+
 // Redirect to home if user is logged in and visits "Adhérer" page
 add_action('template_redirect', function () {
     if (is_user_logged_in() && is_page('adherer')) {

@@ -54,8 +54,55 @@ function member_area_shortcode() {
                 </div>
             </section>
             <section id="profile" class="tab-content">
-                <h3>Mon profil</h3>
-                <p>Infos personnelles ici...</p>
+                <h3>Vos informations</h3>
+                <div class="tab-card profile-section">
+                    <div class="profile-header">
+                        <div class="profile-picture-wrapper">
+                            <img class="profile-picture" src="https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png" alt="Photo de profil">
+                            <button type="button" class="edit-photo-btn" title="Modifier la photo">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <form class="profile-form">
+                        <div class="form-group">
+                            <label>Nom</label>
+                            <div class="input-with-icon">
+                                <input type="text" name="user_lastname" value="<?php echo esc_attr($user->get('user_lastname')); ?>" disabled>
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Prénom</label>
+                            <div class="input-with-icon">
+                                <input type="text" name="user_firstname" value="<?php echo esc_attr($user->get('user_firstname')); ?>" disabled>
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <div class="input-with-icon">
+                                <input type="email" name="user_email" value="<?php echo esc_attr($user->get('user_email')); ?>" disabled>
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Téléphone</label>
+                            <div class="input-with-icon">
+                                <input type="tel" name="user_phone" value="<?php echo esc_attr($user->get('user_phone')); ?>" disabled>
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Adresse</label>
+                            <div class="input-with-icon">
+                                <input type="text" name="user_address" value="<?php echo esc_attr($user->get('user_address')); ?>" disabled>
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-save">Enregistrer</button>
+                    </form>
+                </div>
             </section>
             <section id="statuses" class="tab-content">
                 <h3>Statuts</h2>

@@ -19,8 +19,8 @@ function handle_registration() {
                 'display_name'  => $firstname . ' ' . $lastname,
                 'role'          => 'adherent',
                 'meta_input'    => [
-                    'adresse'   => $address,
-                    'telephone' => $phone
+                    'user_address'   => $address,
+                    'user_phone' => $phone
                 ]
             ];
 

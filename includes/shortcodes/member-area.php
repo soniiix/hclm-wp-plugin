@@ -93,7 +93,7 @@ function member_area_shortcode() {
                                 <i class="fas fa-edit edit-icon"></i>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group address-group">
                             <label>Adresse</label>
                             <div class="input-with-icon">
                                 <input type="text" name="user_address" value="<?php echo esc_attr($user->get('user_address')); ?>" disabled>

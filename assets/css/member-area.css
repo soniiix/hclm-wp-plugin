@@ -113,10 +113,6 @@
 
 .profile-header{
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .profile-picture-wrapper {
@@ -160,7 +156,7 @@
 .profile-form {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 1rem;
 }
 
@@ -171,7 +167,7 @@
 
 .form-group label{
     font-size: 16px;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
 }
 
 .input-with-icon {
@@ -184,6 +180,15 @@
     width: 100%;
     padding-right: 30px;
     border-radius: 10px;
+}
+
+.form-group.address-group{
+    grid-column: 1 / -1;
+
+}
+
+.input-with-icon input:focus {
+    border: 1px solid #e76f51;
 }
 
 .edit-icon {
@@ -207,4 +212,5 @@
     border-radius: 10px;
     cursor: pointer;
     align-self: start;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }

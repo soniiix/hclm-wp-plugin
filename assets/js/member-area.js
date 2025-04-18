@@ -16,3 +16,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.edit-icon').forEach(icon => {
+        icon.addEventListener('click', () => {
+            const input = icon.previousElementSibling;
+            input.disabled = false;
+            input.focus();
+            icon.style.display = 'none';
+        });
+    });
+});

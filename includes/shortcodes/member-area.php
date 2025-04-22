@@ -128,11 +128,51 @@ function member_area_shortcode() {
             </section>
             <section id="reports" class="tab-content">
                 <h3>Compte rendus</h3>
-                <p>Liste de documents, etc.</p>
+                
+                <div class="filters">
+                    <input type="text" placeholder="Rechercher un compte rendu...">
+
+                    <select>
+                        <option value="">Toutes les années</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                    </select>
+
+                    <select>
+                        <option value="">Tous les types</option>
+                        <option value="AG">Assemblée Générale</option>
+                        <option value="CA">Conseil d'Administration</option>
+                    </select>
+                </div>
+
+                <div class="reports-list">
+                    <div class="report-card">
+                        <img src="<?php echo esc_url(home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
+                        <div class="report-info">
+                            <p class="report-meta"><i class="fas fa-calendar-alt"></i> 18/04/2025 — <strong>AG</strong></p>
+                            <a class="btn-download" href="#">Télécharger</a>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <img src="<?php echo esc_url(home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
+                        <div class="report-info">
+                            <p class="report-meta"><i class="fas fa-calendar-alt"></i> 18/04/2025 — <strong>CA</strong></p>
+                            <a class="btn-download" href="#">Télécharger</a>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <img src="<?php echo esc_url(home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
+                        <div class="report-info">
+                            <p class="report-meta"><i class="fas fa-calendar-alt"></i> 18/04/2025 — <strong>AG</strong></p>
+                            <a class="btn-download" href="#">Télécharger</a>
+                        </div>
+                    </div>
+
+                </div>
             </section>
             <section id="suggestions" class="tab-content">
                 <h3>Suggestions / Remarques</h3>
-                <p>Liste de documents, etc.</p>
+                <p>à développer</p>
             </section>
         </main>
     </div>

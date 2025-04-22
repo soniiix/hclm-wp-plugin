@@ -43,7 +43,11 @@ function newsletters_shortcode() {
             <h2>Consulter le sommaire d'un bulletin</h2>
             <?php echo do_shortcode('[hclm_newsletter_summaries]'); ?>
         </div>
-    <?php } ?>
+    <?php } 
+    
+    echo do_shortcode('[hclm_newsletter_list]');
+    
+    ?>
 
     <?php
     return ob_get_clean();

@@ -214,3 +214,51 @@
     align-self: start;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
+
+
+/* DASHBOARD */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 25px;
+}
+
+.tab-card h4 {
+    font-size: 18px;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.tab-card h4 i{
+    margin-right: 4px;
+    color: #e76f51;
+}
+
+.span-2 {
+    grid-column: span 2;
+}
+
+.card-last-report {
+    text-align: center;
+    transition: box-shadow 0.2s ease;
+}
+
+.card-last-report:hover {
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
+.report-thumbnail {
+    height: 150px;
+    margin: 10px auto;
+}
+
+.report-thumbnail img {
+    height: 100%;
+    max-width: 100%;
+    border: 1px solid black;
+}
+
+content p{
+    margin-bottom: 0;
+}

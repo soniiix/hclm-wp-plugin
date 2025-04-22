@@ -27,3 +27,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+function showReports(){
+    const tabs = document.querySelectorAll('.sidebar li');
+    const sections = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.classList.toggle('active', tab.getAttribute('data-tab') === "reports");
+    });
+
+    sections.forEach(section => {
+        section.classList.toggle('active', section.id === "reports");
+    });
+}

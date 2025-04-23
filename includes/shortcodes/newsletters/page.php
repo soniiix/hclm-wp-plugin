@@ -44,9 +44,9 @@ function newsletters_shortcode() {
             <?php echo do_shortcode('[hclm_newsletter_summaries]'); ?>
         </div>
     <?php } 
-    
-    echo do_shortcode('[hclm_newsletter_list]');
-    
+        if (is_user_logged_in()){
+            echo do_shortcode('[hclm_newsletter_list]');
+        }
     ?>
 
     <?php

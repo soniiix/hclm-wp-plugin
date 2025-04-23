@@ -14,11 +14,11 @@ function hclm_newsletter_cards_shortcode() {
 
     foreach ($folders as $folder) {
         if (preg_match('/^B\d+$/', $folder)) {
-            $pdf_url = NEWSLETTERS_URL . "$folder/$folder.pdf";
-            $cover_url = NEWSLETTERS_URL . "B0/B0_Couverture.png";
+            $pdf_url = NEWSLETTERS_URL . "$folder/" . $folder . "_TableMatieres.pdf";
+            $cover_url = NEWSLETTERS_URL . "$folder/$folder" . "_Couverture.png";
 
             $cards_html .= '
-                <div class="newsletter-card" data-pdf="' . esc_url($pdf_url) . '">
+                <div class="newsletter-card" data-pdf="' . esc_url($pdf_url) . '" data-bulletin="' . esc_html(str_replace("B", "", $folder))  .'">
                     <img src="' . esc_url($cover_url) . '" alt="Couverture Bulletin ' . esc_html(str_replace("B", "", $folder)) . '">
                     <h3 class="newsletter-name">Bulletin n°' . esc_html(str_replace("B", "", $folder)) . '</h3>
                 </div>
@@ -32,8 +32,13 @@ function hclm_newsletter_cards_shortcode() {
         <div id="newsletter-popup" class="hidden">
             <div class="popup-overlay"></div>
             <div class="popup-content">
-                <span class="popup-close">&times;</span>
-                <div id="newsletter-viewer" class="_df_book" source=""></div>
+                <button class="popup-close">x</button>
+
+                <div id="newsletter-title" style="margin-bottom: 15px; font-size: 20px; font-weight: bold;">
+                    Bulletin n°XX - Table des matières ci-dessous
+                </div>
+
+                <iframe id="newsletter-viewer" width="100%" height="600px" frameborder="0"></iframe>
             </div>
         </div>
     ';

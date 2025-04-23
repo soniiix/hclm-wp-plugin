@@ -4,32 +4,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const viewer = document.getElementById('newsletter-viewer');
     const closeBtn = document.querySelector('.popup-close');
     const overlay = document.querySelector('.popup-overlay');
+    const title = document.getElementById('newsletter-title');
 
     cards.forEach(card => {
         card.addEventListener('click', () => {
             const pdfSrc = card.getAttribute('data-pdf');
-            viewer.setAttribute('source', pdfSrc);
+            const bulletinNumber = card.getAttribute('data-bulletin');
+            viewer.setAttribute('src', pdfSrc);
+            title.textContent = `Bulletin n°${bulletinNumber} - Table des matières ci-dessous`;
             popup.classList.remove('hidden');
-
-            // Si le plugin DFLIP est utilisé, il faut le recharger manuellement :
-            if (typeof dFlipLocation !== 'undefined' && typeof dFlipBooks !== 'undefined') {
-                if (dFlipBooks.length) {
-                    dFlipBooks.forEach(book => book.destroy());
-                }
-                dFlipInit(); // Recharge les viewers
-            }
         });
     });
 
     const closePopup = () => {
         popup.classList.add('hidden');
-        viewer.setAttribute('source', '');
-
-        if (typeof dFlipLocation !== 'undefined' && typeof dFlipBooks !== 'undefined') {
-            if (dFlipBooks.length) {
-                dFlipBooks.forEach(book => book.destroy());
-            }
-        }
+        viewer.setAttribute('src', '');
     };
 
     closeBtn.addEventListener('click', closePopup);

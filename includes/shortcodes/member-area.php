@@ -23,15 +23,15 @@ function member_area_shortcode() {
                 </li>
                 <li data-tab="profile">
                     <span class="icon"><i class="fas fa-user-circle"></i></span>
-                    <span class="label">Profil</span>
+                    <span class="label">Mon profil</span>
                 </li>
                 <li data-tab="statuses">
                     <span class="icon"><i class="fas fa-layer-group"></i></span>
-                    <span class="label">Statuts</span>
+                    <span class="label">Statuts HCLM</span>
                 </li>
                 <li data-tab="reports">
                     <span class="icon"><i class="fas fa-file-alt"></i></span>
-                    <span class="label">Compte rendus</span>
+                    <span class="label">Comptes rendus</span>
                 </li>
                 <li data-tab="suggestions">
                     <span class="icon"><i class="far fa-comment-dots"></i></i></span>
@@ -48,15 +48,11 @@ function member_area_shortcode() {
         </aside>
         <main class="content">
             <section id="dashboard" class="tab-content active">
-                <h3>Bonjour <?php echo esc_html($user->get('user_firstname')); ?>&nbsp;!</h3>
+                <h3>Bonjour <?php echo esc_html($user->get('user_firstname') . ' ' . $user->get('user_lastname')); ?>,</h3>
                 <div class="dashboard-grid">
                     <div class="tab-card span-2">
                         <p>Bienvenue dans l'espace adhérent. Ici, vous retrouverez toutes les informations importantes liées à votre adhésion.</p>
                         <span>Vous avez également accès à du contenu supplémentaire.</span>
-                    </div>
-                    <div class="tab-card">
-                        <h4><i class="fas fa-address-card"></i> Statut de l'adhésion</h4>
-                        <span>Adhérent depuis le : <?php echo date('d/m/Y', strtotime($user->get('user_registered'))) ?></span>
                     </div>
                     <div class="tab-card">
                         <h4><i class="fas fa-calendar-alt"></i> Prochain événement</h4>
@@ -121,10 +117,14 @@ function member_area_shortcode() {
                         <button type="submit" class="btn-save">Enregistrer</button>
                     </form>
                 </div>
+                <div class="tab-card">
+                    <h4><i class="fas fa-address-card"></i> Statut de l'adhésion</h4>
+                    <span>Adhérent depuis le : <?php echo date('d/m/Y', strtotime($user->get('user_registered'))) ?></span>
+                </div>
             </section>
             <section id="statuses" class="tab-content">
-                <h3>Statuts</h2>
-                <p>PDF, infos, etc.</p>
+                <h3>Statuts de l'association</h2>
+                <p><i>Mettre PDF</i></p>
             </section>
             <section id="reports" class="tab-content">
                 <h3>Compte rendus</h3>
@@ -137,12 +137,15 @@ function member_area_shortcode() {
                         <option value="2025">2025</option>
                         <option value="2024">2024</option>
                     </select>
-
+                    <?php 
+                    if (current_user_can('administrator')) {
+                    ?>
                     <select>
                         <option value="">Tous les types</option>
                         <option value="AG">Assemblée Générale</option>
                         <option value="CA">Conseil d'Administration</option>
                     </select>
+                    <?php } ?>
                 </div>
 
                 <div class="reports-list">

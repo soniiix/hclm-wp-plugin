@@ -26,7 +26,6 @@ add_shortcode('hclm_login_form', 'login_form_shortcode');
 add_shortcode('hclm_member_area', 'member_area_shortcode');
 add_shortcode('hclm_newsletters', 'newsletters_shortcode');
 add_shortcode('hclm_newsletter_summaries', 'newsletters_summaries_shortcode');
-
-add_shortcode('hclm_newsletter_list', 'hclm_newsletter_cards_shortcode');
+add_shortcode('hclm_newsletter_list', 'newsletters_list_shortcode');
 
 ?>

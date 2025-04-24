@@ -175,7 +175,9 @@ function member_area_shortcode() {
             </section>
             <section id="suggestions" class="tab-content">
                 <h3>Suggestions / Remarques</h3>
-                <p>à développer</p>
+                <div class="tab-card">
+                    <?php echo do_shortcode('[hclm_contact_form]') ?>
+                </div>
             </section>
         </main>
     </div>

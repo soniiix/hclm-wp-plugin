@@ -13,7 +13,11 @@ function newsletters_list_shortcode() {
 
     foreach ($folders as $folder) {
         if (preg_match('/^B\d+$/', $folder)) {
-            $summary_url = NEWSLETTERS_URL . "$folder/{$folder}_TableMatieres.pdf";
+            if (!file_exists(NEWSLETTERS_FOLDER . "$folder/{$folder}_TableMatieres.pdf")) {
+                $summary_url = NEWSLETTERS_URL . "$folder/{$folder}_Sommaire.pdf";
+            } else {
+                $summary_url = NEWSLETTERS_URL . "$folder/{$folder}_TableMatieres.pdf";
+            }
             $cover_url = NEWSLETTERS_URL . "$folder/{$folder}_Couverture.png";
             $bulletin_num = str_replace("B", "", $folder);
     

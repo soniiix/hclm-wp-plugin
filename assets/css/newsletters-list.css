@@ -1,3 +1,4 @@
+/* CARDS */
 .newsletter-cards {
     display: flex;
     flex-wrap: wrap;
@@ -31,7 +32,8 @@
     border-radius: 4px;
 }
 
-#newsletter-popup {
+/* POPUPS */
+.newsletter-popup {
     position: fixed;
     top: 0;
     left: 0;
@@ -61,6 +63,11 @@
     border-radius: 10px;
 }
 
+.popup-title{
+    font-size: 18px;
+    font-weight: 600;
+}
+
 .popup-description{
     margin-bottom: 15px;
 }
@@ -79,7 +86,7 @@
 }
 
 .newsletter-button {
-    padding: 12px 25px;
+    padding: 11px 24px;
     color: #FFF !important;
     background-color: #e76f51;
     border-radius: 10px;
@@ -98,4 +105,5 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 15px;
 }

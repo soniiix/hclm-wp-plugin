@@ -11,6 +11,8 @@ function newsletters_list_shortcode() {
     $folders = scandir(NEWSLETTERS_FOLDER);
     $cards_html = '<div class="newsletter-cards">';
 
+    sort($folders, SORT_NATURAL | SORT_FLAG_CASE);
+
     foreach ($folders as $folder) {
         if (preg_match('/^B\d+$/', $folder)) {
             if (!file_exists(NEWSLETTERS_FOLDER . "$folder/{$folder}_TableMatieres.pdf")) {

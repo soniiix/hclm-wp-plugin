@@ -149,6 +149,10 @@
     transition: background-color 0.2s ease;
 }
 
+.tab-card.membership {
+    margin-top: 25px;
+}
+
 .edit-photo-btn:hover {
     background-color: #d55f45;
 }
@@ -217,6 +221,19 @@
 
 
 /* DASHBOARD */
+.dashboard-two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 25px;
+}
+
+.dashboard-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -242,6 +259,7 @@
 .card-last-report {
     text-align: center;
     transition: box-shadow 0.2s ease;
+    min-height: 315px;
 }
 
 .card-last-report:hover {

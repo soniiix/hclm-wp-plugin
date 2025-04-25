@@ -49,21 +49,26 @@ function member_area_shortcode() {
         <main class="content">
             <section id="dashboard" class="tab-content active">
                 <h3>Bonjour <?php echo esc_html($user->get('user_firstname') . ' ' . $user->get('user_lastname')); ?>,</h3>
-                <div class="dashboard-grid">
-                    <div class="tab-card span-2">
-                        <p>Bienvenue dans l'espace adhérent. Ici, vous retrouverez toutes les informations importantes liées à votre adhésion.</p>
-                        <span>Vous avez également accès à du contenu supplémentaire.</span>
-                    </div>
-                    <div class="tab-card">
-                        <h4><i class="fas fa-calendar-alt"></i> Prochain événement</h4>
-                        <span>Réunion du CA le 24/04/2025 à 14h</span>
-                    </div>
-                    <div class="tab-card card-last-report" onclick="showReports();" style="cursor: pointer;">
-                        <h4><i class="fas fa-file-alt"></i> Dernier compte rendu</h4>
-                        <div class="report-thumbnail">
-                            <img src="<?php echo home_url('/wp-content/uploads/hclm/images/b70.jpg') ?>">
+                <div class="dashboard-two-columns">
+                    <div class="dashboard-col">
+                        <div class="tab-card">
+                            <p>Bienvenue dans l'espace adhérent. Ici, vous retrouverez toutes les informations importantes liées à votre adhésion.</p>
+                            <span>Vous avez également accès à du contenu supplémentaire.</span>
                         </div>
-                        <span>Compte rendu du 25/03/2025</span>
+                        <div class="tab-card">
+                            <h4><i class="fas fa-calendar-alt"></i> Prochain événement</h4>
+                            <span>Réunion du CA le 24/04/2025 à 14h</span>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-col">
+                        <div class="tab-card card-last-report" onclick="showReports();" style="cursor: pointer;">
+                            <h4><i class="fas fa-file-alt"></i> Dernier compte rendu</h4>
+                            <div class="report-thumbnail">
+                                <img src="<?php echo home_url('/wp-content/uploads/hclm/images/b70.jpg') ?>">
+                            </div>
+                            <span>Compte rendu du 25/03/2025</span>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -117,7 +122,7 @@ function member_area_shortcode() {
                         <button type="submit" class="btn-save">Enregistrer</button>
                     </form>
                 </div>
-                <div class="tab-card">
+                <div class="tab-card membership">
                     <h4><i class="fas fa-address-card"></i> Statut de l'adhésion</h4>
                     <span>Adhérent depuis le : <?php echo date('d/m/Y', strtotime($user->get('user_registered'))) ?></span>
                 </div>
@@ -176,7 +181,8 @@ function member_area_shortcode() {
             <section id="suggestions" class="tab-content">
                 <h3>Suggestions / Remarques</h3>
                 <div class="tab-card">
-                    <?php echo do_shortcode('[hclm_contact_form]') ?>
+                    <div class="mb-5"><span>Pour toute suggestion ou remarque concernant le site, merci de bien vouloir remplir le formulaire ci-dessous.</span></div>
+                    <?php echo do_shortcode('[forminator_form id="2040"]') ?>
                 </div>
             </section>
         </main>

@@ -24,6 +24,7 @@ add_filter('woocommerce_product_add_to_cart_text', function ($text) {
     }
 });
 
+// Hide duplicate button caused by yith
 add_filter('ywctm_modify_woocommerce_after_shop_loop_item', '__return_false');
 
 ?>

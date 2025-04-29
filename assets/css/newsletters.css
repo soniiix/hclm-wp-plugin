@@ -5,6 +5,22 @@
     color: #000000 !important;
 }
 
+.page-subtitle{
+    font-size: 30px !important;
+    font-weight: 600 !important;
+    color: #000000 !important;
+}
+
+.newsletter_display_section{
+    margin-top: 55px;
+    margin-bottom: 75px;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
 .description-section{
     margin-top: 55px;
     margin-bottom: 55px;

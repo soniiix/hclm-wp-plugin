@@ -4,6 +4,7 @@ require_once plugin_dir_path(__FILE__) . '/functions/handle-login.php';
 require_once plugin_dir_path(__FILE__) . '/functions/handle-registration.php';
 require_once plugin_dir_path(__FILE__) . '/functions/hide-page.php';
 require_once plugin_dir_path(__FILE__) . '/functions/show-more-user-data.php';
+require_once plugin_dir_path(__FILE__) . '/functions/admin-page.php';
 
 // Handle login form submission
 add_action('template_redirect', 'handle_login');
@@ -20,6 +21,19 @@ add_action('template_redirect', function () {
     hide_page('espace-adherent', false); // If not logged in
     hide_page('adherer', true);          // If logged in
     hide_page('connexion', true);        // If logged in
+});
+
+// Add a plugin-specific tab in the wordpress menu
+add_action('admin_menu', function () {
+    add_menu_page(
+        'HCLM - Gestion',
+        'Gestion HCLM',
+        'manage_options',
+        'hclm-manage',
+        'hclm_index_admin_page',
+        'dashicons-database',
+        27
+    );
 });
 
 ?>

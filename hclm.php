@@ -4,6 +4,7 @@ Plugin Name: HCLM
 Description: Plugin personnalisé pour intégrer diverses fonctionnalités au site de l'association HCLM.
 Version: 1.0
 Author: Quentin COUZINET
+Author URI: https://cznquentin.vercel.app
 */
 
 defined('ABSPATH') || exit;

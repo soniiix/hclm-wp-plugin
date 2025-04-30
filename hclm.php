@@ -20,6 +20,7 @@ require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/member-area.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/newsletters/page.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/newsletters/newsletters-summaries.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/newsletters/newsletters-list.php';
+require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/paywall-content.php';
 
 // Save shortcodes
 add_shortcode('hclm_login_button', 'login_button_shortcode');
@@ -30,5 +31,6 @@ add_shortcode('hclm_member_area', 'member_area_shortcode');
 add_shortcode('hclm_newsletters', 'newsletters_shortcode');
 add_shortcode('hclm_newsletter_summaries', 'newsletters_summaries_shortcode');
 add_shortcode('hclm_newsletter_list', 'newsletters_list_shortcode');
+add_shortcode('hclm_paywall_content', 'paywall_content_shortcode');
 
 ?>

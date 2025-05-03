@@ -14,7 +14,8 @@ function handle_login() {
             wp_redirect(add_query_arg('login_error', '1', wp_get_referer()));
             exit;
         } else {
-            wp_redirect(home_url('/accueil'));
+            $redirect = !empty($_POST['redirect_to']) ? esc_url_raw($_POST['redirect_to']) : home_url('/accueil');
+            wp_redirect($redirect);
             exit;
         }
     }

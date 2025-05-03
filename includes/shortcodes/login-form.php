@@ -21,6 +21,7 @@ function login_form_shortcode() {
 
     return $error . '
         <form method="post" class="hclm_form">
+            <input type="hidden" name="redirect_to" value="' . esc_url($_GET['redirect_to'] ?? home_url('/accueil')) . '">
             <p><label>Email :<br><input type="email" name="user_email" required></label></p>
             <p><label>Mot de passe :<br><input type="password" name="user_password" required></label></p>
             <p class="checkbox"><input type="checkbox" id="remember_me" name="remember_me" class="hclm_checkbox">

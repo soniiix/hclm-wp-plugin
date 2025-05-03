@@ -13,7 +13,7 @@ function paywall_content_shortcode($atts, $content = null) {
                 </div>
                 <div class="paywall-box">
                     <div class="paywall-header">
-                        Déjà membre ? <a href="/connexion">Connectez-vous</a>
+                        Déjà membre ? <a href="' . esc_url( home_url('/connexion?redirect_to=' . urlencode(get_permalink())) ) . '">Connectez-vous</a>
                     </div>
                     <div class="paywall-content">
                         <span class="paywall-title"><i class="fas fa-lock"></i>&nbsp;Envie de lire la suite ?</span>

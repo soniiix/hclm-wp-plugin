@@ -27,4 +27,12 @@ add_filter('woocommerce_product_add_to_cart_text', function ($text) {
 // Hide duplicate button caused by yith
 add_filter('ywctm_modify_woocommerce_after_shop_loop_item', '__return_false');
 
+// Use a custom template for fall visit details page
+add_filter('template_include', function($template){
+    if (is_singular('visite_automnale')) {
+        return plugin_dir_path(__FILE__) . '../../templates/single-fall-visit.php';
+    }
+    return $template;
+});
+
 ?>

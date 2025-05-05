@@ -24,9 +24,9 @@ if (have_posts()) :
             <?php else : ?>
                 <div class="post-excerpt">
                     <?php
-                    $extrait = get_field('extrait');
-                    if ($extrait) {
-                        echo do_shortcode('[hclm_paywall_content]' . esc_html($extrait) . '[/hclm_paywall_content]');
+                    $extract = get_field('extrait');
+                    if ($extract) {
+                        echo do_shortcode('[hclm_paywall_content]' . wpautop($extract) . '[/hclm_paywall_content]');
                     } else {
                         echo '<p>Contenu réservé aux adhérents.</p>';
                     }

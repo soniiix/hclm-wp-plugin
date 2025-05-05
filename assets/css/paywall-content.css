@@ -47,6 +47,10 @@
     overflow: hidden;
 }
 
+.article-fadeout > p:last-child{
+    margin-bottom: 0 !important;
+}
+
 .article-fadeout::after {
     content: '';
     position: absolute;

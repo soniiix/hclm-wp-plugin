@@ -2,7 +2,7 @@
     background: #fff7d2;
     border-radius: 10px;
     padding-bottom: 20px;
-    margin-top: 15px;
+    margin-top: 10px;
     text-align: center;
 }
 
@@ -43,7 +43,6 @@
 
 .article-fadeout {
     position: relative;
-    max-height: 300px;
     overflow: hidden;
 }
 

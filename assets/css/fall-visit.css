@@ -166,7 +166,7 @@ main.content {
     color: black !important;
     background: transparent !important;
     flex: 1 !important;
-    font-size: 1rem !important;
+    font-size: 16px !important;
 }
 
 .hclm-visits-searchbar-wrapper:focus-within {
@@ -187,8 +187,31 @@ main.content {
     border-radius: 10px;
 }
 
+.hclm-visits_search-row-sort div:focus-within {
+    border: 1px solid #e76f51 !important;
+}
+
 .hclm-visits_search-row-sort select{
     border-radius: 10px !important;
     border:none !important;
     outline: none !important;
+}
+
+@media (max-width: 710px) {
+    .hclm-visits_search-row{
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .hclm-visits_search-row span{
+        display: none;
+    }
+
+    .hclm-visits_search-row-sort, .hclm-visits_search-row-sort div{
+        width: 100%;
+    }
+
+    .hclm-visits-searchbar-wrapper {
+        width: 100% !important;
+    }
 }

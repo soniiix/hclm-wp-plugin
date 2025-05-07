@@ -40,7 +40,7 @@ function newsletters_shortcode() {
 
         <?php if (!is_user_logged_in()) : ?>
             <div class="complete-newsletter-section">
-                <h2>Bulletin n°68</h2>
+                <h2>Bulletin n°67</h2>
                 <div class="pdf-container">
                     <?php echo do_shortcode('[dflip id="826"][/dflip]'); ?>
                 </div>

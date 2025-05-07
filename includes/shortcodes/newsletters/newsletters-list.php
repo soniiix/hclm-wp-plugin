@@ -12,6 +12,7 @@ function newsletters_list_shortcode() {
     $cards_html = '<div class="newsletter-cards">';
 
     sort($folders, SORT_NATURAL | SORT_FLAG_CASE);
+    $folders = array_reverse($folders);
 
     foreach ($folders as $folder) {
         if (preg_match('/^B\d+$/', $folder)) {

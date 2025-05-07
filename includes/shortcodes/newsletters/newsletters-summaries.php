@@ -12,6 +12,9 @@ function newsletters_summaries_shortcode() {
 
     $folders = scandir(NEWSLETTERS_FOLDER);
 
+    sort($folders, SORT_NATURAL | SORT_FLAG_CASE);
+    $folders = array_reverse($folders);
+
     $options = '';
 
     foreach ($folders as $folder) {

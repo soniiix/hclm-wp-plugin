@@ -27,4 +27,9 @@ add_action('template_redirect', function () {
 // Add a plugin-specific tab in the wordpress menu
 add_action('admin_menu', 'hclm_admin_menu');
 
+// Remove zoom on hover for product images
+add_action( 'wp', function () {
+    remove_theme_support('wc-product-gallery-zoom');
+}, 100 );
+
 ?>

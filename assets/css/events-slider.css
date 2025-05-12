@@ -1,0 +1,94 @@
+.hclm-events-section {
+    margin: 2rem 0;
+}
+
+.hclm-events-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hclm-events-header h2 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.separator {
+    flex-grow: 1;
+    height: 2px;
+    background-color: #ccc;
+    margin: 0 1rem;
+    border-radius: 10px;
+}
+
+.slider-nav button {
+    background-color: #e76f51 !important;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px 21px !important;
+    font-weight: 300 !important;
+}
+
+.prev-slide{
+    transform: rotate(-0.50turn);
+}
+
+.hclm-events-slider {
+    display: flex;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    gap: 1rem;
+    padding: 1.5rem 0;
+}
+
+.event-card {
+    width: 350px;
+    background: #f6f6f6;
+    padding: 25px 35px;
+    border-radius: 10px;
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.event-card p{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.event-card i{
+    margin-right: 8px;
+}
+
+.view-calendar {
+    text-align: center;
+    font-weight: 500 !important;
+    margin-top: 15px;
+}
+
+.view-calendar a{
+    text-decoration: none !important;
+}
+
+.slider-nav svg{
+    height: 20px;
+}
+
+.view-calendar a:hover{
+    text-decoration: underline !important;
+    text-underline-offset: 4px !important;
+    text-decoration-thickness: 2px !important;
+}
+
+.event-link{
+    padding: 5px 18px !important;
+    border: 2px solid #e76f51 !important;
+    text-decoration: none !important;
+    border-radius: 10px !important;
+    width: fit-content;
+}

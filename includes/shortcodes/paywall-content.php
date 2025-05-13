@@ -1,7 +1,7 @@
 <?php
 
 function paywall_content_shortcode($atts, $content = null) {
-    wp_enqueue_style('hclm-signup-style', plugin_dir_url(__FILE__) . '../../assets/css/paywall-content.css');
+    wp_enqueue_style('hclm-paywall-content-style', plugin_dir_url(__FILE__) . '../../assets/css/paywall-content.css');
     
     if (is_user_logged_in()) {
         return '<div class="article-full">' . do_shortcode($content) . '</div>';

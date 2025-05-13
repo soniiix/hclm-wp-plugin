@@ -17,7 +17,7 @@ function login_form_shortcode() {
     }
 
     // Load CSS style
-    wp_enqueue_style('hclm-signup-style', plugin_dir_url(__FILE__) . '../../assets/css/forms.css');
+    wp_enqueue_style('hclm-login-form-style', plugin_dir_url(__FILE__) . '../../assets/css/forms.css');
 
     return $error . '
         <form method="post" class="hclm_form">

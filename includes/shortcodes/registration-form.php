@@ -11,7 +11,7 @@ function registration_form_shortcode() {
     }
 
     // Load CSS style
-    wp_enqueue_style('hclm-signup-style', plugin_dir_url(__FILE__) . '../../assets/css/forms.css');
+    wp_enqueue_style('hclm-registration-form-style', plugin_dir_url(__FILE__) . '../../assets/css/forms.css');
 
     ob_start();
     ?>

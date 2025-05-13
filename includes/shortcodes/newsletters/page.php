@@ -7,7 +7,7 @@
  */
 function newsletters_shortcode() {
     // Load CSS style
-    wp_enqueue_style('hclm-signup-style', plugin_dir_url(__FILE__) . '../../../assets/css/newsletters.css');
+    wp_enqueue_style('hclm-newsletters-style', plugin_dir_url(__FILE__) . '../../../assets/css/newsletters.css');
     ob_start();
 
     $view = isset($_GET['view']) ? sanitize_text_field($_GET['view']) : null;

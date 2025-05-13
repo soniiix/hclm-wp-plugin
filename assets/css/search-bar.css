@@ -1,0 +1,31 @@
+.hclm-search-bar-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: start !important;
+    padding: 3px 16px !important;
+    width: 300px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 10px !important;
+}
+
+.hclm-search-bar-wrapper svg {
+    height: 20px;
+    color: black;
+    margin-right: 8px !important;
+}
+
+.hclm-search-bar {
+    padding: 0 2px !important;
+    border: none !important;
+    outline: none !important;
+    color: black !important;
+    background: transparent !important;
+    flex: 1 !important;
+    font-size: 16px !important;
+}
+
+.hclm-search-bar-wrapper:focus-within {
+    border: 1px solid #e76f51 !important;
+    outline: none !important;
+}

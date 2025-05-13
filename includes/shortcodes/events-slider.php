@@ -18,8 +18,8 @@ function events_slider_shortcode() {
             <h2>Évènements à venir</h2>
             <div class="separator"></div>
             <div class="slider-nav">
-                <button class="prev-slide">➜</button>
-                <button class="next-slide">➜</button>
+                <button class="prev-slide"><i class="fas fa-chevron-left"></i></button>
+                <button class="next-slide"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
 

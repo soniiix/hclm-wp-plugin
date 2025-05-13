@@ -31,20 +31,17 @@
     font-weight: 300 !important;
 }
 
-.prev-slide{
-    transform: rotate(-0.50turn);
-}
-
 .hclm-events-slider {
     display: flex;
     overflow-x: hidden;
     scroll-behavior: smooth;
     gap: 1rem;
     padding: 1.5rem 0;
+    width: 100%;
 }
 
 .event-card {
-    width: 350px;
+    width: 422px;
     background: #f6f6f6;
     padding: 25px 35px;
     border-radius: 10px;
@@ -68,15 +65,11 @@
 .view-calendar {
     text-align: center;
     font-weight: 500 !important;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 .view-calendar a{
     text-decoration: none !important;
-}
-
-.slider-nav svg{
-    height: 20px;
 }
 
 .view-calendar a:hover{
@@ -91,4 +84,18 @@
     text-decoration: none !important;
     border-radius: 10px !important;
     width: fit-content;
+}
+
+/* Tablet : 2 event cards */
+@media screen and (max-width: 1023px) {
+    .event-card {
+        width: calc((100% - 1rem) / 2);
+    }
+}
+
+/* Mobile : 1 event card */
+@media screen and (max-width: 600px) {
+    .event-card {
+        width: 100%;
+    }
 }

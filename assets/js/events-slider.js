@@ -1,13 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
     const slider = document.querySelector('.hclm-events-slider');
-    const next = document.querySelector('.next-slide');
-    const prev = document.querySelector('.prev-slide');
+    const cardWidth = document.querySelector('.event-card')?.offsetWidth + 16;
 
-    next?.addEventListener('click', () => {
-        slider.scrollBy({ left: 300, behavior: 'smooth' });
+    document.querySelector('.next-slide').addEventListener('click', function () {
+        slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
     });
 
-    prev?.addEventListener('click', () => {
-        slider.scrollBy({ left: -300, behavior: 'smooth' });
+    document.querySelector('.prev-slide').addEventListener('click', function () {
+        slider.scrollBy({ left: -cardWidth, behavior: 'smooth' });
     });
 });

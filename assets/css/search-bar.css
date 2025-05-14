@@ -62,7 +62,7 @@ body:is(.home) .hclm-search-bar-wrapper {
 
 .hclm-popup-content {
     background: #fff;
-    padding: 1.8rem 2rem;
+    padding: 28px 30px 20px 30px;
     border-radius: 10px;
     width: 90%;
     max-width: 500px;
@@ -113,8 +113,12 @@ body:is(.home) .hclm-search-bar-wrapper {
 .hclm-popup-close-btn {
     color: #e76f51;
     font-weight: 500;
+    padding: 8px 11px;
+    border-radius: 10px;
+    transition: background-color 0.2s, color 0.2s;
 }
 
 .hclm-popup-close-btn:hover {
     cursor: pointer;
+    background-color: #f0f0f0;
 }

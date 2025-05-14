@@ -1,21 +1,92 @@
+/* Search bar in header */
 .hclm-search-bar-wrapper {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: start !important;
-    padding: 3px 16px !important;
-    width: 300px !important;
+    padding: 9px 12px 9px 15px !important;
+    width: 160px !important;
     border: 1px solid #ccc !important;
     border-radius: 10px !important;
+}
+
+.hclm-search-bar-wrapper:hover,
+.hclm-search-bar:hover {
+    cursor: pointer !important;
+}
+
+body:is(.home) .hclm-search-bar-wrapper {
+    background-color: #fff;
 }
 
 .hclm-search-bar-wrapper svg {
     height: 20px;
     color: black;
-    margin-right: 8px !important;
+    margin-right: 9px !important;
 }
 
 .hclm-search-bar {
+    padding: 0 2px !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    flex: 1 !important;
+    font-size: 16px !important;
+    color: #9da2af;
+}
+
+.hclm-search-bar-wrapper:focus,
+.hclm-search-bar-wrapper:hover,
+.hclm-search-bar-wrapper:active {
+    border: 1px solid #e76f51 !important;
+    outline: none !important;
+}
+
+/* Popup with advanced search */
+.hclm-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6) !important;
+    z-index: 99999;
+    justify-content: center !important;
+    align-items: start !important;
+    padding-top: 95px;
+}
+
+.hclm-popup-overlay svg {
+    height: 20px;
+}
+
+.hclm-popup-content {
+    background: #fff;
+    padding: 1.8rem 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.hclm-popup-search-bar-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: start !important;
+    padding: 3px 16px !important;
+    width: 100% !important;
+    border: 1px solid #ccc !important;
+    border-radius: 10px !important;
+}
+
+.hclm-popup-search-bar-wrapper svg {
+    height: 20px;
+    color: black;
+    margin-right: 8px !important;
+}
+
+.hclm-popup-search-bar {
     padding: 0 2px !important;
     border: none !important;
     outline: none !important;
@@ -25,7 +96,25 @@
     font-size: 16px !important;
 }
 
-.hclm-search-bar-wrapper:focus-within {
+.hclm-popup-search-bar-wrapper:focus-within {
     border: 1px solid #e76f51 !important;
     outline: none !important;
+}
+
+.hclm-popup-action-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.hclm-popup-close-btn {
+    color: #e76f51;
+    font-weight: 500;
+}
+
+.hclm-popup-close-btn:hover {
+    cursor: pointer;
 }

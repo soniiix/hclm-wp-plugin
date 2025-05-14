@@ -18,6 +18,13 @@
     border-radius: 10px;
 }
 
+.slider-nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 4px;
+}
+
 .slider-nav button {
     background-color: #e76f51 !important;
     border: none;

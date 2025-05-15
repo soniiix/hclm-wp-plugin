@@ -35,4 +35,12 @@ add_filter('template_include', function($template){
     return $template;
 });
 
+// Use a custom page for search results
+add_filter('template_include', function($template){
+    if (is_search()) {
+        return plugin_dir_path(__FILE__) . '../../templates/search-results.php';
+    }
+    return $template;
+});
+
 ?>

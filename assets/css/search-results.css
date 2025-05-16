@@ -2,18 +2,18 @@ body {
     background-color: #fff !important;
 }
 
-.search-results {
+.hclm-search-results {
     width: 100% !important;
     padding-bottom: 50px;
     padding-top: 20px;
 }
 
 .hclm-search-category-wrapper{
-    margin-top: 35px;
+    margin-top: 37px;
 }
 
 .hclm-search-category-title{
-    font-size: 25px;
+    font-size: 22px;
     font-weight: 500;
 }
 

@@ -88,12 +88,12 @@ body {
 .hclm-result-arrow svg{
     margin-right: 5px;
     height: 24px;
+    width: 24px;
     color: #888;
     transition: transform 0.3s ease, color 0.2s ease;
 }
 
 .hclm-result-arrow{
-    font-size: 24px;
     margin-left: auto;
 }
 

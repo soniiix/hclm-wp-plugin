@@ -1,12 +1,13 @@
 <?php get_header(); 
 
-// Load CSS style
+// Load CSS style and JavaScript
 wp_enqueue_style('hclm-search-results-style', plugin_dir_url(__FILE__) . '../assets/css/search-results.css');
+wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../assets/js/search-results.js', [], false, true);
 ?>
 
 <div class="search-results">
     <h1>Résultats de recherche pour "<?php echo get_search_query(); ?>"</h1>
-    <span>18 résultats</span>
+    <span id="hclm-search-results-count">0 résultat</span>
 
     <!-- Search if any pages match the query -->
     <?php if (have_posts()) { ?>

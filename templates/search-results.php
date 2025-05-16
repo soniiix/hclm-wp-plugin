@@ -54,15 +54,36 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
         if (stripos($content, $query) !== false) {
             $newsletter = basename($txt_file, '.txt');
             $folder = basename(dirname($txt_file));
+            $pos = stripos($content, $query); // Find position of first word occurence in the newsletter
+            $excerpt = '';
+            if ($pos !== false) {
+                // Extract 50 words around the occurrence to make an excerpt
+                $start = max(0, $pos - 50);
+                $length = strlen($query) + 100;
+                $snippet = substr($content, $start, $length);
+                
+                $safe_snippet = htmlspecialchars($snippet, ENT_QUOTES, 'UTF-8');
+
+                // Highlight the word
+                $highlighted = preg_replace(
+                    '/' . preg_quote($query, '/') . '/i',
+                    '<mark>$0</mark>',
+                    $safe_snippet
+                );
+
+                $excerpt = '... ' . $highlighted . ' ...'; // Concatenate the highlighted word and the excerpt where it's present
+            }
+
             $results[] = [
                 'title' => 'Bulletin n°' . str_replace("B", "", $newsletter),
                 "image" => $base_url . '/' . $folder . '/' . $newsletter . '_Couverture.png',
-                'url'   => $base_url . '/' . $folder . '/' . $newsletter . '.pdf'
+                'url'   => $base_url . '/' . $folder . '/' . $newsletter . '.pdf',
+                'excerpt' => $excerpt
             ];
         }
     }
 
-    // Display results : a list of each newsletter
+    // Display results : a list of each newsletter with excerpt
     if (!empty($results)) { ?>
     <div class="hclm-search-category-wrapper">
         <h2 class="hclm-search-category-title">Bulletins</h2>
@@ -71,11 +92,11 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
                 <li class="hclm-search-result-row">
                     <a href="<?php echo esc_url($item['url']); ?>" target="_blank">
                         <div class="hclm-result-thumbnail">
-                            <img src="<?php echo $item['image'] ?>">
+                            <img src="<?php echo $item['image'] ?>" class="newsletter-thumbnail">
                         </div>
                         <div class="hclm-result-content">
                             <h3 class="hclm-result-title"><?php echo esc_html($item['title']); ?></h3>
-                            <p class="hclm-result-excerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                            <p class="hclm-result-excerpt"><?php echo $item['excerpt']; ?></p>
                         </div>
                         <div class="hclm-result-arrow">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" height="24" width="24">

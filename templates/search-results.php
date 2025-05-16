@@ -88,21 +88,36 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
             $pos = stripos($content, $query); // Find position of first word occurence in the newsletter
             $excerpt = '';
             if ($pos !== false) {
-                // Extract 50 words around the occurrence to make an excerpt
-                $start = max(0, $pos - 50);
-                $length = strlen($query) + 100;
-                $snippet = substr($content, $start, $length);
-                
-                $safe_snippet = htmlspecialchars($snippet, ENT_QUOTES, 'UTF-8');
+                // Convert content to an array of words
+                $words = preg_split('/\s+/', $content);
 
-                // Highlight the word
-                $highlighted = preg_replace(
-                    '/' . preg_quote($query, '/') . '/i',
-                    '<mark>$0</mark>',
-                    $safe_snippet
-                );
+                // Find the index of the searched word
+                $matchIndex = -1;
+                foreach ($words as $i => $word) {
+                    if (stripos($word, $query) !== false) {
+                        $matchIndex = $i;
+                        break;
+                    }
+                }
 
-                $excerpt = '... ' . $highlighted . ' ...'; // Concatenate the highlighted word and the excerpt where it's present
+                // Build excerpt around the matched word
+                if ($matchIndex !== -1) {
+                    $start = max(0, $matchIndex - 10);
+                    $length = 20;
+                    $excerptWords = array_slice($words, $start, $length);
+
+                    $snippet = implode(' ', $excerptWords);
+                    $safe_snippet = htmlspecialchars($snippet, ENT_QUOTES, 'UTF-8');
+
+                    // Highlight the matched word
+                    $highlighted = preg_replace(
+                        '/' . preg_quote($query, '/') . '/i',
+                        '<mark>$0</mark>',
+                        $safe_snippet
+                    );
+
+                    $excerpt = '... ' . $highlighted . ' ...';
+                }
             }
 
             $results[] = [

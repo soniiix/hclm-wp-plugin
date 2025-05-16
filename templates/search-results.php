@@ -1,4 +1,6 @@
-<?php get_header(); 
+<?php get_header();
+
+require_once plugin_dir_path(__FILE__) . 'utils/get-highlighted-excerpt.php';
 
 // Load CSS style and JavaScript
 wp_enqueue_style('hclm-search-results-style', plugin_dir_url(__FILE__) . '../assets/css/search-results.css');
@@ -6,7 +8,7 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
 ?>
 
 <div class="hclm-search-results">
-    <h1>Résultats de recherche pour "<?php echo get_search_query(); ?>"</h1>
+    <h1>Résultats de recherche pour "<?php echo esc_html(get_search_query()); ?>"</h1>
     <span id="hclm-search-results-count">0 résultat</span>
 
     <!-- Retrieve all search results in the website content -->
@@ -19,7 +21,7 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
                 'url' => get_the_permalink(),
                 'title' => get_the_title(),
                 'thumbnail' => get_the_post_thumbnail(get_the_ID(), 'thumbnail'),
-                'excerpt' => "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                'excerpt' => get_highlighted_excerpt(get_the_excerpt(), get_search_query())
             ];
         }
 
@@ -53,7 +55,7 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
                                     <?php } ?>
                                     <div class="hclm-result-content">
                                         <h3 class="hclm-result-title"><?php echo esc_html($result['title']); ?></h3>
-                                        <p class="hclm-result-excerpt"><?php echo esc_html($result['excerpt']); ?></p>
+                                        <p class="hclm-result-excerpt"><?php echo $result['excerpt']; ?></p>
                                     </div>
                                     <div class="hclm-result-arrow">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" height="24" width="24">
@@ -85,40 +87,8 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
         if (stripos($content, $query) !== false) {
             $newsletter = basename($txt_file, '.txt');
             $folder = basename(dirname($txt_file));
-            $pos = stripos($content, $query); // Find position of first word occurence in the newsletter
-            $excerpt = '';
-            if ($pos !== false) {
-                // Convert content to an array of words
-                $words = preg_split('/\s+/', $content);
-
-                // Find the index of the searched word
-                $matchIndex = -1;
-                foreach ($words as $i => $word) {
-                    if (stripos($word, $query) !== false) {
-                        $matchIndex = $i;
-                        break;
-                    }
-                }
-
-                // Build excerpt around the matched word
-                if ($matchIndex !== -1) {
-                    $start = max(0, $matchIndex - 10);
-                    $length = 20;
-                    $excerptWords = array_slice($words, $start, $length);
-
-                    $snippet = implode(' ', $excerptWords);
-                    $safe_snippet = htmlspecialchars($snippet, ENT_QUOTES, 'UTF-8');
-
-                    // Highlight the matched word
-                    $highlighted = preg_replace(
-                        '/' . preg_quote($query, '/') . '/i',
-                        '<mark>$0</mark>',
-                        $safe_snippet
-                    );
-
-                    $excerpt = '... ' . $highlighted . ' ...';
-                }
-            }
+            
+            $excerpt = get_highlighted_excerpt($content, $query);
 
             $results[] = [
                 'title' => 'Bulletin n°' . str_replace("B", "", $newsletter),

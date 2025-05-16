@@ -85,14 +85,19 @@ body {
     font-size: 14px;
 }
 
-.hclm-result-arrow {
-    font-size: 24px;
-    margin-left: auto;
+.hclm-result-arrow svg{
+    margin-right: 5px;
+    height: 24px;
     color: #888;
     transition: transform 0.3s ease, color 0.2s ease;
 }
 
-.hclm-search-result-row:hover .hclm-result-arrow {
+.hclm-result-arrow{
+    font-size: 24px;
+    margin-left: auto;
+}
+
+.hclm-search-result-row:hover .hclm-result-arrow svg{
     transform: translateX(5px);
     color: #e76f51;
 }

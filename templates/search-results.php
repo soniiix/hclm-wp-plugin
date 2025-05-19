@@ -50,7 +50,8 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
                     'url' => get_the_permalink(),
                     'title' => get_the_title(),
                     'thumbnail' => get_the_post_thumbnail(get_the_ID(), 'thumbnail'),
-                    'excerpt' => get_highlighted_excerpt(get_the_excerpt(), get_search_query())
+                    'excerpt' => get_highlighted_excerpt(get_the_excerpt(), get_search_query()),
+                    'date' => get_post_type() == "tribe_events" ? tribe_get_start_date(null, false, 'j F Y') : null
                 ];
             }
 
@@ -84,7 +85,13 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
                                         <?php } ?>
                                         <div class="hclm-result-content">
                                             <h3 class="hclm-result-title"><?php echo esc_html($result['title']); ?></h3>
-                                            <p class="hclm-result-excerpt"><?php echo $result['excerpt']; ?></p>
+                                            <p class="hclm-result-excerpt">
+                                                <?php 
+                                                if ($result['date']) {
+                                                    echo '<span class="hclm-result-event-date">' . esc_html($result['date']) . '&nbsp;•&nbsp;</span>';
+                                                }
+                                                echo $result['excerpt']; ?>
+                                            </p>
                                         </div>
                                         <div class="hclm-result-arrow">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" height="24" width="24">

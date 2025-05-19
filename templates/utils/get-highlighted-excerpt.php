@@ -31,8 +31,11 @@ function get_highlighted_excerpt(string $text, string $query, $word_count = 20, 
                 '<mark>$0</mark>',
                 $safe_snippet
             );
-            $excerpt = '... ' . $highlighted . ' ...';
-
+            if (count($words) >= 20){
+                $excerpt = '... ' . $highlighted . ' ...';
+            } else {
+                $excerpt = $highlighted;
+            }
             return $excerpt;
         }
     }

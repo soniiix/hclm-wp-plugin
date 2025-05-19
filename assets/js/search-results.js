@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (countSpan) {
         const count = resultRows.length;
-        countSpan.innerText = `${count} résultat${count !== 1 ? 's' : ''}`;
+        if (count >= 1) {
+            countSpan.innerText = `${count} résultat${count !== 1 ? 's' : ''}`;
+        }
     }
 });

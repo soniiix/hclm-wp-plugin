@@ -9,7 +9,7 @@
  *
  * @return string The excerpt with the search term highlighted.
  */
-function get_highlighted_excerpt(string $text, string $query, $char_count = 200) {
+function get_highlighted_excerpt(string $text, string $query, $char_count = 120) {
     $text = strip_tags($text);
     $query = trim($query);
 

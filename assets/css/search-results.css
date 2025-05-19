@@ -1,3 +1,4 @@
+/* BASE */
 body {
     background-color: #fff !important;
 }
@@ -5,7 +6,103 @@ body {
 .hclm-search-results {
     width: 100% !important;
     padding-bottom: 50px;
-    padding-top: 20px;
+    padding-top: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+/* SIDEBAR */
+.hclm-search-results-aside{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 350px;
+    flex-shrink: 0;
+    height: fit-content;
+    position: sticky;
+    top: 30px;
+}
+
+.hclm-search-results-aside-content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    height: 500px;
+}
+
+.hclm-search-results-aside-title{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.hclm-search-results-aside-search-bar-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 3px 16px !important;
+    width: 100% !important;
+    border: 1px solid #ccc !important;
+    border-radius: 10px !important;
+}
+
+.hclm-search-results-aside-search-bar-wrapper svg {
+    height: 20px;
+    color: black;
+    margin-right: 8px !important;
+}
+
+.hclm-search-results-aside-search-bar {
+    padding: 0 2px !important;
+    border: none !important;
+    outline: none !important;
+    color: black !important;
+    background: transparent !important;
+    flex: 1 !important;
+    font-size: 16px !important;
+}
+
+.hclm-search-results-aside-search-bar-wrapper:focus-within {
+    border: 1px solid #e76f51 !important;
+    outline: none !important;
+}
+
+/* HEADER & SORTING */
+.hclm-search-results-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-top: 8px;
+    padding-bottom: 10px;
+}
+
+.hclm-search-results-sort{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.hclm-search-results-sort select{
+    border:none !important;
+    outline: none !important;
+    padding-left: 5px !important;
+    padding-right: 25px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 25px !important;
+}
+
+/* SEARCH RESULTS LIST */
+.hclm-search-results-content {
+    flex: 1;
+    min-width: 0;
 }
 
 .hclm-search-category-wrapper{

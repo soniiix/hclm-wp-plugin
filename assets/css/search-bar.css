@@ -213,3 +213,7 @@ body:is(.home) .hclm-search-bar-wrapper {
 .hclm-popup-submit-btn{
     padding: 12px 15px !important;
 }
+
+.hclm-popup-submit-btn:disabled{
+    cursor: not-allowed !important;
+}

@@ -25,17 +25,24 @@ function search_bar_shortcode() {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" height="20" width="20">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>
-                    <input type="text" placeholder="Rechercher sur le site" name="s" class="hclm-popup-search-bar" required/>
+                    <input type="text" placeholder="Rechercher sur le site" name="s" class="hclm-popup-search-bar"/>
                 </div>
 
                 <div class="hclm-popup-advanced-search">
                     <span class="hclm-popup-title">Recherche avancée</span>
                     <div class="hclm-popup-advanced-search-filter-group">
-                        <label for="hclm-keywords-tagbox">Mots-clés</label>
+                        <label for="hclm-keywords-input">Mots-clés</label>
                         <div id="hclm-keywords-tagbox" class="hclm-keywords-tagbox">
-                            <input type="text" id="hclm-keywords-input" placeholder="Entrer un mot-clé" autocomplete="off" />
+                            <input type="text" id="hclm-keywords-input" placeholder="Entrer des mots-clés" autocomplete="off" />
                         </div>
                         <input type="hidden" name="keywords" id="hclm-keywords-hidden" />
+                    </div>
+                    <div class="hclm-popup-advanced-search-filter-group">
+                        <label for="hclm-exclude-input">Mots à exclure</label>
+                        <div id="hclm-exclude-tagbox" class="hclm-keywords-tagbox">
+                            <input type="text" id="hclm-exclude-input" placeholder="Entrer des mots à exclure" autocomplete="off" />
+                        </div>
+                        <input type="hidden" name="exclude" id="hclm-exclude-hidden" />
                     </div>
                     <div class="hclm-popup-advanced-search-filter-group">
                         <label for="hclm-advanced-search-filter-input">Type de contenu</label>
@@ -48,12 +55,12 @@ function search_bar_shortcode() {
                         </select>
                     </div>
                 </div>
-            </form>
 
-            <div class="hclm-popup-action-row">
+                <div class="hclm-popup-action-row">
                 <div class="hclm-popup-close-btn">Fermer</div>
-                <div></div>
+                <button type="submit" class="hclm-popup-submit-btn">Lancer la recherche</button>
             </div>
+            </form>
         </div>
     </div>
     

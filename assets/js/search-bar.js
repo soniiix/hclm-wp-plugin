@@ -23,48 +23,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /* KEYWORDS TAGBOX */
-    const tagbox = document.getElementById('hclm-keywords-tagbox');
-    const input = document.getElementById('hclm-keywords-input');
-    const hidden = document.getElementById('hclm-keywords-hidden');
-    let tags = [];
+    function setupTagBox(tagboxId, inputId, hiddenId) {
+        const tagbox = document.getElementById(tagboxId);
+        const input = document.getElementById(inputId);
+        const hidden = document.getElementById(hiddenId);
+        let tags = [];
 
-    function updateHidden() {
-        hidden.value = tags.join(',');
-    }
-
-    function renderTags() {
-        tagbox.querySelectorAll('.hclm-keywords-tag').forEach(tag => tag.remove());
-        tags.forEach((tag, idx) => {
-            const tagEl = document.createElement('span');
-            tagEl.className = 'hclm-keywords-tag';
-            tagEl.textContent = tag;
-
-            const remove = document.createElement('span');
-            remove.className = 'hclm-keywords-remove-tag';
-            remove.textContent = '×';
-            remove.onclick = function () {
-                tags.splice(idx, 1);
-                renderTags();
-                updateHidden();
-            };
-            tagEl.appendChild(remove);
-            tagbox.insertBefore(tagEl, input);
-        });
-        updateHidden();
-    }
-
-    input.addEventListener('keydown', function (e) {
-        if ((e.key === 'Enter' || e.key === ',') && input.value.trim() !== '') {
-            e.preventDefault();
-            const value = input.value.trim();
-            if (value && !tags.includes(value)) {
-                tags.push(value);
-                renderTags();
-            }
-            input.value = '';
-        } else if (e.key === 'Backspace' && input.value === '' && tags.length) {
-            tags.pop();
-            renderTags();
+        function updateHidden() {
+            hidden.value = tags.join(',');
         }
-    });
+
+        function renderTags() {
+            tagbox.querySelectorAll('.hclm-keywords-tag').forEach(tag => tag.remove());
+            tags.forEach((tag, idx) => {
+                const tagEl = document.createElement('span');
+                tagEl.className = 'hclm-keywords-tag';
+                tagEl.textContent = tag;
+                const remove = document.createElement('span');
+                remove.className = 'hclm-keywords-remove-tag';
+                remove.textContent = '×';
+                remove.onclick = function () {
+                    tags.splice(idx, 1);
+                    renderTags();
+                    updateHidden();
+                };
+                tagEl.appendChild(remove);
+                tagbox.insertBefore(tagEl, input);
+            });
+            updateHidden();
+        }
+
+        input.addEventListener('keydown', function (e) {
+            if ((e.key === 'Enter' || e.key === ',') && input.value.trim() !== '') {
+                e.preventDefault();
+                const value = input.value.trim();
+                if (value && !tags.includes(value)) {
+                    tags.push(value);
+                    renderTags();
+                }
+                input.value = '';
+            }
+        });
+    }
+
+    setupTagBox('hclm-keywords-tagbox', 'hclm-keywords-input', 'hclm-keywords-hidden');
+    setupTagBox('hclm-exclude-tagbox', 'hclm-exclude-input', 'hclm-exclude-hidden');
 });

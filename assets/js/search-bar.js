@@ -79,15 +79,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const main = form?.querySelector('input[name="s"]');
     const keywords = form?.querySelector('input[name="keywords"]');
     const exclude = form?.querySelector('input[name="exclude"]');
-    const type = form?.querySelector('select[name="type"]');
 
     // Check if the form fields are filled and enable/disable the submit button accordingly
     function checkFormFields() {
         const hasMain = main && main.value.trim() !== '';
         const hasKeywords = keywords && keywords.value.trim() !== '';
         const hasExclude = exclude && exclude.value.trim() !== '';
-        const hasType = type && type.value !== '';
-        if (hasMain || hasKeywords || hasExclude || hasType) {
+        if (hasMain || hasKeywords || hasExclude) {
             submitBtn.removeAttribute('disabled');
             submitBtn.classList.remove('disabled');
         } else {
@@ -96,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    [main, keywords, exclude, type].forEach(field => {
+    [main, keywords, exclude].forEach(field => {
         if (field) {
             field.addEventListener('input', checkFormFields);
             field.addEventListener('change', checkFormFields);

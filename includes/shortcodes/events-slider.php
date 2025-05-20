@@ -7,7 +7,7 @@ function events_slider_shortcode() {
 
     // Retrieve upcoming events
     $events = tribe_get_events([
-        'posts_per_page' => 10,
+        'posts_per_page' => -1,
         'start_date'     => current_time('Y-m-d H:i:s'),
     ]);
 

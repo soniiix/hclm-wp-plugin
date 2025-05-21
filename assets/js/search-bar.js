@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const tagbox = document.getElementById(tagboxId);
         const input = document.getElementById(inputId);
         const hidden = document.getElementById(hiddenId);
+
+        if (!tagbox || !input || !hidden) return;
+        
         let tags = [];
 
         function updateHidden() {

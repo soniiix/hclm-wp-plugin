@@ -5,6 +5,9 @@ require_once plugin_dir_path(__FILE__) . 'utils/get-highlighted-excerpt.php';
 // Load CSS style and JavaScript
 wp_enqueue_style('hclm-search-results-style', plugin_dir_url(__FILE__) . '../assets/css/search-results.css');
 wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../assets/js/search-results.js', [], false, true);
+
+$keywords = isset($_GET['keywords']) ? explode(',', $_GET['keywords']) : [];
+$exclude = isset($_GET['exclude']) ? explode(',', $_GET['exclude']) : [];
 ?>
 
 <div class="hclm-search-results">
@@ -24,6 +27,15 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
                         <div class="hclm-popup-advanced-search-filter-group">
                             <label for="hclm-keywords-input">Mots-clés</label>
                             <div id="hclm-aside-keywords-tagbox" class="hclm-keywords-tagbox">
+                                <?php
+                                foreach ($keywords as $tag) {
+                                    $tag = trim($tag);
+                                    if ($tag !== '') { ?>
+                                        <span class="hclm-keywords-tag">
+                                            <?php echo esc_html($tag); ?>
+                                            <span class="hclm-keywords-remove-tag">×</span>
+                                        </span>
+                                <?php }} ?>
                                 <input type="text" id="hclm-aside-keywords-input" placeholder="Entrer des mots-clés" autocomplete="off" />
                             </div>
                             <input type="hidden" name="keywords" id="hclm-aside-keywords-hidden" />
@@ -31,6 +43,15 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
                         <div class="hclm-popup-advanced-search-filter-group">
                             <label for="hclm-exclude-input">Mots à exclure</label>
                             <div id="hclm-exclude-tagbox" class="hclm-keywords-tagbox">
+                                <?php
+                                foreach ($exclude as $tag) {
+                                    $tag = trim($tag);
+                                    if ($tag !== '') { ?>
+                                        <span class="hclm-keywords-tag">
+                                            <?php echo esc_html($tag); ?>
+                                            <span class="hclm-keywords-remove-tag">×</span>
+                                        </span>
+                                <?php }} ?>
                                 <input type="text" id="hclm-exclude-input" placeholder="Entrer des mots à exclure" autocomplete="off" />
                             </div>
                             <input type="hidden" name="exclude" id="hclm-exclude-hidden" />
@@ -70,15 +91,49 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
         <!-- Retrieve all search results in the website content -->
         <?php if (have_posts()) {
             $site_results = [];
-            while (have_posts()) {
+            while ( have_posts() ) {
                 the_post();
+
+                // Get post data
+                $title   = get_the_title();
+                $excerpt = get_the_excerpt();
+                $haystack = strtolower( $title . ' ' . $excerpt );
+
+                // Keywords
+                $ok_keywords = true;
+                foreach ( $keywords as $kw ) {
+                    $kw = trim( strtolower( $kw ) );
+                    if ( $kw !== '' && strpos( $haystack, $kw ) === false ) {
+                        $ok_keywords = false;
+                        break;
+                    }
+                }
+                if ( ! $ok_keywords ) {
+                    continue; // post is skipped
+                }
+
+                // Words to exclude
+                $has_exclude = false;
+                foreach ( $exclude as $ex ) {
+                    $ex = trim( strtolower( $ex ) );
+                    if ( $ex !== '' && strpos( $haystack, $ex ) !== false ) {
+                        $has_exclude = true;
+                        break;
+                    }
+                }
+                if ( $has_exclude ) {
+                    continue; // post is skipped
+                }
+
                 $site_results[] = [
                     'post_type' => get_post_type(),
-                    'url' => get_the_permalink(),
-                    'title' => get_the_title(),
-                    'thumbnail' => get_the_post_thumbnail(get_the_ID(), 'thumbnail'),
-                    'excerpt' => get_highlighted_excerpt(get_the_excerpt(), get_search_query()),
-                    'date' => get_post_type() == "tribe_events" ? tribe_get_start_date(null, false, 'j F Y') : null
+                    'url'       => get_the_permalink(),
+                    'title'     => $title,
+                    'thumbnail' => get_the_post_thumbnail( get_the_ID(), 'thumbnail' ),
+                    'excerpt'   => get_highlighted_excerpt( $excerpt, get_search_query() ),
+                    'date'      => get_post_type() === 'tribe_events'
+                                    ? tribe_get_start_date( null, false, 'j F Y' )
+                                    : null,
                 ];
             }
 
@@ -138,7 +193,7 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
 
         <!-- Retrieve all newsletters that contain the search -->
         <?php
-        if (isset($_GET['type']) && ($_GET['type'] === 'newsletters') || ($_GET['type'] === '')) {
+        if (isset($_GET['type']) && (($_GET['type'] === 'newsletters') || ($_GET['type'] === ''))) {
             $query = get_search_query();
             $upload_dir = wp_upload_dir();
             $base = $upload_dir['basedir'] . '/hclm/bulletins';

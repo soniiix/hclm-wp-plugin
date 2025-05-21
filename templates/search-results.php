@@ -8,7 +8,7 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
 ?>
 
 <div class="hclm-search-results">
-
+    <!-- Display a sidebar with the search bar and filters. Fields are filled if the user has already searched -->
     <aside class="hclm-search-results-aside">
         <form method="GET" action="/">
             <div class="hclm-search-results-aside-search-bar-wrapper">
@@ -17,13 +17,40 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
                 </svg>
                 <input type="text" placeholder="Rechercher sur le site" name="s" value="<?php echo esc_html(get_search_query()); ?>" class="hclm-search-results-aside-search-bar" />
             </div>
-        </form>
-        <div class="hclm-search-results-aside-content">
-            <span class="hclm-search-results-aside-title">Recherche avancée</span>
-            <div class="hclm-search-results-aside-filters">
-                <!-- @TODO : Add filters for the search -->
+            <div class="hclm-search-results-aside-content">
+                <span class="hclm-search-results-aside-title">Recherche avancée</span>
+                <div class="hclm-search-results-aside-filters">
+                    <div class="hclm-popup-advanced-search">
+                        <div class="hclm-popup-advanced-search-filter-group">
+                            <label for="hclm-keywords-input">Mots-clés</label>
+                            <div id="hclm-aside-keywords-tagbox" class="hclm-keywords-tagbox">
+                                <input type="text" id="hclm-aside-keywords-input" placeholder="Entrer des mots-clés" autocomplete="off" />
+                            </div>
+                            <input type="hidden" name="keywords" id="hclm-aside-keywords-hidden" />
+                        </div>
+                        <div class="hclm-popup-advanced-search-filter-group">
+                            <label for="hclm-exclude-input">Mots à exclure</label>
+                            <div id="hclm-exclude-tagbox" class="hclm-keywords-tagbox">
+                                <input type="text" id="hclm-exclude-input" placeholder="Entrer des mots à exclure" autocomplete="off" />
+                            </div>
+                            <input type="hidden" name="exclude" id="hclm-exclude-hidden" />
+                        </div>
+                        <div class="hclm-popup-advanced-search-filter-group">
+                            <label for="hclm-advanced-search-filter-input">Type de contenu</label>
+                            <select id="hclm-advanced-search-filter-input" name="type">
+                                <option value="">Tout</option>
+                                <option value="newsletters" <?= ($_GET['type'] ?? '') === 'newsletters' ? 'selected' : '' ?>>Bulletins</option>
+                                <option value="pages" <?= ($_GET['type'] ?? '') === 'pages' ? 'selected' : '' ?>>Pages</option>
+                                <option value="events" <?= ($_GET['type'] ?? '') === 'events' ? 'selected' : '' ?>>Événements</option>
+                                <option value="fall-visits" <?= ($_GET['type'] ?? '') === 'fall-visits' ? 'selected' : '' ?>>Visites automnales</option>
+                                <option value="products" <?= ($_GET['type'] ?? '') === 'products' ? 'selected' : '' ?>>Ouvrages</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="hclm-popup-submit-btn" style="margin-top: 5px;">Lancer la recherche</button>
             </div>
-        </div>
+        </form>
     </aside>
 
     <div class="hclm-search-results-content">
@@ -111,56 +138,58 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
 
         <!-- Retrieve all newsletters that contain the search -->
         <?php
-        $query = get_search_query();
-        $upload_dir = wp_upload_dir();
-        $base = $upload_dir['basedir'] . '/hclm/bulletins';
-        $base_url = $upload_dir['baseurl'] . '/hclm/bulletins';
+        if (isset($_GET['type']) && ($_GET['type'] === 'newsletters') || ($_GET['type'] === '')) {
+            $query = get_search_query();
+            $upload_dir = wp_upload_dir();
+            $base = $upload_dir['basedir'] . '/hclm/bulletins';
+            $base_url = $upload_dir['baseurl'] . '/hclm/bulletins';
 
-        $results = [];
-        // Read all txt files and check if the term is present
-        foreach (glob($base . '/B*/B*.txt') as $txt_file) {
-            $content = file_get_contents($txt_file);
-            if (stripos($content, $query) !== false) {
-                $newsletter = basename($txt_file, '.txt');
-                $folder = basename(dirname($txt_file));
-                
-                $excerpt = get_highlighted_excerpt($content, $query);
+            $results = [];
+            // Read all txt files and check if the term is present
+            foreach (glob($base . '/B*/B*.txt') as $txt_file) {
+                $content = file_get_contents($txt_file);
+                if (stripos($content, $query) !== false) {
+                    $newsletter = basename($txt_file, '.txt');
+                    $folder = basename(dirname($txt_file));
+                    
+                    $excerpt = get_highlighted_excerpt($content, $query);
 
-                $results[] = [
-                    'title' => 'Bulletin n°' . str_replace("B", "", $newsletter),
-                    "image" => $base_url . '/' . $folder . '/' . $newsletter . '_Couverture.png',
-                    'url'   => $base_url . '/' . $folder . '/' . $newsletter . '.pdf',
-                    'excerpt' => $excerpt
-                ];
+                    $results[] = [
+                        'title' => 'Bulletin n°' . str_replace("B", "", $newsletter),
+                        "image" => $base_url . '/' . $folder . '/' . $newsletter . '_Couverture.png',
+                        'url'   => $base_url . '/' . $folder . '/' . $newsletter . '.pdf',
+                        'excerpt' => $excerpt
+                    ];
+                }
             }
-        }
 
-        // Display results : a list of each newsletter with excerpt
-        if (!empty($results)) { ?>
-            <div class="hclm-search-category-wrapper">
-                <h2 class="hclm-search-category-title">Bulletins</h2>
-                <ul class="hclm-search-category-list">
-                    <?php foreach ($results as $item) { ?>
-                        <li class="hclm-search-result-row">
-                            <a href="<?php echo esc_url($item['url']); ?>" target="_blank">
-                                <div class="hclm-result-thumbnail">
-                                    <img src="<?php echo $item['image'] ?>" class="newsletter-thumbnail">
-                                </div>
-                                <div class="hclm-result-content">
-                                    <h3 class="hclm-result-title"><?php echo esc_html($item['title']); ?></h3>
-                                    <p class="hclm-result-excerpt"><?php echo $item['excerpt']; ?></p>
-                                </div>
-                                <div class="hclm-result-arrow">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" height="24" width="24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                    </svg>
-                                </div>
-                            </a>
-                        </li>
-                    <?php } ?>
-                </ul>
-            </div>
-        <?php } ?>
+            // Display results : a list of each newsletter with excerpt
+            if (!empty($results)) { ?>
+                <div class="hclm-search-category-wrapper">
+                    <h2 class="hclm-search-category-title">Bulletins</h2>
+                    <ul class="hclm-search-category-list">
+                        <?php foreach ($results as $item) { ?>
+                            <li class="hclm-search-result-row">
+                                <a href="<?php echo esc_url($item['url']); ?>" target="_blank">
+                                    <div class="hclm-result-thumbnail">
+                                        <img src="<?php echo $item['image'] ?>" class="newsletter-thumbnail">
+                                    </div>
+                                    <div class="hclm-result-content">
+                                        <h3 class="hclm-result-title"><?php echo esc_html($item['title']); ?></h3>
+                                        <p class="hclm-result-excerpt"><?php echo $item['excerpt']; ?></p>
+                                    </div>
+                                    <div class="hclm-result-arrow">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" height="24" width="24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                        </svg>
+                                    </div>
+                                </a>
+                            </li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            <?php } 
+        } ?>
     </div>
 </div>
 

@@ -74,6 +74,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setupTagBox('hclm-keywords-tagbox', 'hclm-keywords-input', 'hclm-keywords-hidden');
     setupTagBox('hclm-exclude-tagbox', 'hclm-exclude-input', 'hclm-exclude-hidden');
+    setupTagBox('hclm-aside-keywords-tagbox', 'hclm-aside-keywords-input', 'hclm-aside-keywords-hidden');
+    setupTagBox('hclm-aside-exclude-tagbox', 'hclm-aside-exclude-input', 'hclm-aside-exclude-hidden');
 
 
     /* SEARCH FORM VALIDATION */

@@ -39,19 +39,20 @@ function search_bar_shortcode() {
                     </div>
                     <div class="hclm-popup-advanced-search-filter-group">
                         <label for="hclm-exclude-input">Mots à exclure</label>
-                        <div id="hclm-exclude-tagbox" class="hclm-keywords-tagbox">
-                            <input type="text" id="hclm-exclude-input" placeholder="Entrer des mots à exclure" autocomplete="off" />
+                        <div id="hclm-aside-exclude-tagbox" class="hclm-keywords-tagbox">
+                            <input type="text" id="hclm-aside-exclude-input" placeholder="Entrer des mots à exclure" autocomplete="off" />
                         </div>
-                        <input type="hidden" name="exclude" id="hclm-exclude-hidden" />
+                        <input type="hidden" name="exclude" id="hclm-aside-exclude-hidden" />
                     </div>
                     <div class="hclm-popup-advanced-search-filter-group">
                         <label for="hclm-advanced-search-filter-input">Type de contenu</label>
                         <select id="hclm-advanced-search-filter-input" name="type">
                             <option value="">Tout</option>
-                            <option value="post">Bulletins</option>
-                            <option value="page">Pages</option>                    
-                            <option value="page">Évenements</option>
-                            <option value="page">Visites automnales</option>
+                            <option value="newsletters">Bulletins</option>
+                            <option value="pages">Pages</option>                    
+                            <option value="events">Évenements</option>
+                            <option value="fall-visits">Visites automnales</option>
+                            <option value="products">Ouvrages</option>
                         </select>
                     </div>
                 </div>

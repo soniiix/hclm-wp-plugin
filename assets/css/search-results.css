@@ -14,7 +14,7 @@ body {
 }
 
 /* SIDEBAR */
-.hclm-search-results-aside{
+.hclm-search-results-aside form{
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -32,7 +32,7 @@ body {
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    height: 500px;
+    height: fit-content;
 }
 
 .hclm-search-results-aside-title{
@@ -110,7 +110,7 @@ body {
 }
 
 .hclm-search-category-title{
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 500;
 }
 

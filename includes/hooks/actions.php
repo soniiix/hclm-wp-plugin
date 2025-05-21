@@ -32,33 +32,4 @@ add_action( 'wp', function () {
     remove_theme_support('wc-product-gallery-zoom');
 }, 100 );
 
-// Extend search results
-add_action('pre_get_posts', function ($query) {
-    if (!is_admin() && $query->is_main_query() && is_search()) {
-        // Content type filter
-        if (!empty($_GET['type'])) {
-            switch ($_GET['type']) {
-                case 'newsletters':
-                    $query->set('post_type', '');
-                    break;
-                case 'pages':
-                    $query->set('post_type', 'page');
-                    break;
-                case 'events':
-                    $query->set('post_type', 'tribe_events');
-                    break;
-                case 'fall-visits':
-                    $query->set('post_type', 'visite_automnale');
-                    break;
-                case 'products':
-                    $query->set('post_type', 'product');
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-});
-
-
 ?>

@@ -65,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     renderTags();
                 }
                 input.value = '';
+            } else if (e.key === 'Backspace' && input.value === '' && tags.length) {
+                tags.pop();
+                renderTags();
             }
         });
     }

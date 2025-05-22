@@ -34,11 +34,15 @@ function register_newsletter_post_type() {
             'search_items' => 'Rechercher des bulletins',
             'not_found' => 'Aucun bulletin trouvé',
             'not_found_in_trash' => 'Aucun bulletin dans la corbeille',
+            'featured_image' => 'Image de couverture',
+            'set_featured_image' => 'Définir l\'image de couverture',
+            'remove_featured_image' => 'Supprimer l\'image de couverture',
+            'use_featured_image' => 'Utiliser comme image de couverture',
         ],
         'public' => true,
         'has_archive' => false,
         'rewrite' => ['slug' => 'bulletins'],
-        'supports' => ['title', 'thumbnail'],
+        'supports' => ['title', 'editor', 'thumbnail'],
         'show_ui' => true,
         'show_in_rest' => false,
         'show_in_menu' => 'hclm-manage',
@@ -46,9 +50,12 @@ function register_newsletter_post_type() {
 }
 add_action('init', 'register_newsletter_post_type');
 
-// Remove astra settings meta box
+// Remove useless meta boxes
 add_action('do_meta_boxes', function () {
     remove_meta_box('astra_settings_meta_box', 'visite_automnale', 'normal');
+    remove_meta_box('astra_settings_meta_box', 'bulletin', 'side');
+    remove_meta_box('wpr-secondary-image', 'visite_automnale', 'side');
+    remove_meta_box('wpr-secondary-image', 'bulletin', 'side');
 });
 
 ?>

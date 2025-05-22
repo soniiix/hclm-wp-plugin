@@ -22,7 +22,7 @@ $args = [
 // If a specific content type is selected, it's set it in the query
 if ($type) {
     $post_type_map = [
-        'newsletters' => '',
+        'newsletters' => 'bulletin',
         'pages' => 'page',
         'events' => 'tribe_events',
         'fall-visits' => 'visite_automnale',
@@ -157,7 +157,11 @@ $query = new WP_Query($args);
                     'post_type' => get_post_type(),
                     'url'       => get_the_permalink(),
                     'title'     => $title,
-                    'thumbnail' => get_the_post_thumbnail(get_the_ID(), 'thumbnail'),
+                    'thumbnail' => get_the_post_thumbnail(
+                                    get_the_ID(),
+                                    get_post_type() === 'bulletin' ? 'full' : 'thumbnail',
+                                    ['class' => get_post_type() === 'bulletin' ? 'newsletter-thumbnail' : '']
+                                ),
                     'excerpt'   => get_highlighted_excerpt($excerpt, $search_term),
                     'date'      => get_post_type() === 'tribe_events'
                                     ? tribe_get_start_date(null, false, 'j F Y')
@@ -180,6 +184,7 @@ $query = new WP_Query($args);
                         case 'tribe_events': echo 'Événements'; break;
                         case 'visite_automnale': echo 'Visites automnales'; break;
                         case 'product': echo 'Ouvrages'; break;
+                        case 'bulletin': echo 'Bulletins'; break;
                         default: echo 'Autres';
                     } 
                     ?>
@@ -220,61 +225,6 @@ $query = new WP_Query($args);
             <?php
         }
         ?>
-
-        <!-- Retrieve all newsletters that contain the search -->
-        <?php
-        if (isset($_GET['type']) && (($_GET['type'] === 'newsletters') || ($_GET['type'] === ''))) {
-            $query = get_search_query();
-            $upload_dir = wp_upload_dir();
-            $base = $upload_dir['basedir'] . '/hclm/bulletins';
-            $base_url = $upload_dir['baseurl'] . '/hclm/bulletins';
-
-            $results = [];
-            // Read all txt files and check if the term is present
-            foreach (glob($base . '/B*/B*.txt') as $txt_file) {
-                $content = file_get_contents($txt_file);
-                if (stripos($content, $query) !== false) {
-                    $newsletter = basename($txt_file, '.txt');
-                    $folder = basename(dirname($txt_file));
-                    
-                    $excerpt = get_highlighted_excerpt($content, $query);
-
-                    $results[] = [
-                        'title' => 'Bulletin n°' . str_replace("B", "", $newsletter),
-                        "image" => $base_url . '/' . $folder . '/' . $newsletter . '_Couverture.png',
-                        'url'   => $base_url . '/' . $folder . '/' . $newsletter . '.pdf',
-                        'excerpt' => $excerpt
-                    ];
-                }
-            }
-
-            // Display results : a list of each newsletter with excerpt
-            if (!empty($results)) { ?>
-                <div class="hclm-search-category-wrapper">
-                    <h2 class="hclm-search-category-title">Bulletins</h2>
-                    <ul class="hclm-search-category-list">
-                        <?php foreach ($results as $item) { ?>
-                            <li class="hclm-search-result-row">
-                                <a href="<?php echo esc_url($item['url']); ?>" target="_blank">
-                                    <div class="hclm-result-thumbnail">
-                                        <img src="<?php echo $item['image'] ?>" class="newsletter-thumbnail">
-                                    </div>
-                                    <div class="hclm-result-content">
-                                        <h3 class="hclm-result-title"><?php echo esc_html($item['title']); ?></h3>
-                                        <p class="hclm-result-excerpt"><?php echo $item['excerpt']; ?></p>
-                                    </div>
-                                    <div class="hclm-result-arrow">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" height="24" width="24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                        </svg>
-                                    </div>
-                                </a>
-                            </li>
-                        <?php } ?>
-                    </ul>
-                </div>
-            <?php } 
-        } ?>
     </div>
 </div>
 

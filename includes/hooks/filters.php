@@ -35,6 +35,14 @@ add_filter('template_include', function($template){
     return $template;
 });
 
+// Use a custom template for newsletter single page
+add_filter('template_include', function($template){
+    if (is_singular('bulletin')) {
+        return plugin_dir_path(__FILE__) . '../../templates/single-newsletter.php';
+    }
+    return $template;
+});
+
 // Use a custom page for search results
 add_filter('template_include', function($template){
     if (is_search()) {

@@ -3,7 +3,13 @@ get_header();
 
 // Check if the user is logged in
 if (!is_user_logged_in()) {
-    wp_redirect(home_url('/'));
+    $current_url = home_url(add_query_arg(array(), $_SERVER['REQUEST_URI']));
+    
+    // Redirect to the login page with the current URL as a parameter
+    $login_url = home_url('/connexion');
+    $redirect_url = add_query_arg('redirect_to', urlencode($current_url), $login_url);
+
+    wp_redirect($redirect_url);
     exit;
 }
 

@@ -9,7 +9,7 @@ wp_enqueue_script('hclm-search-results-script', plugin_dir_url(__FILE__) . '../a
 $keywords = isset($_GET['keywords']) ? explode(',', $_GET['keywords']) : [];
 $exclude = isset($_GET['exclude']) ? explode(',', $_GET['exclude']) : [];
 $type = $_GET['type'] ?? '';
-$order = $_GET['order'] ?? 'desc';
+$orderby = $_GET['orderby'] ?? 'relevance';
 // Retrieve the search term or if empty, use the keywords
 $search_term = get_search_query();
 if (empty($search_term) && !empty($keywords)) {
@@ -20,10 +20,38 @@ if (empty($search_term) && !empty($keywords)) {
 
 $args = [
     'post_type' => 'any',
-    'posts_per_page' => 50,
-    'orderby' => 'date',
-    'order' => ($order === 'asc') ? 'ASC' : 'DESC',
+    'posts_per_page' => -1,
 ];
+
+// Set sorting arguments based on the selected order
+switch ($orderby) {
+    case 'date_asc':
+        $args['orderby'] = 'date';
+        $args['order'] = 'ASC';
+        break;
+    case 'date_desc':
+        $args['orderby'] = 'date';
+        $args['order'] = 'DESC';
+        break;
+    case 'title_asc':
+        $args['orderby'] = 'title';
+        $args['order'] = 'ASC';
+        break;
+    case 'title_desc':
+        $args['orderby'] = 'title';
+        $args['order'] = 'DESC';
+        break;
+    case 'relevance':
+    default:
+        if (!empty($search_term)) {
+            $args['orderby'] = 'relevance';
+            $args['order'] = 'DESC';
+        } else {
+            $args['orderby'] = 'date';
+            $args['order'] = 'DESC';
+        }
+        break;
+}
 
 // If a specific content type is selected, it's set it in the query
 if ($type) {
@@ -116,20 +144,27 @@ $query = new WP_Query($args);
         <div class="hclm-search-results-header">
             <div class="hclm-search-results-title">Résultats de recherche (<span id="hclm-search-results-count">0</span>)</div>
             <form method="get" class="hclm-search-results-sort">
-                <span>Trier :</span>
-                <div>
-                    <select name="order" onchange="this.form.submit()">
-                        <option value="desc" <?= ($_GET['order'] ?? '') === 'desc' ? 'selected' : '' ?>>Du plus récent au plus ancien</option>
-                        <option value="asc" <?= ($_GET['order'] ?? '') === 'asc' ? 'selected' : '' ?>>Du plus ancien au plus récent</option>
-                    </select>
-                </div>
+                <!-- Hidden fields to keep the search term and filters -->
+                <input type="hidden" name="s" value="<?php echo esc_attr($search_term); ?>">
+                <input type="hidden" name="keywords" value="<?php echo esc_attr(implode(',', $keywords)); ?>">
+                <input type="hidden" name="exclude" value="<?php echo esc_attr(implode(',', $exclude)); ?>">
+                <input type="hidden" name="type" value="<?php echo esc_attr($type); ?>">
+
+                <span>Trier&nbsp;par&nbsp;:</span>
+                <select name="orderby" id="orderby" onchange="this.form.submit()">
+                    <option value="relevance" <?php selected($orderby, 'relevance'); ?>>Pertinence</option>
+                    <option value="date_desc" <?php selected($orderby, 'date_desc'); ?>>Date (décroissant)</option>
+                    <option value="date_asc" <?php selected($orderby, 'date_asc'); ?>>Date (croissant)</option>
+                    <option value="title_asc" <?php selected($orderby, 'title_asc'); ?>>Titre (A-Z)</option>
+                    <option value="title_desc" <?php selected($orderby, 'title_desc'); ?>>Titre (Z-A)</option>
+                </select>
             </form>
         </div>
 
         <!-- Retrieve all search results in the website content -->
-        <?php if ($query->have_posts()) {
-            $site_results = [];
-
+        <?php 
+        $site_results = [];
+        if ($query->have_posts()) {
             while ($query->have_posts()) {
                 $query->the_post();
 

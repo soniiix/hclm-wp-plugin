@@ -148,6 +148,19 @@ $query = new WP_Query($args);
                 }
                 if ($has_exclude) continue;
 
+                $slug = get_post_field('post_name', get_post());
+                // Exclude specific pages from the results
+                $slugs_to_exclude = ['connexion', 'en-construction'];
+                if (in_array($slug, $slugs_to_exclude)) {
+                    continue;
+                }
+                // Do not display the excerpt for specific pages
+                $excerpt_exclude = false;
+                $exlude_excerpt_slugs = ['contact', 'bulletins', 'espace-adherent'];
+                if (in_array($slug, $exlude_excerpt_slugs)) {
+                    $excerpt_exclude = true;
+                }
+
                 $site_results[] = [
                     'post_type' => get_post_type(),
                     'url'       => get_the_permalink(),
@@ -157,7 +170,7 @@ $query = new WP_Query($args);
                                     get_post_type() === 'bulletin' ? 'full' : 'thumbnail',
                                     ['class' => get_post_type() === 'bulletin' ? 'newsletter-thumbnail' : '']
                                 ),
-                    'excerpt'   => get_highlighted_excerpt($content, $search_term),
+                    'excerpt'   => $excerpt_exclude ? '' : get_highlighted_excerpt($content, $search_term),
                     'date'      => get_post_type() === 'tribe_events'
                                     ? tribe_get_start_date(null, false, 'j F Y')
                                     : null,

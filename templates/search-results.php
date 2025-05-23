@@ -10,7 +10,13 @@ $keywords = isset($_GET['keywords']) ? explode(',', $_GET['keywords']) : [];
 $exclude = isset($_GET['exclude']) ? explode(',', $_GET['exclude']) : [];
 $type = $_GET['type'] ?? '';
 $order = $_GET['order'] ?? 'desc';
+// Retrieve the search term or if empty, use the keywords
 $search_term = get_search_query();
+if (empty($search_term) && !empty($keywords)) {
+    $search_term = implode(' ', $keywords);
+} else if (!empty($search_term) && !empty($keywords)) {
+    $search_term = $search_term . ' ' . implode(' ', $keywords);
+}
 
 $args = [
     'post_type' => 'any',
@@ -128,19 +134,8 @@ $query = new WP_Query($args);
                 $query->the_post();
 
                 $title   = get_the_title();
-                $excerpt = get_the_excerpt();
-                $haystack = strtolower($title . ' ' . $excerpt);
-
-                // Keywords filtering
-                $ok_keywords = true;
-                foreach ($keywords as $kw) {
-                    $kw = strtolower($kw);
-                    if ($kw !== '' && strpos($haystack, $kw) === false) {
-                        $ok_keywords = false;
-                        break;
-                    }
-                }
-                if (!$ok_keywords) continue;
+                $content = get_the_content();
+                $haystack = strtolower($title . ' ' . $content);
 
                 // Words exclusion filtering
                 $has_exclude = false;
@@ -162,7 +157,7 @@ $query = new WP_Query($args);
                                     get_post_type() === 'bulletin' ? 'full' : 'thumbnail',
                                     ['class' => get_post_type() === 'bulletin' ? 'newsletter-thumbnail' : '']
                                 ),
-                    'excerpt'   => get_highlighted_excerpt($excerpt, $search_term),
+                    'excerpt'   => get_highlighted_excerpt($content, $search_term),
                     'date'      => get_post_type() === 'tribe_events'
                                     ? tribe_get_start_date(null, false, 'j F Y')
                                     : null,

@@ -10,6 +10,11 @@
  * @return string The excerpt with the search term highlighted.
  */
 function get_highlighted_excerpt(string $text, string $query, $char_count = 120) {
+    // Check if the text is empty or the query is empty
+    if (empty($text) || empty($query)) {
+        return wp_trim_words($text, (int) ($char_count / 5), '...');
+    }
+
     $text = strip_tags($text);
     $query = trim($query);
 

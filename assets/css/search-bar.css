@@ -217,3 +217,30 @@ body:is(.home) .hclm-search-bar-wrapper {
 .hclm-popup-submit-btn:disabled{
     cursor: not-allowed !important;
 }
+
+.hclm-date-range-wrapper {
+    display: flex;
+    gap: 8px;
+}
+
+.hclm-date-range-wrapper input[type="date"] {
+    flex: 1;
+    padding: 7px 10px;
+    height: 45px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.hclm-date-range-wrapper:not(.popup) input[type="date"] {
+    font-size: 14px;
+}
+
+.hclm-date-range-wrapper:is(.popup) input[type="date"] {
+    font-size: 15px;
+}
+
+.hclm-date-range-wrapper input[type="date"]:focus {
+    outline: none;
+    border-color: #e76f51;
+}

@@ -53,6 +53,24 @@ switch ($orderby) {
         break;
 }
 
+// Filter results by date if start or end date is provided
+$start_date = isset($_GET['start_date']) ? sanitize_text_field($_GET['start_date']) : '';
+$end_date   = isset($_GET['end_date']) ? sanitize_text_field($_GET['end_date']) : '';
+
+if ($start_date || $end_date) {
+    $date_query = [];
+
+    if ($start_date) {
+        $date_query['after'] = $start_date;
+    }
+    if ($end_date) {
+        $date_query['before'] = $end_date;
+    }
+
+    $date_query['inclusive'] = true;
+    $args['date_query'] = [$date_query];
+}
+
 // If a specific content type is selected, it's set it in the query
 if ($type) {
     $post_type_map = [
@@ -133,6 +151,13 @@ $query = new WP_Query($args);
                                 <option value="products" <?= ($_GET['type'] ?? '') === 'products' ? 'selected' : '' ?>>Ouvrages</option>
                             </select>
                         </div>
+                        <div class="hclm-popup-advanced-search-filter-group">
+                            <label>Période</label>
+                            <div class="hclm-date-range-wrapper">
+                                <input type="date" name="start_date" value="<?php echo esc_attr($_GET['start_date'] ?? '') ?>" />
+                                <input type="date" name="end_date" value="<?php echo esc_attr($_GET['end_date'] ?? '') ?>" />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="hclm-popup-submit-btn" style="margin-top: 5px;">Lancer la recherche</button>
@@ -149,6 +174,8 @@ $query = new WP_Query($args);
                 <input type="hidden" name="keywords" value="<?php echo esc_attr(implode(',', $keywords)); ?>">
                 <input type="hidden" name="exclude" value="<?php echo esc_attr(implode(',', $exclude)); ?>">
                 <input type="hidden" name="type" value="<?php echo esc_attr($type); ?>">
+                <input type="hidden" name="start_date" value="<?php echo esc_attr($start_date); ?>">
+                <input type="hidden" name="end_date" value="<?php echo esc_attr($end_date); ?>">
 
                 <span>Trier&nbsp;par&nbsp;:</span>
                 <select name="orderby" id="orderby" onchange="this.form.submit()">

@@ -55,6 +55,13 @@ function search_bar_shortcode() {
                             <option value="products">Ouvrages</option>
                         </select>
                     </div>
+                    <div class="hclm-popup-advanced-search-filter-group">
+                        <label>Période</label>
+                        <div class="hclm-date-range-wrapper popup">
+                            <input type="date" name="start_date" value="<?php echo esc_attr($_GET['start_date'] ?? '') ?>" />
+                            <input type="date" name="end_date" value="<?php echo esc_attr($_GET['end_date'] ?? '') ?>" />
+                        </div>
+                    </div>
                 </div>
 
                 <div class="hclm-popup-action-row">

@@ -35,7 +35,7 @@ function member_area_shortcode() {
                 </li>
                 <li data-tab="suggestions">
                     <span class="icon"><i class="far fa-comment-dots"></i></i></span>
-                    <span class="label">Suggestions</span>
+                    <span class="label">Vos suggestions</span>
                 </li>
             </ul>
             <div class="logout-container">

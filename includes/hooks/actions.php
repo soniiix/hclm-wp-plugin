@@ -19,9 +19,11 @@ add_action( 'edit_user_profile', 'show_more_user_data' );
 
 // Redirect to the home page depending on whether the user is logged in or not
 add_action('template_redirect', function () {
-    hide_page('espace-adherent', false, '/connexion'); // If not logged in
-    hide_page('adherer', true);          // If logged in
-    hide_page('connexion', true);        // If logged in
+    if (!current_user_can('administrator')) {
+        hide_page('espace-adherent', false, '/connexion'); // If not logged in
+        hide_page('adherer', true);          // If logged in
+        hide_page('connexion', true);        // If logged in
+    }
 });
 
 // Add a plugin-specific tab in the wordpress menu

@@ -9,8 +9,7 @@ function fall_visits_shortcode() {
     $args = [
         'post_type' => 'visite_automnale',
         'posts_per_page' => -1,
-        'orderby' => 'meta_value',
-        'meta_key' => 'date',
+        'orderby' => 'date',
         'order' => $order,
     ];
     $query = new WP_Query($args);
@@ -45,7 +44,7 @@ function fall_visits_shortcode() {
             <div class="visit-image" style="background-image: url('<?= esc_url($img); ?>')"></div>
             <div class="visit-content">
                 <h3 class="visit-title"><?= get_the_title(); ?></h3>
-                <p class="visit-date"><?= esc_html(get_field('date')); ?></p>
+                <p class="visit-date"><?= get_the_date('d/m/Y'); ?></p>
                 <a href="<?= esc_url($link); ?>" class="visit-button">Voir les détails</a>
             </div>
         </div>

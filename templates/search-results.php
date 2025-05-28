@@ -11,7 +11,7 @@ $exclude = isset($_GET['exclude']) ? explode(',', $_GET['exclude']) : [];
 $type = $_GET['type'] ?? '';
 $orderby = $_GET['orderby'] ?? 'relevance';
 // Retrieve the search term or if empty, use the keywords
-$search_term = get_search_query();
+$search_term = trim(get_search_query());
 if (empty($search_term) && !empty($keywords)) {
     $search_term = implode(' ', $keywords);
 } else if (!empty($search_term) && !empty($keywords)) {

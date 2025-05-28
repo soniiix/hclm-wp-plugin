@@ -6,7 +6,7 @@ wp_enqueue_style('hclm-fall-visit-style', plugin_dir_url(__FILE__) . '../assets/
 if (have_posts()) :
     while (have_posts()) : the_post(); ?>
         <main class="content">
-            <span class="hclm-post-date"><?php echo get_field('date'); ?></span>
+            <span class="hclm-post-date"><?php echo get_the_date('d/m/Y'); ?></span>
             <h3 class="hclm-post-title">Visite à <?php the_title(); ?></h3>
 
             <?php if (is_user_logged_in()) : ?>

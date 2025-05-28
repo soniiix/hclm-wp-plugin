@@ -28,6 +28,7 @@ function newsletters_list_shortcode() {
     foreach ($newsletters as $post) {
         $bulletin_num = preg_replace('/[^0-9]/', '', $post->post_title); // Exctract the number from the title
 
+        $pdf_url = get_post_meta($post->ID, 'pdf_url', true);
         $cover_url = get_the_post_thumbnail_url($post->ID, 'medium');
         $summary_url = get_post_meta($post->ID, 'summary_url', true);
 
@@ -57,7 +58,9 @@ function newsletters_list_shortcode() {
                     </div>
 
                     <div class="newsletter-button-container">
-                        <a href="' . get_permalink($post) . '" class="newsletter-button">Consulter le bulletin entier</a>
+                        <div class="_df_button" source="' . esc_url($pdf_url) . '">
+                            <div class="newsletter-button">Consulter le bulletin entier</div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -99,6 +99,7 @@
 .newsletter-button:hover {
     background-color: #D76245;
     color: #FFF !important;
+    cursor: pointer;
 }
 
 .newsletter-button-container{
@@ -107,4 +108,8 @@
     align-items: center;
     justify-content: center;
     margin-top: 15px;
+}
+
+._df_button{
+    all: unset !important;
 }

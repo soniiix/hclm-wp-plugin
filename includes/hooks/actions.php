@@ -26,6 +26,14 @@ add_action('template_redirect', function () {
     }
 });
 
+// Remove the default WooCommerce shop page
+add_action( 'template_redirect', function() {
+    if (is_shop()) {
+        wp_redirect(home_url('/ouvrages')); // Redirect to the custom shop page
+        exit;
+    }
+});
+
 // Add a plugin-specific tab in the wordpress menu
 add_action('admin_menu', 'hclm_admin_menu');
 

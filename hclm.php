@@ -22,6 +22,7 @@ require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/newsletters/newsle
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/newsletters/newsletters-list.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/paywall-content.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/visits-list.php';
+require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/products-list.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/events-slider.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/search-bar.php';
 
@@ -36,6 +37,7 @@ add_shortcode('hclm_newsletter_summaries', 'newsletters_summaries_shortcode');
 add_shortcode('hclm_newsletter_list', 'newsletters_list_shortcode');
 add_shortcode('hclm_paywall_content', 'paywall_content_shortcode');
 add_shortcode('hclm_fall_visits', 'fall_visits_shortcode');
+add_shortcode('hclm_products', 'products_list_shortcode');
 add_shortcode('hclm_events_slider', 'events_slider_shortcode');
 add_shortcode('hclm_search-bar', 'search_bar_shortcode');
 

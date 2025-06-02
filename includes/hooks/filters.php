@@ -15,15 +15,6 @@ add_filter('wp_nav_menu_objects', function ($items, $args) {
     return $items;
 }, 10, 2);
 
-// Change the product button text
-add_filter('woocommerce_product_add_to_cart_text', function ($text) {
-    if ($text == 'Lire la suite' || 'Ajouter au panier') {
-        return 'Voir les détails';
-    } else {
-        return $text;
-    }
-});
-
 // Rename the product tabs
 add_filter( 'woocommerce_product_tabs', 'woo_rename_tabs', 98 );
 function woo_rename_tabs( $tabs ) {

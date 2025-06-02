@@ -2,7 +2,7 @@
 
 function fall_visits_shortcode() {
     wp_enqueue_style('hclm-fall-visits-style', plugin_dir_url(__FILE__) . '../../assets/css/fall-visit.css');
-    wp_enqueue_script('hclm-member-area-js', plugin_dir_url(__FILE__) . '../../assets/js/fall-visits.js', [], false, true);
+    wp_enqueue_script('hclm-fall-visits-js', plugin_dir_url(__FILE__) . '../../assets/js/fall-visits.js', [], false, true);
 
     $order = isset($_GET['order']) && $_GET['order'] === 'asc' ? 'ASC' : 'DESC';
 

@@ -1,5 +1,7 @@
 <?php
 
+require_once plugin_dir_path(__FILE__) . 'utils/get-pdf-cover.php';
+
 /**
  * Displays the HCLM member area.
  *
@@ -132,7 +134,34 @@ function member_area_shortcode() {
                 <p><i>Mettre PDF</i></p>
             </section>
             <section id="reports" class="tab-content">
-                <h3>Compte rendus</h3>
+                <?php
+                $upload_dir = wp_upload_dir();
+                $reports_dir = $upload_dir['basedir'] . '/hclm/comptes-rendus/';
+                $reports_url = $upload_dir['baseurl'] . '/hclm/comptes-rendus/';
+
+                $files = [];
+                if (is_dir($reports_dir)) {
+                    foreach (glob($reports_dir . 'CR-*.pdf') as $file) {
+                        // Parse filename: CR-[CA|AG]_JJ-MM-AAAA.pdf
+                        if (preg_match('/CR\-(CA|AG)_(\d{2})\-(\d{2})\-(\d{4})\.pdf$/', basename($file), $matches)) {
+                            $files[] = [
+                                'type' => $matches[1],
+                                'day' => $matches[2],
+                                'month' => $matches[3],
+                                'year' => $matches[4],
+                                'filename' => basename($file),
+                                'url' => $reports_url . basename($file),
+                                'cover' => hclm_get_pdf_cover($reports_dir . basename($file)),
+                            ];
+                        }
+                    }
+                    // Sort by date descending
+                    usort($files, function($a, $b) {
+                        return strtotime("{$b['year']}-{$b['month']}-{$b['day']}") - strtotime("{$a['year']}-{$a['month']}-{$a['day']}");
+                    });
+                }
+                ?>
+                <h3>Comptes rendus</h3>
                 
                 <div class="filters">
                     <input type="text" placeholder="Rechercher un compte rendu...">
@@ -154,29 +183,31 @@ function member_area_shortcode() {
                 </div>
 
                 <div class="reports-list">
-                    <div class="report-card">
-                        <img src="<?php echo esc_url(home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
-                        <div class="report-info">
-                            <p class="report-meta"><i class="fas fa-calendar-alt"></i> 18/04/2025 — <strong>AG</strong></p>
-                            <a class="btn-download" href="#">Télécharger</a>
-                        </div>
-                    </div>
-                    <div class="report-card">
-                        <img src="<?php echo esc_url(home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
-                        <div class="report-info">
-                            <p class="report-meta"><i class="fas fa-calendar-alt"></i> 18/04/2025 — <strong>CA</strong></p>
-                            <a class="btn-download" href="#">Télécharger</a>
-                        </div>
-                    </div>
-                    <div class="report-card">
-                        <img src="<?php echo esc_url(home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
-                        <div class="report-info">
-                            <p class="report-meta"><i class="fas fa-calendar-alt"></i> 18/04/2025 — <strong>AG</strong></p>
-                            <a class="btn-download" href="#">Télécharger</a>
-                        </div>
-                    </div>
-
+                    <?php if (empty($files)): ?>
+                        <p>Aucun compte rendu trouvé.</p>
+                    <?php else: ?>
+                        <?php foreach ($files as $report): ?>
+                            <div class="report-card">
+                                <img src="<?php echo $report['cover'] ?: esc_url(home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
+                                <div class="report-info">
+                                    <p class="report-meta">
+                                        <?php if ($report['type'] === 'CA'): ?>
+                                            Conseil d'Administration
+                                        <?php elseif ($report['type'] === 'AG'): ?>
+                                            Assemblée Générale
+                                        <?php endif; ?>
+                                        <br>
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <?php echo "{$report['day']}/{$report['month']}/{$report['year']}"; ?>
+                                    </p>
+                                    <a class="btn-download" href="<?php echo esc_url($report['url']); ?>" target="_blank">Télécharger</a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
+
+
             </section>
             <section id="suggestions" class="tab-content">
                 <h3>Suggestions / Remarques</h3>

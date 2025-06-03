@@ -14,6 +14,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: sticky;
+    top: 0;
 }
 
 .sidebar ul {
@@ -260,6 +262,11 @@
     text-align: center;
     transition: box-shadow 0.2s ease;
     min-height: 315px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0px;
 }
 
 .card-last-report:hover {
@@ -323,6 +330,17 @@ content p{
     align-items: center;
     gap: 20px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.report-card .report-link {
+  position: absolute;
+  left:0; top:0; bottom:0; right:0;
+}
+
+.report-card:hover {
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    cursor: pointer;
 }
 
 .report-card img {
@@ -336,23 +354,40 @@ content p{
     flex: 1;
 }
 
-.report-meta {
+.report-title {
+    font-size: 17px !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+}
+
+.report-date {
     margin: 0;
     font-size: 16px;
 }
 
+.report-date i {
+    margin-right: 4px;
+    color: #e76f51;
+}
+
 .btn-download {
-    padding: 12px 20px;
+    padding: 8px 18px;
     color: #FFF !important;
-    background-color: #e76f51;
+    background-color: transparent;
     border-radius: 10px;
+    border: 2px solid #e76f51;
+    color: #e76f51 !important;
     font-size: 16px;
     transition: background-color 0.3s ease;
     text-decoration: none !important;
+    position:relative;
+    pointer-events: all;
+    z-index: 1;
 }
 
 .btn-download:hover {
-    background-color: #d55f45;
+    background-color: #e76f51 !important;
+    color: white !important;
 }
 
 .btn-upload {
@@ -368,8 +403,4 @@ content p{
 
 .btn-upload:hover {
     background-color: #21867a;
-}
-.report-meta i {
-    margin-right: 4px;
-    color: #e76f51;
 }

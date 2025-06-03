@@ -188,19 +188,21 @@ function member_area_shortcode() {
                     <?php else: ?>
                         <?php foreach ($files as $report): ?>
                             <div class="report-card">
+                                <a href="<?php echo esc_url($report['url']); ?>" target="_blank" class="report-link"></a>
                                 <img src="<?php echo $report['cover'] ?: esc_url(home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
                                 <div class="report-info">
-                                    <p class="report-meta">
+                                    <h4 class="report-title">
                                         <?php if ($report['type'] === 'CA'): ?>
                                             Conseil d'Administration
                                         <?php elseif ($report['type'] === 'AG'): ?>
                                             Assemblée Générale
                                         <?php endif; ?>
-                                        <br>
+                                    </h4>
+                                    <p class="report-date">
                                         <i class="fas fa-calendar-alt"></i>
                                         <?php echo "{$report['day']}/{$report['month']}/{$report['year']}"; ?>
                                     </p>
-                                    <a class="btn-download" href="<?php echo esc_url($report['url']); ?>" target="_blank">Télécharger</a>
+                                    <a class="btn-download" href="<?php echo esc_url($report['url']); ?>" target="_blank" download>Télécharger</a>
                                 </div>
                             </div>
                         <?php endforeach; ?>

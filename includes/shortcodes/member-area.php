@@ -41,7 +41,7 @@ function member_area_shortcode() {
                 </li>
             </ul>
             <div class="logout-container">
-                <a href="<?php echo wp_logout_url(home_url('/connexion')); ?>" class="logout-button">
+                <a href="<?php echo wp_logout_url(home_url('/connexion')); ?>" class="logout-button" aria-label="Déconnexion">
                     <span>Déconnexion</span>
                     <i class="fas fa-sign-out-alt"></i>
                 </a>
@@ -188,7 +188,7 @@ function member_area_shortcode() {
                     <?php else: ?>
                         <?php foreach ($files as $report): ?>
                             <div class="report-card">
-                                <a href="<?php echo esc_url($report['url']); ?>" target="_blank" class="report-link"></a>
+                                <a href="<?php echo esc_url($report['url']); ?>" target="_blank" title="Voir le compte rendu PDF" class="report-link"></a>
                                 <img src="<?php echo $report['cover'] ?: esc_url(home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
                                 <div class="report-info">
                                     <h4 class="report-title">

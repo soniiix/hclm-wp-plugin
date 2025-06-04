@@ -46,7 +46,9 @@ function newsletters_list_shortcode() {
             <div id="popup-b' . $bulletin_num . '" class="newsletter-popup hidden">
                 <div class="popup-overlay"></div>
                 <div class="popup-content">
-                    <button class="popup-close"><i class="fas fa-times"></i></button>
+                    <button class="popup-close">
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#FFF"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#FFF" d="M195.2 195.2a64 64 0 0 1 90.496 0L512 421.504 738.304 195.2a64 64 0 0 1 90.496 90.496L602.496 512 828.8 738.304a64 64 0 0 1-90.496 90.496L512 602.496 285.696 828.8a64 64 0 0 1-90.496-90.496L421.504 512 195.2 285.696a64 64 0 0 1 0-90.496z"></path></g></svg>
+                    </button>
 
                     <div class="popup-title">Bulletin n°' . $bulletin_num . '</div>
                     <div class="popup-description">
@@ -55,15 +57,29 @@ function newsletters_list_shortcode() {
 
                     <div class="popup-flipbook">
                         <div class="_df_book" style="max-height: 600px !important;" source="' . esc_url($summary_url) . '"></div>
-                    </div>
+                    </div>';
 
-                    <div class="newsletter-button-container">
-                        <div class="_df_button" source="' . esc_url($pdf_url) . '">
-                            <div class="newsletter-button">Consulter le bulletin entier</div>
-                        </div>
-                    </div>
+                    // Display conditional button based on user login status. If the user is not logged in, redirect them to the login page.
+                    $current_url = home_url(add_query_arg(array(), $_SERVER['REQUEST_URI']));
+                    $login_url = home_url('/connexion');
+                    $redirect_url = esc_url(add_query_arg('redirect_to', urlencode($current_url), $login_url));
+
+                    $cards_html .= is_user_logged_in() 
+                        ? '
+                        <div class="newsletter-button-container">
+                            <div class="_df_button" source="' . esc_url($pdf_url) . '">
+                                <div class="newsletter-button">Consulter le bulletin entier</div>
+                            </div>
+                        </div>'
+                        : '
+                        <div class="newsletter-button-container">
+                            <a href="' . $redirect_url . '" class="newsletter-button">
+                                Consulter le bulletin entier
+                            </a>
+                        </div>';
+                $cards_html .= '
                 </div>
-            </div>
+            </div> 
         ';
     }
 

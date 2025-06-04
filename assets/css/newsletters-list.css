@@ -65,7 +65,7 @@
 }
 
 .popup-title{
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 600;
 }
 
@@ -78,8 +78,16 @@
     top: 10px;
     right: 15px;
     cursor: pointer;
-    padding: 10px 13px;
+    padding: 12px 12px;
     border-radius: 100%;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+}
+
+.popup-close svg{
+    height: 21px !important;
 }
 
 .hidden {
@@ -87,7 +95,7 @@
 }
 
 .newsletter-button {
-    padding: 11px 24px;
+    padding: 10px 24px;
     color: #FFF !important;
     background-color: #e76f51;
     border-radius: 10px;

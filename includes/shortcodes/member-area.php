@@ -131,7 +131,14 @@ function member_area_shortcode() {
             </section>
             <section id="statuses" class="tab-content">
                 <h3>Statuts de l'association</h2>
-                <p><i>Mettre PDF</i></p>
+                <div class="tab-card">
+                    <p>Les statuts de l'association HCLM sont disponibles ci-dessous.</p>
+                    <?php $status_pdf_url = wp_upload_dir()['baseurl'] . '/hclm/documents/statuts-hclm.pdf'; ?>
+                    <a href="<?php echo esc_url(plugin_dir_url(__FILE__) . '../../assets/documents/statuts-hclm.pdf'); ?>" class="btn-download" target="_blank" download>Télécharger</a>
+                    <div class="_df_button" source="<?php echo esc_url($status_pdf_url) ; ?>">
+                        Consulter le fichier PDF
+                    </div>
+                </div>
             </section>
             <section id="reports" class="tab-content">
                 <?php

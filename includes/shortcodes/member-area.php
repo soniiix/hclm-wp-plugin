@@ -164,22 +164,29 @@ function member_area_shortcode() {
                 <h3>Comptes rendus</h3>
                 
                 <div class="filters">
-                    <input type="text" placeholder="Rechercher un compte rendu...">
+                    <div class="hclm-reports-search-bar-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" height="20" width="20">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+                        <input type="text" id="search-input" placeholder="Rechercher un compte rendu..." class="hclm-reports-search-bar"/>
+                    </div>
 
-                    <select>
+                    <select id="filter-year">
                         <option value="">Toutes les années</option>
-                        <option value="2025">2025</option>
-                        <option value="2024">2024</option>
                     </select>
-                    <?php 
-                    if (current_user_can('administrator')) {
-                    ?>
-                    <select>
+
+                    <?php if (current_user_can('administrator')): ?>
+                    <select id="filter-type">
                         <option value="">Tous les types</option>
                         <option value="AG">Assemblée Générale</option>
                         <option value="CA">Conseil d'Administration</option>
                     </select>
-                    <?php } ?>
+                    <?php endif; ?>
+
+                    <select id="sort-date">
+                        <option value="desc">Du plus récent au plus ancien</option>
+                        <option value="asc">Du plus ancien au plus récent</option>
+                    </select>
                 </div>
 
                 <div class="reports-list">
@@ -187,7 +194,11 @@ function member_area_shortcode() {
                         <p>Aucun compte rendu trouvé.</p>
                     <?php else: ?>
                         <?php foreach ($files as $report): ?>
-                            <div class="report-card">
+                            <div class="report-card" 
+                                data-year="<?php echo esc_attr($report['year']); ?>" 
+                                data-type="<?php echo esc_attr($report['type']); ?>" 
+                                data-date="<?php echo "{$report['day']}/{$report['month']}/{$report['year']}"; ?>"
+                            >
                                 <a href="<?php echo esc_url($report['url']); ?>" target="_blank" title="Voir le compte rendu PDF" class="report-link"></a>
                                 <img src="<?php echo $report['cover'] ?: esc_url(home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
                                 <div class="report-info">
@@ -209,6 +220,7 @@ function member_area_shortcode() {
                     <?php endif; ?>
                 </div>
 
+                <p id="no-results-message" style="display: none; font-style: italic;">Aucun compte rendu trouvé.</p>
 
             </section>
             <section id="suggestions" class="tab-content">

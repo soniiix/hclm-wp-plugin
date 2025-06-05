@@ -13,6 +13,29 @@ document.addEventListener('DOMContentLoaded', function () {
             sections.forEach(section => {
                 section.classList.toggle('active', section.id === target);
             });
+
+            const sidebar = document.querySelector('.sidebar');
+            
+            // Apply 80vh height for reports and suggestions tabs if they are active
+            if (target === 'reports' || target === 'suggestions') {
+                sidebar.classList.add('sidebar-80vh');
+            } else {
+                sidebar.classList.remove('sidebar-80vh');
+            }
+
+            // Adjust sidebar height based on scroll position and header visibility
+            document.addEventListener('scroll', () => {
+                const header = document.querySelector('header');
+                const headerVisible = header
+                    ? header.getBoundingClientRect().bottom > 0
+                    : false;
+
+                if ((target === 'reports' || target === 'suggestions') && !headerVisible) {
+                    sidebar.classList.add('sidebar-90vh');
+                } else {
+                    sidebar.classList.remove('sidebar-90vh');
+                }
+            });
         });
     });
 });

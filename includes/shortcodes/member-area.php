@@ -17,34 +17,36 @@ function member_area_shortcode() {
     ob_start();
     ?>
     <div class="hclm-member-area">
-        <aside class="sidebar">
-            <ul>
-                <li data-tab="dashboard" class="active">
-                    <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
-                    <span class="label">Tableau de bord</span>
-                </li>
-                <li data-tab="profile">
-                    <span class="icon"><i class="fas fa-user-circle"></i></span>
-                    <span class="label">Mon profil</span>
-                </li>
-                <li data-tab="statuses">
-                    <span class="icon"><i class="fas fa-layer-group"></i></span>
-                    <span class="label">Statuts HCLM</span>
-                </li>
-                <li data-tab="reports">
-                    <span class="icon"><i class="fas fa-file-alt"></i></span>
-                    <span class="label">Comptes rendus</span>
-                </li>
-                <li data-tab="suggestions">
-                    <span class="icon"><i class="far fa-comment-dots"></i></i></span>
-                    <span class="label">Vos suggestions</span>
-                </li>
-            </ul>
-            <div class="logout-container">
-                <a href="<?php echo wp_logout_url(home_url('/connexion')); ?>" class="logout-button" aria-label="Déconnexion">
-                    <span>Déconnexion</span>
-                    <i class="fas fa-sign-out-alt"></i>
-                </a>
+        <aside>
+            <div class="sidebar">
+                <ul>
+                    <li data-tab="dashboard" class="active">
+                        <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
+                        <span class="label">Tableau de bord</span>
+                    </li>
+                    <li data-tab="profile">
+                        <span class="icon"><i class="fas fa-user-circle"></i></span>
+                        <span class="label">Mon profil</span>
+                    </li>
+                    <li data-tab="statuses">
+                        <span class="icon"><i class="fas fa-layer-group"></i></span>
+                        <span class="label">Statuts HCLM</span>
+                    </li>
+                    <li data-tab="reports">
+                        <span class="icon"><i class="fas fa-file-alt"></i></span>
+                        <span class="label">Comptes rendus</span>
+                    </li>
+                    <li data-tab="suggestions">
+                        <span class="icon"><i class="far fa-comment-dots"></i></i></span>
+                        <span class="label">Vos suggestions</span>
+                    </li>
+                </ul>
+                <div class="logout-container">
+                    <a href="<?php echo wp_logout_url(home_url('/connexion')); ?>" class="logout-button" aria-label="Déconnexion">
+                        <span>Déconnexion</span>
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </div>
             </div>
             
         </aside>

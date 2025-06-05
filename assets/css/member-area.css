@@ -104,7 +104,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.03);
 }
 
-/* Profile */
+/* PROFILE */
 .profile-section {
     display: flex;
     gap: 4rem;
@@ -219,6 +219,50 @@
     cursor: pointer;
     align-self: start;
     transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+/* STATUS */
+.hclm-status-buttons-row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 16px;
+}
+
+._df_button{
+    all: unset !important;
+    padding: 7px 18px !important;
+    color: #FFF !important;
+    background-color: #e76f51 !important;
+    border: 2px solid #e76f51 !important;
+    border-radius: 10px !important;
+    color: #fff !important;
+    font-size: 16px !important;
+    transition: background-color 0.3s ease !important;
+    cursor: pointer !important;
+    font-weight: 500 !important;
+}
+
+._df_button:hover {
+    background-color: #D76245 !important;
+    border-color: #D76245 !important;
+}
+
+.btn-download svg {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 1px;
+}
+
+.btn-download-with-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 7px 18px !important;
 }
 
 

@@ -1,0 +1,52 @@
+<?php
+
+function hclm_update_user_profile() {
+
+    if (!is_user_logged_in()) {
+        wp_redirect(home_url());
+        exit;
+    }
+
+    if (!isset($_POST['update_user_profile_nonce_field']) || 
+        !wp_verify_nonce($_POST['update_user_profile_nonce_field'], 'update_user_profile_nonce')) {
+        wp_die('Sécurité non valide');
+    }
+
+    $user_id = get_current_user_id();
+
+    // Sanitize and update user information
+    if (isset($_POST['user_firstname'])) {
+        wp_update_user([
+            'ID' => $user_id,
+            'first_name' => sanitize_text_field($_POST['user_firstname']),
+        ]);
+    }
+
+    if (isset($_POST['user_lastname'])) {
+        wp_update_user([
+            'ID' => $user_id,
+            'last_name' => sanitize_text_field($_POST['user_lastname']),
+        ]);
+    }
+
+    if (isset($_POST['user_phone'])) {
+        update_user_meta($user_id, 'user_phone', sanitize_text_field($_POST['user_phone']));
+    }
+
+    if (isset($_POST['user_address'])) {
+        update_user_meta($user_id, 'user_address', sanitize_text_field($_POST['user_address']));
+    }
+
+    if (isset($_POST['user_email']) && is_email($_POST['user_email'])) {
+        wp_update_user([
+            'ID' => $user_id,
+            'user_email' => sanitize_email($_POST['user_email']),
+        ]);
+    }
+
+    // Redirect back to the profile page with a success message
+    wp_redirect($_SERVER['HTTP_REFERER'] . '?profile_updated=1');
+    exit;
+}
+
+?>

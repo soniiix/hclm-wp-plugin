@@ -1,3 +1,4 @@
+/* SIDEBAR HANDLING */
 document.addEventListener('DOMContentLoaded', function () {
     const tabs = document.querySelectorAll('.sidebar li');
     const sections = document.querySelectorAll('.tab-content');
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+/* EDITABLE FIELDS (PROFILE SECTION) */
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.edit-icon').forEach(icon => {
         icon.addEventListener('click', () => {
@@ -61,6 +63,19 @@ function showReports(){
 
     sections.forEach(section => {
         section.classList.toggle('active', section.id === "reports");
+    });
+}
+
+function showProfile(){
+    const tabs = document.querySelectorAll('.sidebar li');
+    const sections = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.classList.toggle('active', tab.getAttribute('data-tab') === "profile");
+    });
+
+    sections.forEach(section => {
+        section.classList.toggle('active', section.id === "profile");
     });
 }
 
@@ -133,4 +148,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     filterAndSortReports();
+});
+
+/* PROFILE UPDATE MESSAGE */
+document.addEventListener("DOMContentLoaded", function () {
+    const message = document.querySelector(".update-message");
+    if (message) {
+        setTimeout(() => {
+            message.classList.add("fade-out");
+            setTimeout(() => {
+                message.remove();
+            }, 600);
+        }, 5000);
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("profile_updated") && params.get("profile_updated") === "1") {
+        showProfile();
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
 });

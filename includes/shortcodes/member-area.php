@@ -77,6 +77,12 @@ function member_area_shortcode() {
                 </div>
             </section>
             <section id="profile" class="tab-content">
+                <?php if (isset($_GET['profile_updated'])): ?>
+                    <div class="update-message">
+                        <i class="fas fa-check-circle"></i>
+                        Profil mis à jour avec succès !
+                    </div>
+                <?php endif; ?>
                 <h3>Vos informations</h3>
                 <div class="tab-card profile-section">
                     <div class="profile-header">
@@ -87,7 +93,10 @@ function member_area_shortcode() {
                             </button>
                         </div>
                     </div>
-                    <form class="profile-form">
+                    <form class="profile-form" method="post" action="<?php echo esc_url( admin_url('admin-post.php') ); ?>">
+                        <?php wp_nonce_field('update_user_profile_nonce', 'update_user_profile_nonce_field'); ?>
+                        <input type="hidden" name="action" value="update_user_profile">
+
                         <div class="form-group">
                             <label>Nom</label>
                             <div class="input-with-icon">

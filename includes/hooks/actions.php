@@ -3,6 +3,7 @@
 require_once plugin_dir_path(__FILE__) . '/functions/handle-login.php';
 require_once plugin_dir_path(__FILE__) . '/functions/handle-registration.php';
 require_once plugin_dir_path(__FILE__) . '/functions/hide-page.php';
+require_once plugin_dir_path(__FILE__) . '/functions/update-user-profile.php';
 require_once plugin_dir_path(__FILE__) . '/functions/show-more-user-data.php';
 require_once plugin_dir_path(__FILE__) . '/functions/admin/menu.php';
 require_once plugin_dir_path(__FILE__) . '/functions/admin/register-post-type.php';
@@ -41,5 +42,9 @@ add_action('admin_menu', 'hclm_admin_menu');
 add_action( 'wp', function () {
     remove_theme_support('wc-product-gallery-zoom');
 }, 100 );
+
+// Update user profile
+add_action('admin_post_update_user_profile', 'hclm_update_user_profile');
+add_action('admin_post_nopriv_update_user_profile', 'hclm_update_user_profile');
 
 ?>

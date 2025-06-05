@@ -129,6 +129,43 @@ aside {
     justify-content: center;
 }
 
+.update-message {
+    background-color: #e0fce6;
+    color: #0e5c25;
+    border: 1px solid #a4e5b3;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    font-weight: 500;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.03);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    animation: fadeInSlide 0.4s ease-out;
+}
+
+.update-message i {
+    color: #1c7c45;
+    font-size: 1.2rem;
+}
+
+.update-message.fade-out {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+@keyframes fadeInSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .profile-header{
     height: 100%;
 }

@@ -44,6 +44,14 @@ function hclm_update_user_profile() {
         ]);
     }
 
+    if (isset($_FILES['profile_picture']) && !empty($_FILES['profile_picture']['tmp_name'])) {
+        require_once(ABSPATH . 'wp-admin/includes/file.php');
+        $uploaded = media_handle_upload('profile_picture', 0);
+        if (!is_wp_error($uploaded)) {
+            update_user_meta($user_id, 'profile_picture', $uploaded);
+        }
+    }
+
     // Redirect back to the profile page with a success message
     wp_redirect($_SERVER['HTTP_REFERER'] . '?profile_updated=1');
     exit;

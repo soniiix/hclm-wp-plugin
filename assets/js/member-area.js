@@ -48,6 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const input = icon.previousElementSibling;
             input.disabled = false;
             input.focus();
+            const val = input.value;
+            input.value = '';
+            input.value = val;
             icon.style.display = 'none';
         });
     });
@@ -166,5 +169,29 @@ document.addEventListener("DOMContentLoaded", function () {
     if (params.has("profile_updated") && params.get("profile_updated") === "1") {
         showProfile();
         window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    // Handle profile picture upload
+    const profilePictureInput = document.querySelector('.profile-picture-input');
+    const editPictureBtn = document.querySelector('.edit-picture-btn');
+    const profilePicture = document.querySelector('.profile-picture');
+
+    if (profilePictureInput && editPictureBtn) {
+        editPictureBtn.addEventListener('click', () => {
+            profilePictureInput.click();
+        });
+
+        profilePictureInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            console.log(reader);
+            reader.readAsDataURL(file);
+
+            console.log(profilePicture);
+            reader.onloadend = () => {
+                profilePicture.src = reader.result;
+            }
+    });
     }
 });

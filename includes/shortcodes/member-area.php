@@ -84,55 +84,63 @@ function member_area_shortcode() {
                     </div>
                 <?php endif; ?>
                 <h3>Vos informations</h3>
-                <div class="tab-card profile-section">
-                    <div class="profile-header">
-                        <div class="profile-picture-wrapper">
-                            <img class="profile-picture" src="https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png" alt="Photo de profil">
-                            <button type="button" class="edit-photo-btn" title="Modifier la photo">
-                                <i class="fas fa-camera"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <form class="profile-form" method="post" action="<?php echo esc_url( admin_url('admin-post.php') ); ?>">
+                <div class="tab-card">
+                    <form class="profile-section" method="post" action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" enctype="multipart/form-data">
                         <?php wp_nonce_field('update_user_profile_nonce', 'update_user_profile_nonce_field'); ?>
                         <input type="hidden" name="action" value="update_user_profile">
 
-                        <div class="form-group">
-                            <label>Nom</label>
-                            <div class="input-with-icon">
-                                <input type="text" name="user_lastname" value="<?php echo esc_attr($user->get('user_lastname')); ?>" disabled>
-                                <i class="fas fa-edit edit-icon"></i>
+                        <div class="profile-header">
+                            <input type="file" class="profile-picture-input" name="profile_picture" accept="image/*" />
+                            <div class="profile-picture-wrapper">
+                                <?php
+                                $profile_picture_id = get_user_meta($user->ID, 'profile_picture', true);
+                                $profile_picture_url = $profile_picture_id ? wp_get_attachment_url($profile_picture_id) : get_avatar_url($user->get('user_email'));
+                                ?>
+                                <img class="profile-picture" src="<?php echo esc_url($profile_picture_url); ?>" alt="Photo de profil">
+                                <button type="button" class="edit-picture-btn" title="Modifier la photo">
+                                    <i class="fas fa-camera"></i>
+                                </button>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Prénom</label>
-                            <div class="input-with-icon">
-                                <input type="text" name="user_firstname" value="<?php echo esc_attr($user->get('user_firstname')); ?>" disabled>
-                                <i class="fas fa-edit edit-icon"></i>
+
+                        <div class="profile-form">
+                            <div class="form-group">    
+                                <label>Nom</label>
+                                <div class="input-with-icon">
+                                    <input type="text" name="user_lastname" value="<?php echo esc_attr($user->get('user_lastname')); ?>" disabled>
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <div class="input-with-icon">
-                                <input type="email" name="user_email" value="<?php echo esc_attr($user->get('user_email')); ?>" disabled>
-                                <i class="fas fa-edit edit-icon"></i>
+                            <div class="form-group">
+                                <label>Prénom</label>
+                                <div class="input-with-icon">
+                                    <input type="text" name="user_firstname" value="<?php echo esc_attr($user->get('user_firstname')); ?>" disabled>
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Téléphone</label>
-                            <div class="input-with-icon">
-                                <input type="tel" name="user_phone" value="<?php echo esc_attr($user->get('user_phone')); ?>" disabled>
-                                <i class="fas fa-edit edit-icon"></i>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <div class="input-with-icon">
+                                    <input type="email" name="user_email" value="<?php echo esc_attr($user->get('user_email')); ?>" disabled>
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group address-group">
-                            <label>Adresse</label>
-                            <div class="input-with-icon">
-                                <input type="text" name="user_address" value="<?php echo esc_attr($user->get('user_address')); ?>" disabled>
-                                <i class="fas fa-edit edit-icon"></i>
+                            <div class="form-group">
+                                <label>Téléphone</label>
+                                <div class="input-with-icon">
+                                    <input type="tel" name="user_phone" value="<?php echo esc_attr($user->get('user_phone')); ?>" disabled>
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
                             </div>
+                            <div class="form-group address-group">
+                                <label>Adresse</label>
+                                <div class="input-with-icon">
+                                    <input type="text" name="user_address" value="<?php echo esc_attr($user->get('user_address')); ?>" disabled>
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-save">Enregistrer</button>
                         </div>
-                        <button type="submit" class="btn-save">Enregistrer</button>
                     </form>
                 </div>
                 <div class="tab-card membership">

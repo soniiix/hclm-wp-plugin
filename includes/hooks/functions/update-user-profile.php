@@ -53,7 +53,8 @@ function hclm_update_user_profile() {
     }
 
     // Redirect back to the profile page with a success message
-    wp_redirect($_SERVER['HTTP_REFERER'] . '?profile_updated=1');
+    set_transient('hclm_profile_updated_' . get_current_user_id(), 1, 60);
+    wp_redirect(remove_query_arg('profile_updated', $_SERVER['HTTP_REFERER']));
     exit;
 }
 

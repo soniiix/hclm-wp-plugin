@@ -77,12 +77,16 @@ function member_area_shortcode() {
                 </div>
             </section>
             <section id="profile" class="tab-content">
-                <?php if (isset($_GET['profile_updated'])): ?>
+                <?php
+                $profile_updated = get_transient('hclm_profile_updated_' . get_current_user_id());
+                if ($profile_updated) {
+                    delete_transient('hclm_profile_updated_' . get_current_user_id());
+                    ?>
                     <div class="update-message">
                         <i class="fas fa-check-circle"></i>
                         Profil mis à jour avec succès !
                     </div>
-                <?php endif; ?>
+                <?php } ?>
                 <h3>Vos informations</h3>
                 <div class="tab-card">
                     <form class="profile-section" method="post" action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" enctype="multipart/form-data">

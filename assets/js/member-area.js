@@ -157,18 +157,13 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener("DOMContentLoaded", function () {
     const message = document.querySelector(".update-message");
     if (message) {
+        showProfile();
         setTimeout(() => {
             message.classList.add("fade-out");
             setTimeout(() => {
                 message.remove();
             }, 600);
         }, 5000);
-    }
-
-    const params = new URLSearchParams(window.location.search);
-    if (params.has("profile_updated") && params.get("profile_updated") === "1") {
-        showProfile();
-        window.history.replaceState({}, document.title, window.location.pathname);
     }
 
     // Handle profile picture upload

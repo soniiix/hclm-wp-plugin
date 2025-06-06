@@ -119,4 +119,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    /* Display a help message when the user focus tagbox input */
+    const helpMessages = document.querySelectorAll('.hclm-help-message');
+    helpMessages.forEach(message => {
+        const input = document.getElementById(message.getAttribute('data-tagbox'));
+        if (input) {
+            input.addEventListener('focus', () => {
+                message.style.display = 'block';
+            });
+            input.addEventListener('blur', () => {
+                message.style.display = 'none';
+            });
+        }
+    });
 });

@@ -188,6 +188,13 @@ body:is(.home) .hclm-search-bar-wrapper {
     transition: color 0.2s;
 }
 
+.hclm-help-message {
+    display: none;
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+}
+
 .hclm-popup-action-row {
     display: flex;
     flex-direction: row;

@@ -31,17 +31,37 @@ function search_bar_shortcode() {
                 <div class="hclm-popup-advanced-search">
                     <span class="hclm-popup-title">Recherche avancée</span>
                     <div class="hclm-popup-advanced-search-filter-group">
-                        <label for="hclm-keywords-input">Mots-clés</label>
+                        <label id="label-keywords" for="hclm-keywords-input">Mots-clés</label>
                         <div id="hclm-keywords-tagbox" class="hclm-keywords-tagbox">
-                            <input type="text" id="hclm-keywords-input" placeholder="Entrer des mots-clés" autocomplete="off" />
+                            <input
+                                type="text"
+                                id="hclm-keywords-input"
+                                placeholder="Entrer des mots-clés"
+                                autocomplete="off"
+                                aria-labelledby="label-keywords"
+                                aria-describedby="help-keywords"
+                            />
                         </div>
+                        <span class="hclm-help-message" id="help-keywords" data-tagbox="hclm-keywords-input">
+                            Validez un mot en tapant sur « Entrée » ou « , »
+                        </span>
                         <input type="hidden" name="keywords" id="hclm-keywords-hidden" />
                     </div>
                     <div class="hclm-popup-advanced-search-filter-group">
-                        <label for="hclm-exclude-input">Mots à exclure</label>
+                        <label id="label-exclude" for="hclm-aside-exclude-input">Mots à exclure</label>
                         <div id="hclm-aside-exclude-tagbox" class="hclm-keywords-tagbox">
-                            <input type="text" id="hclm-aside-exclude-input" placeholder="Entrer des mots à exclure" autocomplete="off" />
+                            <input
+                                type="text"
+                                id="hclm-aside-exclude-input"
+                                placeholder="Entrer des mots à exclure"
+                                autocomplete="off"
+                                aria-labelledby="label-exclude"
+                                aria-describedby="help-exclude"
+                            />
                         </div>
+                        <span class="hclm-help-message" id="help-exclude" data-tagbox="hclm-aside-exclude-input">
+                            Validez un mot en tapant sur « Entrée » ou « , »
+                        </span>
                         <input type="hidden" name="exclude" id="hclm-aside-exclude-hidden" />
                     </div>
                     <div class="hclm-popup-advanced-search-filter-group">

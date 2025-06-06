@@ -35,6 +35,23 @@ body:is(.home) .hclm-search-bar-wrapper {
     color: #9da2af;
 }
 
+@media (max-width: 1368px) {
+    .hclm-search-bar {
+        display: none !important;
+    }
+
+    .hclm-search-bar-wrapper {
+        width: fit-content !important;
+        padding: 12px 12px !important;
+    }
+
+    .hclm-search-bar-wrapper svg {
+        margin-right: 0 !important;
+        height: 22px;
+        width: 22px;
+    }
+}
+
 .hclm-search-bar-wrapper:focus,
 .hclm-search-bar-wrapper:hover,
 .hclm-search-bar-wrapper:active {

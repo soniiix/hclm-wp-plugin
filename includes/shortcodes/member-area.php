@@ -36,10 +36,12 @@ function member_area_shortcode() {
                         <span class="icon"><i class="fas fa-file-alt"></i></span>
                         <span class="label">Comptes rendus</span>
                     </li>
+                    <?php if (!current_user_can('administrator')){ ?>
                     <li data-tab="suggestions">
                         <span class="icon"><i class="far fa-comment-dots"></i></i></span>
                         <span class="label">Vos suggestions</span>
                     </li>
+                    <?php } ?>
                 </ul>
                 <div class="logout-container">
                     <a href="<?php echo wp_logout_url(home_url('/connexion')); ?>" class="logout-button" aria-label="Déconnexion">
@@ -52,7 +54,15 @@ function member_area_shortcode() {
         </aside>
         <main class="content">
             <section id="dashboard" class="tab-content active">
-                <h3>Bonjour <?php echo esc_html($user->get('user_firstname') . ' ' . $user->get('user_lastname')); ?>,</h3>
+                <h3>
+                    <?php
+                    if (in_array('adherent', (array) $user->roles)) {
+                        echo 'Bonjour ' . esc_html($user->get('user_firstname') . ' ' . $user->get('user_lastname')) . ',';
+                    } else {
+                        echo 'Bonjour,';
+                    }
+                    ?>
+                </h3>
                 <div class="dashboard-two-columns">
                     <div class="dashboard-col">
                         <div class="tab-card">
@@ -147,10 +157,12 @@ function member_area_shortcode() {
                         </div>
                     </form>
                 </div>
+                <?php if (!current_user_can('administrator')){ ?>
                 <div class="tab-card membership">
                     <h4><i class="fas fa-address-card"></i> Statut de l'adhésion</h4>
                     <span>Adhérent depuis le : <?php echo date('d/m/Y', strtotime($user->get('user_registered'))) ?></span>
                 </div>
+                <?php } ?>
             </section>
             <section id="statuses" class="tab-content">
                 <h3>Statuts de l'association</h2>

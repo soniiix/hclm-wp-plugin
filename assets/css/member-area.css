@@ -120,6 +120,15 @@ aside {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.03);
 }
 
+.tab-hover-card {
+    transition: box-shadow 0.2s ease;   
+}
+
+.tab-hover-card:hover {
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
 /* PROFILE */
 .profile-section {
     display: flex;
@@ -363,7 +372,6 @@ aside {
 
 .card-last-report {
     text-align: center;
-    transition: box-shadow 0.2s ease;
     min-height: 315px;
     display: flex;
     flex-direction: column;
@@ -372,12 +380,12 @@ aside {
     gap: 0px;
 }
 
-.card-last-report:hover {
-    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+.card-last-report h4 {
+    margin-bottom: 0 !important;
 }
 
 .report-thumbnail {
-    height: 150px;
+    height: 165px;
     margin: 10px auto;
 }
 

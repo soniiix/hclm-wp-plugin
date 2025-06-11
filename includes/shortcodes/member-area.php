@@ -14,6 +14,33 @@ function member_area_shortcode() {
     wp_enqueue_style('hclm-member-area-style', plugin_dir_url(__FILE__) . '../../assets/css/member-area.css');
     wp_enqueue_script('hclm-member-area-js', plugin_dir_url(__FILE__) . '../../assets/js/member-area.js', [], false, true);
 
+    // Retrieve all reports
+    $upload_dir = wp_upload_dir();
+    $reports_dir = $upload_dir['basedir'] . '/hclm/comptes-rendus/';
+    $reports_url = $upload_dir['baseurl'] . '/hclm/comptes-rendus/';
+
+    $files = [];
+    if (is_dir($reports_dir)) {
+        foreach (glob($reports_dir . 'CR-*.pdf') as $file) {
+            // Parse filename: CR-[CA|AG]_JJ-MM-AAAA.pdf
+            if (preg_match('/CR\-(CA|AG)_(\d{2})\-(\d{2})\-(\d{4})\.pdf$/', basename($file), $matches)) {
+                $files[] = [
+                    'type' => $matches[1],
+                    'day' => $matches[2],
+                    'month' => $matches[3],
+                    'year' => $matches[4],
+                    'filename' => basename($file),
+                    'url' => $reports_url . basename($file),
+                    'cover' => hclm_get_pdf_cover($reports_dir . basename($file)),
+                ];
+            }
+        }
+        // Sort by date descending
+        usort($files, function($a, $b) {
+            return strtotime("{$b['year']}-{$b['month']}-{$b['day']}") - strtotime("{$a['year']}-{$a['month']}-{$a['day']}");
+        });
+    }
+
     ob_start();
     ?>
     <div class="hclm-member-area">
@@ -69,19 +96,44 @@ function member_area_shortcode() {
                             <p>Bienvenue dans l'espace adhérent. Ici, vous retrouverez toutes les informations importantes liées à votre adhésion.</p>
                             <span>Vous avez également accès à du contenu supplémentaire.</span>
                         </div>
-                        <div class="tab-card">
+                        <div 
+                            class="tab-card tab-hover-card" 
+                            title="Voir les événements à venir" 
+                            onclick="window.location.href='<?php echo esc_url(tribe_get_events_link()); ?>'"
+                        >
                             <h4><i class="fas fa-calendar-alt"></i> Prochain événement</h4>
-                            <span>Réunion du CA le 24/04/2025 à 14h</span>
+                            <?php 
+                            $next_event = tribe_get_events([
+                                'posts_per_page' => 1,
+                                'start_date'     => current_time('Y-m-d H:i:s'),
+                            ]);
+                            ?>
+                            <span>
+                                <?php if (!empty($next_event)) {
+                                    $event = $next_event[0];
+                                    echo esc_html($event->post_title) . ' le ' . tribe_get_start_date($event, false, 'j F Y');
+                                } else {
+                                    echo 'Aucun événement à venir.';
+                                }
+                                ?>
+                            </span>
                         </div>
                     </div>
                     
                     <div class="dashboard-col">
-                        <div class="tab-card card-last-report" onclick="showReports();" style="cursor: pointer;">
+                        <div class="tab-card tab-hover-card card-last-report" onclick="showReports();" title="Voir les comptes rendus">
                             <h4><i class="fas fa-file-alt"></i> Dernier compte rendu</h4>
                             <div class="report-thumbnail">
-                                <img src="<?php echo home_url('/wp-content/uploads/hclm/images/b70.jpg') ?>">
+                                <?php
+                                $last_report = !empty($files) ? $files[0] : null;
+                                if ($last_report) { ?>
+                                <img src="<?php echo $last_report['cover'] ?>" alt="Aperçu du dernier compte rendu">
                             </div>
-                            <span>Compte rendu du 25/03/2025</span>
+                            <span>Compte rendu du <?php echo "{$last_report['day']}/{$last_report['month']}/{$last_report['year']}"; ?></span>
+                            <?php } else { ?>
+                                </div>
+                                <span>Aucun compte rendu disponible.</span>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -190,33 +242,6 @@ function member_area_shortcode() {
                 </div>
             </section>
             <section id="reports" class="tab-content">
-                <?php
-                $upload_dir = wp_upload_dir();
-                $reports_dir = $upload_dir['basedir'] . '/hclm/comptes-rendus/';
-                $reports_url = $upload_dir['baseurl'] . '/hclm/comptes-rendus/';
-
-                $files = [];
-                if (is_dir($reports_dir)) {
-                    foreach (glob($reports_dir . 'CR-*.pdf') as $file) {
-                        // Parse filename: CR-[CA|AG]_JJ-MM-AAAA.pdf
-                        if (preg_match('/CR\-(CA|AG)_(\d{2})\-(\d{2})\-(\d{4})\.pdf$/', basename($file), $matches)) {
-                            $files[] = [
-                                'type' => $matches[1],
-                                'day' => $matches[2],
-                                'month' => $matches[3],
-                                'year' => $matches[4],
-                                'filename' => basename($file),
-                                'url' => $reports_url . basename($file),
-                                'cover' => hclm_get_pdf_cover($reports_dir . basename($file)),
-                            ];
-                        }
-                    }
-                    // Sort by date descending
-                    usort($files, function($a, $b) {
-                        return strtotime("{$b['year']}-{$b['month']}-{$b['day']}") - strtotime("{$a['year']}-{$a['month']}-{$a['day']}");
-                    });
-                }
-                ?>
                 <h3>Comptes rendus</h3>
                 
                 <div class="filters">

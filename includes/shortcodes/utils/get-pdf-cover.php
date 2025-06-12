@@ -4,17 +4,18 @@
  * Generates a cover image for a PDF file using Imagick.
  *
  * @param string $pdf_path Path to the PDF file.
+ * @param string $context Context folder for the cover image (e.g., 'comptes-rendus' or 'visites-automnales'). Default is 'comptes-rendus'.
  * @return string|null URL of the generated cover image or null if an error occurs.
  * @throws Exception If Imagick is not installed or the PDF file does not exist.
  */
-function hclm_get_pdf_cover($pdf_path) {
+function hclm_get_pdf_cover($pdf_path, $context = 'comptes-rendus') {
     if (!extension_loaded('imagick') || !file_exists($pdf_path)) {
         return null;
     }
 
     $upload_dir = wp_upload_dir();
-    $covers_dir = $upload_dir['basedir'] . '/hclm/comptes-rendus/couvertures/';
-    $covers_url = $upload_dir['baseurl'] . '/hclm/comptes-rendus/couvertures/';
+    $covers_dir = $upload_dir['basedir'] . "/hclm/$context/couvertures/";
+    $covers_url = $upload_dir['baseurl'] . "/hclm/$context/couvertures/";
 
     // Create the directory if it doesn't exist
     if (!file_exists($covers_dir)) {

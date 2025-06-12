@@ -12,14 +12,6 @@ function hclm_admin_menu () {
         'dashicons-database',
         27
     );
-    add_submenu_page(
-        'hclm-manage',   
-        'Indexation des bulletins', 
-        'Indexation des bulletins',
-        'manage_options',    
-        'hclm-bulletins',
-        'hclm_index_admin_page'  
-    );
 }
 
 ?>

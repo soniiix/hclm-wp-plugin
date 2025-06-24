@@ -1,7 +1,6 @@
 <?php
 
 require_once plugin_dir_path(__FILE__) . '/functions/handle-login.php';
-require_once plugin_dir_path(__FILE__) . '/functions/handle-registration.php';
 require_once plugin_dir_path(__FILE__) . '/functions/hide-page.php';
 require_once plugin_dir_path(__FILE__) . '/functions/update-user-profile.php';
 require_once plugin_dir_path(__FILE__) . '/functions/show-more-user-data.php';
@@ -10,9 +9,6 @@ require_once plugin_dir_path(__FILE__) . '/functions/admin/register-post-type.ph
 
 // Handle login form submission
 add_action('template_redirect', 'handle_login');
-
-// Handle registration form submission
-add_action('init', 'handle_registration');
 
 // Display additional user information on the admin page 
 add_action( 'show_user_profile', 'show_more_user_data' );

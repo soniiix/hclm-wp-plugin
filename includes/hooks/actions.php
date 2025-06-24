@@ -78,4 +78,19 @@ function hclm_save_custom_user_meta( $user_data ) {
     }
 }
 
+// Make first and last name fields required in the PMS registration form
+add_filter( 'pms_register_form_label_first_name', function($attributes){
+    return __( 'Prénom *', 'paid-member-subscriptions' );
+});
+add_filter( 'pms_register_form_label_last_name', function($attributes){
+    return __( 'Nom *', 'paid-member-subscriptions' );
+});
+add_action( 'pms_register_form_validation', function() {
+    if(empty( $_POST['first_name']))
+		pms_errors()->add( 'first_name', __( 'Veuillez saisir un prénom.', 'paid-member-subscriptions' ) );
+
+	if(empty( $_POST['last_name']))
+		pms_errors()->add( 'last_name', __( 'Veuillez saisir un nom.', 'paid-member-subscriptions' ) );
+});
+
 ?>

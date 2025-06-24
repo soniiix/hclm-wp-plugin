@@ -47,4 +47,35 @@ add_action( 'wp', function () {
 add_action('admin_post_update_user_profile', 'hclm_update_user_profile');
 add_action('admin_post_nopriv_update_user_profile', 'hclm_update_user_profile');
 
+// Display custom fields in the PMS registration form
+add_action( 'pms_register_form_after_fields', 'custom_pms_extra_fields' );
+function custom_pms_extra_fields() {
+    ?>
+    <div class="pms-field">
+        <label for="user_address">Adresse *</label>
+        <input type="text" name="user_address" id="user_address" required>
+    </div>
+    <div class="pms-field">
+        <label for="user_phone">Téléphone *</label>
+        <input type="tel" name="user_phone" id="user_phone" required>
+    </div>
+    <?php
+}
+
+// Save custom fields data after user registration in PMS
+add_action( 'pms_register_form_after_create_user', 'hclm_save_custom_user_meta', 10, 1 );
+function hclm_save_custom_user_meta( $user_data ) {
+    if (isset( $user_data['user_id'] ) ) {
+        $user_id = $user_data['user_id'];
+
+        if (isset($_POST['user_address']) ) {
+            update_user_meta( $user_id, 'user_address', sanitize_text_field($_POST['user_address']) );
+        }
+
+        if (isset($_POST['user_phone']) ) {
+            update_user_meta( $user_id, 'user_phone', sanitize_text_field($_POST['user_phone']) );
+        }
+    }
+}
+
 ?>

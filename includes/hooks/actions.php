@@ -93,4 +93,28 @@ add_action( 'pms_register_form_validation', function() {
 		pms_errors()->add( 'last_name', __( 'Veuillez saisir un nom.', 'paid-member-subscriptions' ) );
 });
 
+// Hide the login field in the PMS registration form and fill it with the email value
+add_action( 'wp_footer', function() {
+    if (is_page('adherer')) { ?>
+        <style>
+            .pms-user-login-field { 
+                display: none !important; 
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelector('.pms-form-submit')?.addEventListener('click', function () {
+                    const email =  document.querySelector('#pms_user_email');
+                    if (email && email.value) {
+                        const loginField = document.querySelector('.pms-user-login-field input');
+                        if (loginField) {
+                            loginField.value = email.value;
+                        }
+                    }
+                });
+            });
+        </script>
+    <?php }
+});
+
 ?>

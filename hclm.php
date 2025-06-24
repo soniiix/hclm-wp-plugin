@@ -13,7 +13,6 @@ defined('ABSPATH') || exit;
 require_once plugin_dir_path(__FILE__) . 'includes/hooks/filters.php';
 require_once plugin_dir_path(__FILE__) . 'includes/hooks/actions.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/login-button.php';
-require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/registration-form.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/login-form.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/contact-form.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/member-area.php';
@@ -27,7 +26,6 @@ require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/search-bar.php';
 
 // Save shortcodes
 add_shortcode('hclm_login_button', 'login_button_shortcode');
-add_shortcode('hclm_registration_form', 'registration_form_shortcode');
 add_shortcode('hclm_login_form', 'login_form_shortcode');
 add_shortcode('hclm_contact_form', 'contact_form_shortcode');
 add_shortcode('hclm_member_area', 'member_area_shortcode');

@@ -46,4 +46,10 @@ add_filter('template_include', function($template){
     return $template;
 });
 
+// Remove the "Posts" column from the users list in the admin area
+add_filter( 'manage_users_columns', function($columns) {
+    unset( $columns['posts'] ); 
+    return $columns;
+});
+
 ?>

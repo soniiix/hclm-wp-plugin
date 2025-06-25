@@ -52,4 +52,18 @@ add_filter( 'manage_users_columns', function($columns) {
     return $columns;
 });
 
+// Remove the "Comments" column from the pages list in the admin area
+// Add a "Modifié le" column
+add_filter('manage_pages_columns', function($columns) {
+    unset($columns['comments']);
+    $columns['modified'] = 'Modifié le';
+    return $columns;
+});
+
+// Make the "Modifié le" column sortable in the admin area
+add_filter('manage_edit-page_sortable_columns', function($columns) {
+    $columns['modified'] = 'modified';
+    return $columns;
+});
+
 ?>

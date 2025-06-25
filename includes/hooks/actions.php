@@ -65,11 +65,27 @@ function hclm_save_custom_user_meta( $user_data ) {
         $user_id = $user_data['user_id'];
 
         if (isset($_POST['user_address']) ) {
-            update_user_meta( $user_id, 'user_address', sanitize_text_field($_POST['user_address']) );
+            update_user_meta( $user_id, 'billing_address_1', sanitize_text_field($_POST['user_address']) );
+            update_user_meta( $user_id, 'shipping_address_1', sanitize_text_field($_POST['user_address']) );
         }
 
         if (isset($_POST['user_phone']) ) {
-            update_user_meta( $user_id, 'user_phone', sanitize_text_field($_POST['user_phone']) );
+            update_user_meta( $user_id, 'billing_phone', sanitize_text_field($_POST['user_phone']) );
+            update_user_meta( $user_id, 'shipping_phone', sanitize_text_field($_POST['user_phone']) );
+        }
+
+        if ( function_exists('pms_get_member') ) {
+            $member = pms_get_member( $user_id );
+
+            if ( $member ) {
+                if (isset($_POST['user_address']) ) {
+                    update_user_meta( $user_id, 'pms_billing_address_1', sanitize_text_field($_POST['user_address']) );
+                }
+
+                if (isset($_POST['user_phone']) ) {
+                    update_user_meta( $user_id, 'pms_billing_phone', sanitize_text_field($_POST['user_phone']) );
+                }
+            }
         }
     }
 }
@@ -112,5 +128,33 @@ add_action( 'wp_footer', function() {
         </script>
     <?php }
 });
+
+// Display the last modified date in the appropriate column
+add_action('manage_pages_custom_column', function($column_name, $post_id) {
+    if ($column_name === 'modified') {
+        $modified_date = get_post_modified_time('d/m/Y H:i', false, $post_id);
+        echo $modified_date;
+    }
+}, 10, 2);
+
+// Sort pages by last modified date in the admin area
+add_action('pre_get_posts', function($query) {
+    if (!is_admin() || !$query->is_main_query()) {
+        return;
+    }
+    if ($query->get('post_type') === 'page' && $query->get('orderby') === 'modified') {
+        $query->set('orderby', 'modified');
+    }
+});
+
+// Reduce the width of the "Modifié le" column in the admin area
+add_action('admin_head', function() {
+    echo '<style>
+        .fixed .column-modified {
+            width: 10%;
+        }
+    </style>';
+});
+
 
 ?>

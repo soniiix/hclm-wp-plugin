@@ -46,6 +46,7 @@ function member_area_shortcode() {
         $files = array_filter($files, function($report) {
             return $report['type'] !== 'CA';
         });
+        $files = array_values($files); // Re-index the array
     }
 
     ob_start();
@@ -132,7 +133,7 @@ function member_area_shortcode() {
                             <h4><i class="fas fa-file-alt"></i> Dernier compte rendu</h4>
                             <div class="report-thumbnail">
                                 <?php
-                                $last_report = !empty($files) ? $files[0] : null;
+                                $last_report = (!empty($files) && isset($files[0])) ? $files[0] : null;
                                 if ($last_report) { ?>
                                 <img src="<?php echo $last_report['cover'] ?>" alt="Aperçu du dernier compte rendu">
                             </div>

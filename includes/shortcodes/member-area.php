@@ -41,6 +41,13 @@ function member_area_shortcode() {
         });
     }
 
+    // Filter reports for non-admin users
+    if (!current_user_can('administrator')) {
+        $files = array_filter($files, function($report) {
+            return $report['type'] !== 'CA';
+        });
+    }
+
     ob_start();
     ?>
     <div class="hclm-member-area">

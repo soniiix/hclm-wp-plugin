@@ -156,5 +156,10 @@ add_action('admin_head', function() {
     </style>';
 });
 
+// Remove the WooCommerce marketing menu item
+add_action('admin_menu', function() {
+    remove_menu_page('woocommerce-marketing');
+}, 99);
+
 
 ?>

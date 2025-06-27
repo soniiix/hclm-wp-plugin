@@ -13,7 +13,11 @@ function login_form_shortcode() {
     $error = '';
 
     if (!empty($_GET['login_error'])) {
-        $error = '<p class="hclm-login-form-error" role="alert">Identifiants incorrects. Veuillez réessayer.</p>';
+        $error = '
+        <p class="hclm-login-form-error" role="alert">
+            <i class="far fa-times-circle"></i>
+            Identifiants incorrects. Veuillez réessayer.
+        </p>';
     }
 
     // Load CSS style
@@ -42,6 +46,31 @@ function login_form_shortcode() {
                 </a>
             </div>
         </form>
+
+        <script>
+        // Hide error message when user interacts with the form
+        document.addEventListener("DOMContentLoaded", function () {
+            const errorMessage = document.querySelector(".hclm-login-form-error");
+            const emailInput = document.getElementById("email");
+            const passwordInput = document.getElementById("password");
+            let userInteracted = false;
+
+            if (errorMessage && emailInput && passwordInput) {
+                [emailInput, passwordInput].forEach(input => {
+                    input.addEventListener("mousedown", () => userInteracted = true);
+                    input.addEventListener("keydown", () => userInteracted = true);
+                });
+
+                [emailInput, passwordInput].forEach(input => {
+                    input.addEventListener("focus", function () {
+                        if (userInteracted) {
+                            errorMessage.style.display = "none";
+                        }
+                    });
+                });
+            }
+        });
+        </script>
     ';
 }
 

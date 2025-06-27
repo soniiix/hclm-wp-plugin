@@ -48,12 +48,12 @@ function search_bar_shortcode() {
                         <input type="hidden" name="keywords" id="hclm-keywords-hidden" />
                     </div>
                     <div class="hclm-popup-advanced-search-filter-group">
-                        <label id="label-exclude" for="hclm-aside-exclude-input">Mots à exclure</label>
+                        <label id="label-exclude" for="hclm-aside-exclude-input">Termes à exclure</label>
                         <div id="hclm-aside-exclude-tagbox" class="hclm-keywords-tagbox">
                             <input
                                 type="text"
                                 id="hclm-aside-exclude-input"
-                                placeholder="Entrer des mots à exclure"
+                                placeholder="Entrer des termes à exclure"
                                 autocomplete="off"
                                 aria-labelledby="label-exclude"
                                 aria-describedby="help-exclude"

@@ -125,7 +125,7 @@ $query = new WP_Query($args);
                             <input type="hidden" name="keywords" id="hclm-aside-keywords-hidden" />
                         </div>
                         <div class="hclm-popup-advanced-search-filter-group">
-                            <label for="hclm-exclude-input">Mots à exclure</label>
+                            <label for="hclm-exclude-input">Termes à exclure</label>
                             <div id="hclm-exclude-tagbox" class="hclm-keywords-tagbox">
                                 <?php
                                 foreach ($exclude as $tag) {
@@ -136,7 +136,7 @@ $query = new WP_Query($args);
                                             <span class="hclm-keywords-remove-tag">×</span>
                                         </span>
                                 <?php }} ?>
-                                <input type="text" id="hclm-exclude-input" placeholder="Entrer des mots à exclure" autocomplete="off" />
+                                <input type="text" id="hclm-exclude-input" placeholder="Entrer des termes à exclure" autocomplete="off" />
                             </div>
                             <input type="hidden" name="exclude" id="hclm-exclude-hidden" />
                         </div>

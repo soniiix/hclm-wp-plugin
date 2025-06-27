@@ -102,7 +102,7 @@ function member_area_shortcode() {
                     <div class="dashboard-col">
                         <div class="tab-card">
                             <p>Bienvenue dans l'espace adhérent. Ici, vous retrouverez toutes les informations importantes liées à votre adhésion.</p>
-                            <span>Vous avez également accès à du contenu supplémentaire.</span>
+                            <span>En tant qu'adhérent, vous avez accès à la totalité du contenu.</span>
                         </div>
                         <div 
                             class="tab-card tab-hover-card" 

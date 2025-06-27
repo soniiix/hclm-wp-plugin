@@ -254,15 +254,16 @@ aside {
     padding-right: 30px;
     border-radius: 10px !important;
     transition: initial !important;
+    border: 2px solid #e5e4e5 !important;
 }
 
 .form-group.address-group{
     grid-column: 1 / -1;
-
 }
 
 .input-with-icon input:focus {
-    border: 1px solid #e76f51 !important;
+    outline: none !important;
+    border-color: #e76f51 !important;
 }
 
 .edit-icon {
@@ -279,7 +280,7 @@ aside {
 .btn-save {
     grid-column: 1 / -1;
     margin-top: 1rem;
-    padding: 13px 20px;
+    padding: 12px 20px;
     background-color: #e76f51;
     color: #fff;
     border: none;

@@ -13,24 +13,25 @@ function login_form_shortcode() {
     $error = '';
 
     if (!empty($_GET['login_error'])) {
-        $error = '<p class="hclm-login-form-error">Identifiants incorrects. Veuillez réessayer.</p>';
+        $error = '<p class="hclm-login-form-error" role="alert">Identifiants incorrects. Veuillez réessayer.</p>';
     }
 
     // Load CSS style
     wp_enqueue_style('hclm-login-form-style', plugin_dir_url(__FILE__) . '../../assets/css/login-form.css');
 
     return $error . '
-        <form method="post" class="hclm-login-form">
+        <form method="post" class="hclm-login-form" aria-labelledby="form-title">
+            <span id="form-title" class="sr-only">Connexion à l\'espace adhérent</span>
             <input type="hidden" name="redirect_to" value="' . esc_url($_GET['redirect_to'] ?? home_url('/accueil')) . '">
             <p>
                 <label for="email">Email</label>
                 <br>
-                <input id="email" type="text" name="user_email" required>
+                <input id="email" type="text" name="user_email" autocomplete="email" required>
             </p>
             <p class="hclm-login-form-password">
                 <label for="password">Mot de passe</label>
                 <br>
-                <input id="password" type="password" name="user_password" required>
+                <input id="password" type="password" name="user_password" required autocomplete="current-password">
                 <a href="' . esc_url(home_url('/contact')) . '">Mot de passe oublié ?</a>
             </p>
             <input type="submit" name="hclm_login_submit" value="Me connecter">

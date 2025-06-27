@@ -25,7 +25,7 @@ function login_form_shortcode() {
             <p>
                 <label for="email">Email</label>
                 <br>
-                <input id="email" type="email" name="user_email" required>
+                <input id="email" type="text" name="user_email" required>
             </p>
             <p class="hclm-login-form-password">
                 <label for="password">Mot de passe</label>

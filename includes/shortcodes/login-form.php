@@ -13,21 +13,33 @@ function login_form_shortcode() {
     $error = '';
 
     if (!empty($_GET['login_error'])) {
-        $error = '<p class="hclm_error">Identifiants incorrects. Veuillez réessayer.</p>';
+        $error = '<p class="hclm-login-form-error">Identifiants incorrects. Veuillez réessayer.</p>';
     }
 
     // Load CSS style
-    wp_enqueue_style('hclm-login-form-style', plugin_dir_url(__FILE__) . '../../assets/css/forms.css');
+    wp_enqueue_style('hclm-login-form-style', plugin_dir_url(__FILE__) . '../../assets/css/login-form.css');
 
     return $error . '
-        <form method="post" class="hclm_form">
+        <form method="post" class="hclm-login-form">
             <input type="hidden" name="redirect_to" value="' . esc_url($_GET['redirect_to'] ?? home_url('/accueil')) . '">
-            <p><label>Email :<br><input type="email" name="user_email" required></label></p>
-            <p><label>Mot de passe :<br><input type="password" name="user_password" required></label></p>
-            <p class="checkbox"><input type="checkbox" id="remember_me" name="remember_me" class="hclm_checkbox">
-                <label for="remember_me"> Se souvenir de moi</label>
+            <p>
+                <label for="email">Email</label>
+                <br>
+                <input id="email" type="email" name="user_email" required>
             </p>
-            <p><input type="submit" name="hclm_login_submit" value="Me connecter"></p>
+            <p class="hclm-login-form-password">
+                <label for="password">Mot de passe</label>
+                <br>
+                <input id="password" type="password" name="user_password" required>
+                <a href="' . esc_url(home_url('/contact')) . '">Mot de passe oublié ?</a>
+            </p>
+            <input type="submit" name="hclm_login_submit" value="Me connecter">
+            <div class="hclm-login-form-signup-action">
+                Pas encore de compte ?&nbsp;
+                <a href="' . esc_url(home_url('/adherer')) . '">
+                    Devenez adhérent
+                </a>
+            </div>
         </form>
     ';
 }

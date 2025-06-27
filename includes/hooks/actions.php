@@ -168,5 +168,13 @@ add_action('init', function () {
     }
 });
 
+// Hide attachment pages and redirect to the home page
+add_action('template_redirect', function() {
+    if (is_attachment()) {
+        wp_redirect(home_url(), 301);
+        exit;
+    }
+});
+
 
 ?>

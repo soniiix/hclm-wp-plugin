@@ -19,6 +19,7 @@ function handle_login() {
         $user = wp_signon($creds, false);
 
         if (is_wp_error($user)) {
+            $_SESSION['hclm_login_failed'] = true;
             wp_redirect(add_query_arg('login_error', '1', wp_get_referer()));
             exit;
         } else {

@@ -12,12 +12,13 @@ function login_form_shortcode() {
 
     $error = '';
 
-    if (!empty($_GET['login_error'])) {
+    if (!empty($_GET['login_error']) && !empty($_SESSION['hclm_login_failed'])) {
         $error = '
         <p class="hclm-login-form-error" role="alert">
             <i class="far fa-times-circle"></i>
             Identifiants incorrects. Veuillez réessayer.
         </p>';
+        unset($_SESSION['hclm_login_failed']);
     }
 
     // Load CSS style
@@ -48,26 +49,13 @@ function login_form_shortcode() {
         </form>
 
         <script>
-        // Hide error message when user interacts with the form
+        // Remove the login_error parameter from the URL after the page loads
         document.addEventListener("DOMContentLoaded", function () {
-            const errorMessage = document.querySelector(".hclm-login-form-error");
-            const emailInput = document.getElementById("email");
-            const passwordInput = document.getElementById("password");
-            let userInteracted = false;
-
-            if (errorMessage && emailInput && passwordInput) {
-                [emailInput, passwordInput].forEach(input => {
-                    input.addEventListener("mousedown", () => userInteracted = true);
-                    input.addEventListener("keydown", () => userInteracted = true);
-                });
-
-                [emailInput, passwordInput].forEach(input => {
-                    input.addEventListener("focus", function () {
-                        if (userInteracted) {
-                            errorMessage.style.display = "none";
-                        }
-                    });
-                });
+            const params = new URLSearchParams(window.location.search);
+            if (params.has("login_error")) {
+                params.delete("login_error");
+                const newUrl = window.location.pathname + (params.toString() ? "?" + params.toString() : "");
+                window.history.replaceState({}, "", newUrl);
             }
         });
         </script>

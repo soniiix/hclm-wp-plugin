@@ -161,5 +161,12 @@ add_action('admin_menu', function() {
     remove_menu_page('woocommerce-marketing');
 }, 99);
 
+// Initialize the session if it is not already started. It is necessary for the login error handling.
+add_action('init', function () {
+    if (!session_id()) {
+        session_start();
+    }
+});
+
 
 ?>

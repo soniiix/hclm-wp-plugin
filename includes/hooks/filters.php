@@ -66,4 +66,30 @@ add_filter('manage_edit-page_sortable_columns', function($columns) {
     return $columns;
 });
 
+// Add a custom user avatar based on user meta
+// This function replaces the default avatar with a custom profile picture if it exists
+add_filter('get_avatar', 'hclm_custom_user_avatar', 10, 5);
+function hclm_custom_user_avatar($avatar, $id_or_email, $size, $default, $alt) {
+    $user = false;
+
+    if (is_numeric($id_or_email)) {
+        $user = get_user_by('id', (int) $id_or_email);
+    } elseif (is_object($id_or_email) && !empty($id_or_email->user_id)) {
+        $user = get_user_by('id', (int) $id_or_email->user_id);
+    } elseif (is_string($id_or_email)) {
+        $user = get_user_by('email', $id_or_email);
+    }
+
+    if ($user) {
+        $profile_picture_id = get_user_meta($user->ID, 'profile_picture', true);
+        if ($profile_picture_id) {
+            $profile_picture_url = wp_get_attachment_url($profile_picture_id);
+            if ($profile_picture_url) {
+                $avatar = '<img alt="' . esc_attr($alt) . '" src="' . esc_url($profile_picture_url) . '" class="avatar avatar-' . esc_attr($size) . ' photo" height="' . esc_attr($size) . '" width="' . esc_attr($size) . '">';
+            }
+        }
+    }
+    return $avatar;
+}
+
 ?>

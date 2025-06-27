@@ -176,5 +176,11 @@ add_action('template_redirect', function() {
     }
 });
 
+// Remove the comments tab from the admin bar
+add_action( 'wp_before_admin_bar_render', function(){
+    global $wp_admin_bar;
+    $wp_admin_bar->remove_menu('comments');
+});
+
 
 ?>

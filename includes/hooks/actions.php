@@ -47,9 +47,19 @@ add_action('admin_post_nopriv_update_user_profile', 'hclm_update_user_profile');
 add_action( 'pms_register_form_after_fields', 'custom_pms_extra_fields' );
 function custom_pms_extra_fields() {
     ?>
-    <div class="pms-field">
-        <label for="user_address">Adresse *</label>
-        <input type="text" name="user_address" id="user_address" required>
+    <div class="pms-field pms-field-address">
+        <div class="pms-field-streetaddress">
+            <label for="user_address">Adresse *</label>
+            <input type="text" name="user_address" id="user_address" required>
+        </div>
+        <div>
+            <label for="user_city">Ville *</label>
+            <input type="text" name="user_city" id="user_city" required>
+        </div>
+        <div>
+            <label for="user_postal_code">Code postal *</label>
+            <input type="text" name="user_postal_code" id="user_postal_code" required autocomplete="postal-code">
+        </div>
     </div>
     <div class="pms-field">
         <label for="user_phone">Téléphone *</label>

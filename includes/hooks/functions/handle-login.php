@@ -32,6 +32,7 @@ function handle_login() {
                 wp_redirect(admin_url());
             } else {
                 $redirect = !empty($_POST['redirect_to']) ? esc_url_raw($_POST['redirect_to']) : home_url('/accueil');
+                $redirect = add_query_arg('login_success', '1', $redirect);
                 wp_redirect($redirect);
             }
             exit;

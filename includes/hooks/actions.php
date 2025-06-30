@@ -192,5 +192,86 @@ add_action( 'wp_before_admin_bar_render', function(){
     $wp_admin_bar->remove_menu('comments');
 });
 
+// Show a success message after login
+add_action('wp_footer', function() {
+    if (isset($_GET['login_success']) && $_GET['login_success'] == '1') {
+        echo '
+        <div class="hclm-success-message"">
+            Connexion réussie ! Vous pouvez maintenant accéder à votre&nbsp;
+            <a href="/espace-adherent">
+                espace adhérent
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16.3153 16.6681C15.9247 17.0587 15.9247 17.6918 16.3153 18.0824C16.7058 18.4729 17.339 18.4729 17.7295 18.0824L22.3951 13.4168C23.1761 12.6357 23.1761 11.3694 22.3951 10.5883L17.7266 5.9199C17.3361 5.52938 16.703 5.52938 16.3124 5.91991C15.9219 6.31043 15.9219 6.9436 16.3124 7.33412L19.9785 11.0002L2 11.0002C1.44772 11.0002 1 11.4479 1 12.0002C1 12.5524 1.44772 13.0002 2 13.0002L19.9832 13.0002L16.3153 16.6681Z" fill="#0e5c25"></path> </g></svg>
+            </a> 
+        </div>
+
+        <style>
+            .hclm-success-message {
+                background-color: #e0fce6;
+                color: #0e5c25;
+                border: 1px solid #a4e5b3;
+                padding: 1rem 1.25rem;
+                border-radius: 12px;
+                font-weight: 500;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.03);
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+                font-size: 16px;
+                animation: fadeInSlide 0.4s ease-out;
+                position:fixed;
+                bottom:20px;
+                right:20px;
+                z-index:9999;
+            }
+            .hclm-success-message a {
+                display: flex;
+                align-items: center;
+                color: #0e5c25 !important;
+                font-weight: 500 !important;
+                gap: 5px;
+                box-shadow: inset 0 -1px 0 0 #0e5c25;
+            }
+            .hclm-success-message a:hover {
+                color: #0e5c25 !important;
+            }
+            .hclm-success-message a svg {
+                height: 17px !important;
+            }
+
+            @media (max-width: 600px) {
+                .hclm-success-message {
+                    left: 10px;
+                    right: 10px;
+                    bottom: 10px;
+                    max-width: calc(100% - 20px);
+                    width: auto;
+                    border-radius: 10px;
+                    align-items: flex-start;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    font-size: 15px;
+                }
+
+                .hclm-success-message a {
+                    display: inline-flex;
+                    margin-top: 0;
+                    gap: 6px;
+                }
+            }
+        </style>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const params = new URLSearchParams(window.location.search);
+                if (params.has("login_success")) {
+                    params.delete("login_success");
+                    const newUrl = window.location.pathname + (params.toString() ? "?" + params.toString() : "");
+                    window.history.replaceState({}, "", newUrl);
+                }
+            });
+        </script>
+        ';
+    }
+});
 
 ?>

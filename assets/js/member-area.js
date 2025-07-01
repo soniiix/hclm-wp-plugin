@@ -153,8 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
     filterAndSortReports();
 });
 
-/* PROFILE UPDATE MESSAGE */
 document.addEventListener("DOMContentLoaded", function () {
+    /* PROFILE UPDATE MESSAGE */
     const message = document.querySelector(".update-message");
     if (message) {
         showProfile();
@@ -188,5 +188,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 profilePicture.src = reader.result;
             }
     });
+    }
+
+    /* MEMBERSHIP PAYMENT HISTORY */
+    const subscriptionTh = document.querySelector('.pms-payment-subscription-plan');
+    if (subscriptionTh) {
+        subscriptionTh.textContent = 'Intitulé';
     }
 });

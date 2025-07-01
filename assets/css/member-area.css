@@ -291,6 +291,68 @@ aside {
 }
 
 
+/* MEMBERSHIP */
+.pms-table {
+    margin: 0 !important;
+}
+
+.pms-no-payments{
+    margin: 0 !important;
+}
+
+.subscription-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.status-active {
+    background-color: #e0fce6;
+    color: #0e5c25;
+    border: 1px solid #0e5c25;
+    padding: 5px 11px;
+    border-radius: 15px;
+}
+
+.status-canceled, .status-expired {
+    background-color: #ffebee;
+    color: #B91C1C;
+    border: 1px solid #B91C1C;
+    padding: 5px 11px;
+    border-radius: 15px;
+}
+
+.next-payment-date{
+    font-weight: 600;
+}
+
+.action-button-container {
+    display: flex;
+    justify-content: start;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.btn-subscription-action {
+    padding: 6px 18px;
+    color: #FFF !important;
+    background-color: transparent;
+    border-radius: 10px;
+    border: 2px solid #e76f51;
+    color: #e76f51 !important;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 500;
+}
+
+.btn-subscription-action i {
+    font-size: 14px;
+}
+
 /* STATUS */
 .hclm-status-buttons-row{
     display: flex;

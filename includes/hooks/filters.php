@@ -92,4 +92,14 @@ function hclm_custom_user_avatar($avatar, $id_or_email, $size, $default, $alt) {
     return $avatar;
 }
 
+// Add custom styling for Stripe payment form
+add_filter( 'pms_stripe_connect_elements_styling', function($args) {
+    $args['variables'] = [
+        'colorPrimary' => '#e76f51',
+        'borderRadius' => '10px',
+        'fontSizeBase' => '16px'
+    ];
+    return $args;
+});
+
 ?>

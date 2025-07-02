@@ -50,24 +50,24 @@ function custom_pms_extra_fields() {
     <div class="pms-field pms-field-address">
         <div class="pms-field-streetaddress">
             <label for="user_address">Adresse *</label>
-            <input type="text" name="user_address" id="user_address" required>
+            <input type="text" name="user_address" id="user_address" autocomplete="address-line1" required>
         </div>
         <div>
             <label for="user_city">Ville *</label>
-            <input type="text" name="user_city" id="user_city" required>
+            <input type="text" name="user_city" id="user_city" autocomplete="address-level2" required>
         </div>
         <div>
             <label for="user_postal_code">Code postal *</label>
-            <input type="text" name="user_postal_code" id="user_postal_code" required autocomplete="postal-code">
+            <input type="text" name="user_postal_code" id="user_postal_code" autocomplete="postal-code" required>
         </div>
     </div>
     <div class="pms-field">
         <label for="user_address_2">Complément d'adresse</label>
-        <input type="text" name="user_address_2" id="user_address_2">
+        <input type="text" name="user_address_2" id="user_address_2" autocomplete="address-line2">
     </div>
     <div class="pms-field">
         <label for="user_phone">Téléphone *</label>
-        <input type="tel" name="user_phone" id="user_phone" required>
+        <input type="tel" name="user_phone" id="user_phone" autocomplete="tel" required>
     </div>
     <?php
 }

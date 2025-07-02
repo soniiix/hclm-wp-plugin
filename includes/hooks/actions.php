@@ -62,6 +62,10 @@ function custom_pms_extra_fields() {
         </div>
     </div>
     <div class="pms-field">
+        <label for="user_address_2">Complément d'adresse</label>
+        <input type="text" name="user_address_2" id="user_address_2">
+    </div>
+    <div class="pms-field">
         <label for="user_phone">Téléphone *</label>
         <input type="tel" name="user_phone" id="user_phone" required>
     </div>
@@ -71,31 +75,43 @@ function custom_pms_extra_fields() {
 // Save custom fields data after user registration in PMS
 add_action( 'pms_register_form_after_create_user', 'hclm_save_custom_user_meta', 10, 1 );
 function hclm_save_custom_user_meta( $user_data ) {
-    if (isset( $user_data['user_id'] ) ) {
+    if ( isset( $user_data['user_id'] ) ) {
         $user_id = $user_data['user_id'];
 
-        if (isset($_POST['user_address']) ) {
-            update_user_meta( $user_id, 'billing_address_1', sanitize_text_field($_POST['user_address']) );
-            update_user_meta( $user_id, 'shipping_address_1', sanitize_text_field($_POST['user_address']) );
+        $pms_fields = [];
+
+        if ( isset($_POST['user_address']) ) {
+            $pms_fields['pms_billing_address'] = sanitize_text_field($_POST['user_address']);
         }
 
-        if (isset($_POST['user_phone']) ) {
+        // Ensure the address 2 field is saved in both PMS and WooCommerce
+        if ( isset($_POST['user_address_2']) ) {
+            $pms_fields['pms_billing_address_2'] = sanitize_text_field($_POST['user_address_2']);
+            update_user_meta( $user_id, 'billing_address_2', sanitize_text_field($_POST['user_address_2']) );
+        }
+
+        if ( isset($_POST['user_city']) ) {
+            $pms_fields['pms_billing_city'] = sanitize_text_field($_POST['user_city']);
+        }
+
+        if ( isset($_POST['user_postal_code']) ) {
+            $pms_fields['pms_billing_zip'] = sanitize_text_field($_POST['user_postal_code']);
+        }
+
+        // Ensure the phone number is saved in both PMS and WooCommerce
+        if ( isset($_POST['user_phone']) ) {
+            $pms_fields['pms_billing_phone'] = sanitize_text_field($_POST['user_phone']);
             update_user_meta( $user_id, 'billing_phone', sanitize_text_field($_POST['user_phone']) );
-            update_user_meta( $user_id, 'shipping_phone', sanitize_text_field($_POST['user_phone']) );
         }
 
-        if ( function_exists('pms_get_member') ) {
-            $member = pms_get_member( $user_id );
+        // Use the native PMS method to handle WooCommerce sync
+        if ( function_exists('pms_update_user_account_data') ) {
+            pms_update_user_account_data( $pms_fields, $user_id, 'pms_form' );
+        }
 
-            if ( $member ) {
-                if (isset($_POST['user_address']) ) {
-                    update_user_meta( $user_id, 'pms_billing_address_1', sanitize_text_field($_POST['user_address']) );
-                }
-
-                if (isset($_POST['user_phone']) ) {
-                    update_user_meta( $user_id, 'pms_billing_phone', sanitize_text_field($_POST['user_phone']) );
-                }
-            }
+        // Manually update user meta for PMS fields
+        foreach ( $pms_fields as $key => $value ) {
+            update_user_meta( $user_id, $key, $value );
         }
     }
 }

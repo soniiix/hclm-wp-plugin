@@ -242,102 +242,109 @@ function member_area_shortcode() {
                         <h4><?php echo $subscription_plan ?></h4>
 
                         <?php
-                        // Determine if the subscription is active, expired, or canceled
-                        $now = time();
-                        $expiration_raw = $subscription['expiration_date'];
+                        // Check if the user is trying to renew the subscription. If so, display the renewal form.
+                        if (isset($_GET['pms-action']) && $_GET['pms-action'] === 'renew_subscription') {
+                            echo do_shortcode('[pms-account]');
 
-                        $has_valid_expiration = !empty($expiration_raw) && $expiration_raw !== '0000-00-00 00:00:00';
+                        } else {
+                            // Determine if the subscription is active, expired, or canceled
+                            $now = time();
+                            $expiration_raw = $subscription['expiration_date'];
 
-                        $expiration_timestamp = $has_valid_expiration ? strtotime($expiration_raw) : null;
+                            $has_valid_expiration = !empty($expiration_raw) && $expiration_raw !== '0000-00-00 00:00:00';
 
-                        $has_auto_renew = !empty($subscription['billing_next_payment']) && $subscription['billing_next_payment'] !== '0000-00-00 00:00:00';
+                            $expiration_timestamp = $has_valid_expiration ? strtotime($expiration_raw) : null;
 
-                        // We assume active if:
-                        // - status is "active"
-                        // - AND (expiration is still valid OR auto-renewal is active)
-                        $is_active = ($subscription['status'] === 'active') && ($has_valid_expiration ? $expiration_timestamp >= $now : $has_auto_renew);
-                        ?>
+                            $has_auto_renew = !empty($subscription['billing_next_payment']) && $subscription['billing_next_payment'] !== '0000-00-00 00:00:00';
 
-                        <!-- Display subscription details -->
-                        <div class="subscription-details">
-                            <?php
-                            if ($is_active) {
-                                echo '<div class="subscription-status">
-                                    Statut :&nbsp;
-                                    <span class="status-active">Actif</span>
-                                </div>';
-
-                                // Display subscription expiration date in the correct format
-                                $date = DateTime::createFromFormat('Y-m-d H:i:s', $subscription['expiration_date']);
-                                $formatter = new IntlDateFormatter(
-                                    'fr_FR',
-                                    IntlDateFormatter::LONG,
-                                    IntlDateFormatter::NONE,
-                                    'Europe/Paris',
-                                    IntlDateFormatter::GREGORIAN,
-                                    'd MMMM yyyy'
-                                );
-
-                                if ($subscription['expiration_date'] !== '0000-00-00 00:00:00') {
-                                    echo "<div class='expiration-date'>Date d'expiration : " . $formatter->format($date) . "</div>";
-                                }
-
-                                // Display next payment date if the user has opted for automatic renewal
-                                // Show option to cancel automatic renewal
-                                if (!empty($subscription['billing_next_payment']) && $subscription['billing_next_payment'] !== '0000-00-00 00:00:00') {
-                                    $next_payment_date = DateTime::createFromFormat('Y-m-d H:i:s', $subscription['billing_next_payment']);
-                                    echo "<div>
-                                        Vous avez opté pour le renouvellement automatique. Le prochain paiement se fera le
-                                        <span class='next-payment-date'>" . $formatter->format($next_payment_date) . "</span>.
-                                    </div>";
-                                    if (pms_get_cancel_url()) {
-                                    echo '<div class="action-button-container">
-                                        <a href="' . pms_get_cancel_url() . '" class="btn-subscription-action">
-                                        <i class="fas fa-ban"></i>
-                                        Annuler le renouvellement
-                                        </a>
-                                    </div>';
-                                    }
-                                }
-
-                                // Show renewal button if available
-                                if (pms_get_renew_url()) {
-                                    echo '<div class="action-button-container">
-                                        <a href="' . pms_get_renew_url() . '" class="btn-subscription-action">
-                                        <i class="fas fa-sync-alt"></i>
-                                        Renouveler
-                                        </a>
-                                    </div>';
-                                }
-
-                            } elseif ($subscription['status'] === 'expired' || $expiration_timestamp < $now) {
-                                echo '<div class="subscription-status">
-                                    Statut :&nbsp;
-                                    <span class="status-expired">Expiré</span>
-                                </div>';
-                                if (pms_get_renew_url()) {
-                                    echo '<div>Veuillez renouveler votre adhésion en cliquant sur le bouton ci-dessous.</div>
-                                    <div class="action-button-container">
-                                        <a href="' . pms_get_renew_url() . '" class="btn-subscription-action">
-                                        <i class="fas fa-sync-alt"></i>
-                                        Renouveler
-                                        </a>
-                                    </div>';
-                                }
-                            } elseif ($subscription['status'] === 'canceled') {
-                                echo '<div class="subscription-status">
-                                    Statut :&nbsp;
-                                    <span class="status-expired">Expiré</span>
-                                </div>';
-                            } else {
-                                echo '<div class="subscription-status">
-                                    Statut :&nbsp;
-                                    <span class="status-expired">En attente</span>
-                                </div>';
-                            }
+                            // We assume active if:
+                            // - status is "active"
+                            // - AND (expiration is still valid OR auto-renewal is active)
+                            $is_active = ($subscription['status'] === 'active') && ($has_valid_expiration ? $expiration_timestamp >= $now : $has_auto_renew);
                             ?>
-                        </div><?php
 
+                            <!-- Display subscription details -->
+                            <div class="subscription-details">
+                                <?php
+                                if ($is_active) {
+                                    echo '<div class="subscription-status">
+                                        Statut :&nbsp;
+                                        <span class="status-active">Actif</span>
+                                    </div>';
+
+                                    // Display subscription expiration date in the correct format
+                                    $date = DateTime::createFromFormat('Y-m-d H:i:s', $subscription['expiration_date'], new DateTimeZone('Europe/Paris'));
+                                    $formatter = new IntlDateFormatter(
+                                        'fr_FR',
+                                        IntlDateFormatter::LONG,
+                                        IntlDateFormatter::NONE,
+                                        'Europe/Paris',
+                                        IntlDateFormatter::GREGORIAN,
+                                        'd MMMM yyyy'
+                                    );
+
+                                    if ($subscription['expiration_date'] !== '0000-00-00 00:00:00') {
+                                        echo "<div class='expiration-date'>Date d'expiration : " . $formatter->format($date) . "</div>";
+                                    }
+
+                                    // Display next payment date if the user has opted for automatic renewal
+                                    // Show option to cancel automatic renewal
+                                    if (!empty($subscription['billing_next_payment']) && $subscription['billing_next_payment'] !== '0000-00-00 00:00:00') {
+                                        $next_payment_date = DateTime::createFromFormat('Y-m-d H:i:s', $subscription['billing_next_payment'], new DateTimeZone('Europe/Paris'));
+                                        echo "<div>
+                                            Vous avez opté pour le renouvellement automatique. Le prochain paiement se fera le
+                                            <span class='next-payment-date'>" . $formatter->format($next_payment_date) . "</span>.
+                                        </div>";
+                                        if (pms_get_cancel_url()) {
+                                        echo '<div class="action-button-container">
+                                            <a href="' . pms_get_cancel_url() . '" class="btn-subscription-action">
+                                            <i class="fas fa-ban"></i>
+                                            Annuler le renouvellement
+                                            </a>
+                                        </div>';
+                                        }
+                                    }
+
+                                    // Show renewal button if available
+                                    if (pms_get_renew_url()) {
+                                        echo '<div class="action-button-container">
+                                            <a href="' . pms_get_renew_url() . '" class="btn-subscription-action">
+                                            <i class="fas fa-sync-alt"></i>
+                                            Renouveler
+                                            </a>
+                                        </div>';
+                                    }
+
+                                } elseif ($subscription['status'] === 'expired' || $expiration_timestamp < $now) {
+                                    echo '<div class="subscription-status">
+                                        Statut :&nbsp;
+                                        <span class="status-expired">Expiré</span>
+                                    </div>';
+                                    if (pms_get_renew_url()) {
+                                        echo '<div>Veuillez renouveler votre adhésion en cliquant sur le bouton ci-dessous.</div>
+                                        <div class="action-button-container">
+                                            <a href="' . pms_get_renew_url() . '" class="btn-subscription-action">
+                                            <i class="fas fa-sync-alt"></i>
+                                            Renouveler
+                                            </a>
+                                        </div>';
+                                    }
+                                } elseif ($subscription['status'] === 'canceled') {
+                                    echo '<div class="subscription-status">
+                                        Statut :&nbsp;
+                                        <span class="status-expired">Expiré</span>
+                                    </div>';
+                                } else {
+                                    echo '<div class="subscription-status">
+                                        Statut :&nbsp;
+                                        <span class="status-expired">En attente</span>
+                                    </div>';
+                                }
+                                ?>
+                            </div>
+                            <?php
+                        }
+                    
                     } else {
                         echo "<span>Aucune adhésion n'est enregistrée pour ce compte. Veuillez adhérer en <a href='/adherer'>cliquant ici</a>.</span>";
                     }?>

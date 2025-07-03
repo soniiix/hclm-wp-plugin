@@ -35,7 +35,7 @@ body:is(.home) .hclm-search-bar-wrapper {
     color: #9da2af;
 }
 
-@media (max-width: 1368px) {
+@media (max-width: 1440px) {
     .hclm-search-bar {
         display: none !important;
     }

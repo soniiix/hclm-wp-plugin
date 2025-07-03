@@ -189,38 +189,63 @@ function member_area_shortcode() {
 
                         <div class="profile-form">
                             <div class="form-group">    
-                                <label>Nom</label>
+                                <label for="user_lastname">Nom</label>
                                 <div class="input-with-icon">
-                                    <input type="text" name="user_lastname" value="<?php echo esc_attr($user->get('user_lastname')); ?>" disabled>
+                                    <input type="text" id="user_lastname" name="user_lastname" value="<?php echo esc_attr($user->get('user_lastname')); ?>" disabled>
                                     <i class="fas fa-edit edit-icon"></i>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Prénom</label>
+                                <label for="user_firstname">Prénom</label>
                                 <div class="input-with-icon">
-                                    <input type="text" name="user_firstname" value="<?php echo esc_attr($user->get('user_firstname')); ?>" disabled>
+                                    <input type="text" id="user_firstname" name="user_firstname" value="<?php echo esc_attr($user->get('user_firstname')); ?>" disabled>
                                     <i class="fas fa-edit edit-icon"></i>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Email</label>
+                                <label for="user_email">Email</label>
                                 <div class="input-with-icon">
-                                    <input type="email" name="user_email" value="<?php echo esc_attr($user->get('user_email')); ?>" disabled>
+                                    <input type="email" id="user_email" name="user_email" value="<?php echo esc_attr($user->get('user_email')); ?>" disabled>
                                     <i class="fas fa-edit edit-icon"></i>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Téléphone</label>
+                                <label for="user_phone">Téléphone</label>
                                 <div class="input-with-icon">
-                                    <input type="tel" name="user_phone" value="<?php echo esc_attr($user->get('user_phone')); ?>" disabled>
+                                    <input type="tel" id="user_phone" name="user_phone" value="<?php echo esc_attr($user->get('billing_phone')); ?>" disabled>
                                     <i class="fas fa-edit edit-icon"></i>
                                 </div>
                             </div>
                             <div class="form-group address-group">
-                                <label>Adresse</label>
-                                <div class="input-with-icon">
-                                    <input type="text" name="user_address" value="<?php echo esc_attr($user->get('user_address')); ?>" disabled>
-                                    <i class="fas fa-edit edit-icon"></i>
+                                <div>
+                                    <label for="user_address">Adresse</label>
+                                    <div class="input-with-icon">
+                                        <input type="text" id="user_address" name="user_address" value="<?php echo esc_attr($user->get('pms_billing_address')); ?>" disabled>
+                                        <i class="fas fa-edit edit-icon"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="user_city">Ville</label>
+                                    <div class="input-with-icon">
+                                        <input type="text" id="user_city" name="user_city" value="<?php echo esc_attr($user->get('pms_billing_city')); ?>" disabled>
+                                        <i class="fas fa-edit edit-icon"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="user_postal_code">Code postal</label>
+                                    <div class="input-with-icon">
+                                        <input type="text" id="user_postal_code" name="user_postal_code" value="<?php echo esc_attr($user->get('pms_billing_zip')); ?>" disabled>
+                                        <i class="fas fa-edit edit-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group address-group">
+                                <div>
+                                    <label for="user_address_2">Complément d'adresse</label>
+                                    <div class="input-with-icon">
+                                        <input type="text" id="user_address_2" name="user_address_2" value="<?php echo esc_attr($user->get('billing_address_2')); ?>" disabled>
+                                        <i class="fas fa-edit edit-icon"></i>
+                                    </div>
                                 </div>
                             </div>
                             <button type="submit" class="btn-save">Enregistrer</button>

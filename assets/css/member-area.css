@@ -238,7 +238,7 @@ aside {
     flex-direction: column;
 }
 
-.form-group label{
+.form-group label, .address-group div label {
     font-size: 16px;
     margin-bottom: 4px;
 }
@@ -259,6 +259,26 @@ aside {
 
 .form-group.address-group{
     grid-column: 1 / -1;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+}
+
+.address-group div {
+    flex: 1;
+}
+
+@media (max-width: 1230px) {
+    .form-group.address-group {
+        flex-direction: column !important;
+        gap: 10px !important;
+        align-items: stretch !important;
+    }
+    .address-group div {
+        width: 100% !important;
+    }
 }
 
 .input-with-icon input:focus {

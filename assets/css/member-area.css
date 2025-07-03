@@ -342,6 +342,14 @@ aside {
     border-radius: 15px;
 }
 
+.status-pending {
+    background-color: #e5eaf1;
+    color: #4c749c;
+    border: 1px solid #4c749c;
+    padding: 5px 11px;
+    border-radius: 15px;
+}
+
 .next-payment-date{
     font-weight: 600;
 }

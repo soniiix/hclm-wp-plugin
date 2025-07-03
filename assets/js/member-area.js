@@ -82,6 +82,19 @@ function showProfile(){
     });
 }
 
+function showMembership(){
+    const tabs = document.querySelectorAll('.sidebar li');
+    const sections = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.classList.toggle('active', tab.getAttribute('data-tab') === "membership");
+    });
+
+    sections.forEach(section => {
+        section.classList.toggle('active', section.id === "membership");
+    });
+}
+
 /* REPORTS FILTERING AND SORTING */
 document.addEventListener('DOMContentLoaded', () => {
     const noResultsMessage = document.getElementById('no-results-message');
@@ -194,5 +207,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const subscriptionTh = document.querySelector('.pms-payment-subscription-plan');
     if (subscriptionTh) {
         subscriptionTh.textContent = 'Intitulé';
+    }
+
+    /* MEMBERSHIP PMS ACTION HANDLING */
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("pms-action")) {
+        showMembership();
     }
 });

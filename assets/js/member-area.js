@@ -212,6 +212,64 @@ document.addEventListener("DOMContentLoaded", function () {
     /* MEMBERSHIP PMS ACTION HANDLING */
     const params = new URLSearchParams(window.location.search);
     if (params.has("pms-action")) {
+        const pmsPopupOverlay = document.querySelector('.pms-action-popup-overlay');
+
+        window.addEventListener('click', (e) => {
+            if (e.target === pmsPopupOverlay) {
+                pmsPopupOverlay.style.display = 'none';
+            }
+        });
+
+        // Customize pms-account output
+        const pmsForm = document.querySelector('.pms-form');
+        const pmsFormParagraph = document.querySelector('.pms-form p');
+        const pmsFormTitle = document.querySelector('.pms-field-type-heading h3');
+        const pmsStripeWrapper = document.querySelector('#pms-stripe-connect');
+        const pmsRedirectBackButton = document.getElementsByName('pms_redirect_back')[0];
+        let pmsSubmitButton = null;
+
+        if (pmsForm) {
+            // Show the popup
+            pmsForm.style.display = 'block';
+            pmsForm.style.marginBottom = '5px';
+
+            // Remove the default styles
+            if (pmsFormParagraph) pmsFormParagraph.style.display = 'none';
+            if (pmsFormTitle) pmsFormTitle.style.display = 'none';
+            if (pmsStripeWrapper) {
+                pmsStripeWrapper.style.border = 'none';
+                pmsStripeWrapper.style.setProperty('padding', '0', 'important');
+                pmsStripeWrapper.style.boxShadow = 'none';
+                pmsStripeWrapper.style.margin = '-15px 0px 0px 0px';
+            }
+
+            switch (params.get("pms-action")) {
+                case "update_payment_method":
+                    pmsSubmitButton = document.getElementsByName('pms_update_payment_method')[0];
+                    if (pmsSubmitButton) pmsSubmitButton.value = 'Mettre à jour le moyen de paiement';
+                    break;
+                case "cancel_subscription":
+                    pmsSubmitButton = document.getElementsByName('pms_confirm_cancel_subscription')[0];
+                    break;
+            }
+
+            // Customize the buttons : change the text and style
+            if (pmsRedirectBackButton) {
+                pmsRedirectBackButton.value = 'Annuler';
+                pmsRedirectBackButton.classList.add('pms-action-popup-close-btn');
+
+                // Create a container for the buttons
+                actionButtonsContainer = document.createElement('div');
+                actionButtonsContainer.classList.add('hclm-popup-action-row');
+                pmsForm.appendChild(actionButtonsContainer);
+                actionButtonsContainer.appendChild(pmsRedirectBackButton);
+                actionButtonsContainer.appendChild(pmsSubmitButton);
+                pmsRedirectBackButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    pmsPopupOverlay.style.display = 'none';
+                });
+            }
+        }
         showMembership();
     }
 });

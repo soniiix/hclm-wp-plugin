@@ -461,6 +461,48 @@ aside {
     font-size: 14px;
 }
 
+.pms-action-popup-overlay {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6) !important;
+    z-index: 99999;
+    justify-content: center !important;
+    align-items: start !important;
+    padding-top: 95px;
+}
+
+.pms-action-popup {
+    background: #fff;
+    padding: 28px 28px 20px 28px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.pms-action-popup input[type="submit"] {
+    width: initial !important;
+}
+
+.pms-action-popup-close-btn {
+    color: #e76f51 !important;
+    font-weight: 500 !important;
+    border-radius: 10px;
+    transition: background-color 0.2s, color 0.2s !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    padding-left: 13px !important;
+    padding-right: 13px !important;
+}
+
+.pms-action-popup-close-btn:hover {
+    background-color: #f0f0f0 !important;
+}
+
 /* STATUS */
 .hclm-status-buttons-row {
     display: flex;

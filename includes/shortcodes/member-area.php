@@ -266,170 +266,182 @@ function member_area_shortcode() {
                         <h4>Cotisation annuelle</h4>
 
                         <?php
-                        // Check if the user is trying to renew the subscription. If so, display the renewal form.
-                        if (isset($_GET['pms-action']) && $_GET['pms-action'] === 'renew_subscription') {
-                            echo do_shortcode('[pms-account]');
+                        // Check if the user is trying to renew / cancel / update payment method for the subscription. If so, display the popup.
+                        if (isset($_GET['pms-action'])) { ?>
+                            <div class="pms-action-popup-overlay">
+                                <div class="pms-action-popup">
+                                    <?php switch ($_GET['pms-action']) {
+                                        case 'update_payment_method': ?>
+                                            <?php break;
+                                        case 'cancel_subscription': ?>
+                                            <span>En annulant le renouvellement automatique, votre adhésion prendra fin à la fin de l'année et ne sera pas reconduite sans action de votre part.</span>
+                                            <?php break;
+                                        //@TODO : default case and renew case
+                                    } ?>
 
-                        } else {
-                            // Determine if the subscription is active, expired, or canceled
-                            $now = time();
-                            $has_valid_expiration = !empty($subscription->expiration_date);
-
-                            $expiration_timestamp = $has_valid_expiration ? strtotime($subscription->expiration_date) : null;
-
-                            $has_auto_renew = !empty($subscription->billing_next_payment);
-
-                            // We assume active if:
-                            // - status is "active"
-                            // - AND (expiration is still valid OR auto-renewal is active)
-                            $is_active = ($subscription->status === 'active') && ($has_valid_expiration ? $expiration_timestamp >= $now : $has_auto_renew);
-                            ?>
-
-                            <!-- Display subscription details -->
-                            <div class="subscription-details">
-                                <?php
-                                // If the subscription is active, show all details
-                                if ($is_active) { ?>
-                                    <!-- Subscription status -->
-                                    <div class="subscription-details-row">
-                                        <div class="subscription-details-row-title">Statut</div><span class="status-active">Actif</span>
-                                    </div>
-
-                                    <!-- Subscription expiration date -->
-                                    <?php if (!empty($subscription->expiration_date)) { ?>
-                                        <div class='subscription-details-row'>
-                                            <div class="subscription-details-row-title">
-                                                Date d'expiration
-                                            </div>
-                                            <span><?php echo esc_html(ucfirst(date_i18n(get_option('date_format'), strtotime( $subscription->expiration_date)))) ?></span>
-                                        </div> 
-                                    <?php }
-
-                                    // Next payment date if the user has opted for automatic renewal, and payment method details if available
-                                    // Show option to cancel automatic renewal
-                                    if (!empty($subscription->billing_next_payment)) {
-                                        $billing_amount = $subscription->billing_amount;
-                                        $next_payment_date = $subscription->billing_next_payment;
-
-                                        $payment_method_data = pms_get_member_subscription_payment_method_details($subscription->id);
-                                        
-                                        // The logic in block comes from the source code of the PMS plugin. Only some details were changed.
-                                        if(!empty($payment_method_data)) { ?>
-                                            <div class="subscription-details-row payment-method-row">
-                                                <div class="subscription-details-row-title">
-                                                    Moyen de paiement
-                                                </div>
-
-                                                <div class="subscription-details-row-payment-method">
-                                                    <div class="pms-account-subscription-details-table__payment-method__wrap">
-                                                        <span class="pms-account-subscription-details-table__payment-method__brand">
-                                                            <?php
-                                                            $assets_src = esc_url( PMS_PLUGIN_DIR_PATH ) . 'assets/images/card-icons/';
-
-                                                            if( !empty( $payment_method_data['pms_payment_method_type'] ) ) 
-                                                                echo file_get_contents( $assets_src . $payment_method_data['pms_payment_method_type'] . '.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                                                            ?>
-                                                        </span>
-
-                                                        <span class="pms-account-subscription-details-table__payment-method__number">
-                                                            <?php echo !empty( $payment_method_data['pms_payment_method_number'] ) ? '&bull;&bull;&bull;&bull; ' . esc_html( $payment_method_data['pms_payment_method_number'] ) : '' ?>
-                                                        </span>
-                                                        
-                                                        <span class="pms-account-subscription-details-table__payment-method__expiration">
-                                                            Expire le :
-                                                            <?php echo !empty( $payment_method_data['pms_payment_method_expiration_month'] ) ? esc_html( $payment_method_data['pms_payment_method_expiration_month'] ) . ' /' : '' ?>
-                                                            <?php echo !empty( $payment_method_data['pms_payment_method_expiration_year'] ) ? esc_html( $payment_method_data['pms_payment_method_expiration_year'] ) : '' ?>
-                                                        </span>
-                                                    </div>
-
-                                                    <?php
-                                                    // Show the update payment method link
-                                                    echo wp_kses_post(
-                                                        apply_filters(
-                                                            'pms_output_subscription_plan_action_update_payment_method',
-                                                            '<a class="hclm-update-payment-method-link" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'pms-action' => 'update_payment_method', 'subscription_id' => $subscription->id  ), pms_get_current_page_url( true ) ), 'pms_update_payment_method', 'pmstkn' ) ) . '" title="Mettre à jour le moyen de paiement rattaché à l\'adhésion">
-                                                                Mettre à jour
-                                                            </a>',
-                                                            pms_get_subscription_plan( $subscription->subscription_plan_id ), $subscription->to_array(), get_current_user_id() ) );
-                                                    ?>
-                                                </div>
-                                            </div>
-                                        <?php } ?>
-
-                                        <div>
-                                            Vous avez opté pour le renouvellement automatique. Le prochain paiement de <?php echo $billing_amount ?> € sera prélevé le 
-                                            <span class='next-payment-date'>
-                                                <?php echo esc_html(ucfirst(date_i18n(get_option('date_format'), strtotime($next_payment_date)))) ?>
-                                            </span>.
-                                        </div>
-                                        <?php if (pms_get_cancel_url()) { ?>
-                                            <div class="action-button-container">
-                                                <a href="<?php echo pms_get_cancel_url() ?>" class="btn-subscription-action">
-                                                <i class="fas fa-ban"></i>
-                                                Annuler le renouvellement
-                                                </a>
-                                            </div>
-                                        <?php }
-                                    }
-
-                                    // Show renewal button if available
-                                    if (pms_get_renew_url()) { ?>
-                                        <div class="action-button-container">
-                                            <a href="<?php echo pms_get_renew_url() ?>" class="btn-subscription-action" title="Renouveler l'adhésion">
-                                                <i class="fas fa-sync-alt"></i>
-                                                Renouveler
-                                            </a>
-                                        </div>
-                                    <?php }
-
-                                }
-
-                                // If the subscription is expired, show status and renewal option
-                                elseif ($subscription->status === 'expired' || $expiration_timestamp < $now) { ?>
-                                    <div>
-                                        Statut :&nbsp;<span class="status-expired">Expiré</span>
-                                    </div>
-
-                                    <?php if (pms_get_renew_url()) { ?>
-                                        <div>Veuillez renouveler votre adhésion en cliquant sur le bouton ci-dessous.</div>
-                                        <div class="action-button-container">
-                                            <a href="<?php echo pms_get_renew_url() ?>" class="btn-subscription-action">
-                                            <i class="fas fa-sync-alt"></i>
-                                            Renouveler
-                                            </a>
-                                        </div>
-                                    <?php }
-
-                                } 
-                                
-                                // If the subscription is canceled, show status and renewal option
-                                elseif ($subscription->status === 'canceled') { ?>
-                                    <div>
-                                        Statut :&nbsp;<span class="status-expired">Annulé</span>
-                                    </div>
-
-                                    <?php if (pms_get_renew_url()) { ?>
-                                        <div>Vous avez avez annulé votre adhésion. Vous pouvez la renouveler en cliquant sur le bouton ci-dessous.</div>
-                                        <div class="action-button-container">
-                                            <a href="<?php echo pms_get_renew_url() ?>" class="btn-subscription-action">
-                                            <i class="fas fa-sync-alt"></i>
-                                            Renouveler
-                                            </a>
-                                        </div>
-                                    <?php }
-                                } 
-                                
-                                // Default case, show pending status and display an information message
-                                else { ?>
-                                    <div>
-                                        Statut :&nbsp;<span class="status-pending">En attente</span>
-                                    </div>
-
-                                    <div>Votre adhésion est en attente de validation. Vous serez notifié par email dès que votre adhésion sera active.</div>
-                                    <div>Si vous pensez qu'il s'agit d'une erreur, veuillez nous contacter en <a href="/contact">cliquant ici</a>.</div>
-                                <?php } ?>
+                                    <?php echo do_shortcode('[pms-account]'); ?>
+                                </div>
                             </div>
                         <?php }
+
+
+                        // Determine if the subscription is active, expired, or canceled
+                        $now = time();
+                        $has_valid_expiration = !empty($subscription->expiration_date);
+                        $expiration_timestamp = $has_valid_expiration ? strtotime($subscription->expiration_date) : null;
+                        $has_auto_renew = !empty($subscription->billing_next_payment);
+
+                        // We assume active if:
+                        // - status is "active"
+                        // - AND (expiration is still valid OR auto-renewal is active)
+                        $is_active = ($subscription->status === 'active') && ($has_valid_expiration ? $expiration_timestamp >= $now : $has_auto_renew);
+                        ?>
+
+                        <!-- Display subscription details -->
+                        <div class="subscription-details">
+                            <?php
+                            // If the subscription is active, show all details
+                            if ($is_active) { ?>
+                                <!-- Subscription status -->
+                                <div class="subscription-details-row">
+                                    <div class="subscription-details-row-title">Statut</div><span class="status-active">Actif</span>
+                                </div>
+
+                                <!-- Subscription expiration date -->
+                                <?php if (!empty($subscription->expiration_date)) { ?>
+                                    <div class='subscription-details-row'>
+                                        <div class="subscription-details-row-title">
+                                            Date d'expiration
+                                        </div>
+                                        <span><?php echo esc_html(ucfirst(date_i18n(get_option('date_format'), strtotime( $subscription->expiration_date)))) ?></span>
+                                    </div> 
+                                <?php }
+
+                                // Next payment date if the user has opted for automatic renewal, and payment method details if available
+                                // Show option to cancel automatic renewal
+                                if (!empty($subscription->billing_next_payment)) {
+                                    $billing_amount = $subscription->billing_amount;
+                                    $next_payment_date = $subscription->billing_next_payment;
+
+                                    $payment_method_data = pms_get_member_subscription_payment_method_details($subscription->id);
+                                    
+                                    // The logic in block comes from the source code of the PMS plugin. Only some details were changed.
+                                    if(!empty($payment_method_data)) { ?>
+                                        <div class="subscription-details-row payment-method-row">
+                                            <div class="subscription-details-row-title">
+                                                Moyen de paiement
+                                            </div>
+
+                                            <div class="subscription-details-row-payment-method">
+                                                <div class="pms-account-subscription-details-table__payment-method__wrap">
+                                                    <span class="pms-account-subscription-details-table__payment-method__brand">
+                                                        <?php
+                                                        $assets_src = esc_url( PMS_PLUGIN_DIR_PATH ) . 'assets/images/card-icons/';
+
+                                                        if( !empty( $payment_method_data['pms_payment_method_type'] ) ) 
+                                                            echo file_get_contents( $assets_src . $payment_method_data['pms_payment_method_type'] . '.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                                        ?>
+                                                    </span>
+
+                                                    <span class="pms-account-subscription-details-table__payment-method__number">
+                                                        <?php echo !empty( $payment_method_data['pms_payment_method_number'] ) ? '&bull;&bull;&bull;&bull; ' . esc_html( $payment_method_data['pms_payment_method_number'] ) : '' ?>
+                                                    </span>
+                                                    
+                                                    <span class="pms-account-subscription-details-table__payment-method__expiration">
+                                                        Expire le :
+                                                        <?php echo !empty( $payment_method_data['pms_payment_method_expiration_month'] ) ? esc_html( $payment_method_data['pms_payment_method_expiration_month'] ) . ' /' : '' ?>
+                                                        <?php echo !empty( $payment_method_data['pms_payment_method_expiration_year'] ) ? esc_html( $payment_method_data['pms_payment_method_expiration_year'] ) : '' ?>
+                                                    </span>
+                                                </div>
+
+                                                <?php
+                                                // Show the update payment method link
+                                                echo wp_kses_post(
+                                                    apply_filters(
+                                                        'pms_output_subscription_plan_action_update_payment_method',
+                                                        '<a class="hclm-update-payment-method-link" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'pms-action' => 'update_payment_method', 'subscription_id' => $subscription->id  ), pms_get_current_page_url( true ) ), 'pms_update_payment_method', 'pmstkn' ) ) . '" title="Mettre à jour le moyen de paiement rattaché à l\'adhésion">
+                                                            Mettre à jour
+                                                        </a>',
+                                                        pms_get_subscription_plan( $subscription->subscription_plan_id ), $subscription->to_array(), get_current_user_id() ) );
+                                                ?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+                                    <div>
+                                        Vous avez opté pour le renouvellement automatique. Le prochain paiement de <?php echo $billing_amount ?> € sera prélevé le 
+                                        <span class='next-payment-date'>
+                                            <?php echo esc_html(ucfirst(date_i18n(get_option('date_format'), strtotime($next_payment_date)))) ?>
+                                        </span>.
+                                    </div>
+                                    <?php if (pms_get_cancel_url()) { ?>
+                                        <div class="action-button-container">
+                                            <a href="<?php echo pms_get_cancel_url() ?>" class="btn-subscription-action">
+                                            <i class="fas fa-ban"></i>
+                                            Annuler le renouvellement
+                                            </a>
+                                        </div>
+                                    <?php }
+                                }
+
+                                // Show renewal button if available
+                                if (pms_get_renew_url()) { ?>
+                                    <div class="action-button-container">
+                                        <a href="<?php echo pms_get_renew_url() ?>" class="btn-subscription-action" title="Renouveler l'adhésion">
+                                            <i class="fas fa-sync-alt"></i>
+                                            Renouveler
+                                        </a>
+                                    </div>
+                                <?php }
+
+                            }
+
+                            // If the subscription is expired, show status and renewal option
+                            elseif ($subscription->status === 'expired' || $expiration_timestamp < $now) { ?>
+                                <div>
+                                    Statut :&nbsp;<span class="status-expired">Expiré</span>
+                                </div>
+
+                                <?php if (pms_get_renew_url()) { ?>
+                                    <div>Veuillez renouveler votre adhésion en cliquant sur le bouton ci-dessous.</div>
+                                    <div class="action-button-container">
+                                        <a href="<?php echo pms_get_renew_url() ?>" class="btn-subscription-action">
+                                        <i class="fas fa-sync-alt"></i>
+                                        Renouveler
+                                        </a>
+                                    </div>
+                                <?php }
+
+                            } 
+                            
+                            // If the subscription is canceled, show status and renewal option
+                            elseif ($subscription->status === 'canceled') { ?>
+                                <div>
+                                    Statut :&nbsp;<span class="status-expired">Annulé</span>
+                                </div>
+
+                                <?php if (pms_get_renew_url()) { ?>
+                                    <div>Vous avez avez annulé votre adhésion. Vous pouvez la renouveler en cliquant sur le bouton ci-dessous.</div>
+                                    <div class="action-button-container">
+                                        <a href="<?php echo pms_get_renew_url() ?>" class="btn-subscription-action">
+                                        <i class="fas fa-sync-alt"></i>
+                                        Renouveler
+                                        </a>
+                                    </div>
+                                <?php }
+                            } 
+                            
+                            // Default case, show pending status and display an information message
+                            else { ?>
+                                <div>
+                                    Statut :&nbsp;<span class="status-pending">En attente</span>
+                                </div>
+
+                                <div>Votre adhésion est en attente de validation. Vous serez notifié par email dès que votre adhésion sera active.</div>
+                                <div>Si vous pensez qu'il s'agit d'une erreur, veuillez nous contacter en <a href="/contact">cliquant ici</a>.</div>
+                            <?php } ?>
+                        </div>
+                        <?php
                     
                     } else {
                         echo "<span>Aucune adhésion n'est enregistrée pour ce compte. Veuillez adhérer en <a href='/adherer'>cliquant ici</a>.</span>";

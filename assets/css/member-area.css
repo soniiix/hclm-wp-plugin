@@ -365,12 +365,44 @@ aside {
     gap: 10px;
 }
 
+.subscription-details-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.subscription-details-row {
+    font-weight: 500;
+}
+
+.subscription-details-row:not(.payment-method-row) {
+    align-items: center;
+}
+
+.payment-method-row {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.subscription-details-row-title {
+    width: 190px;
+    font-weight: 400;
+}
+
+.subscription-details-row-payment-method {
+    display: flex;
+    flex-direction: column;
+}
+
 .status-active {
     background-color: #e0fce6;
     color: #0e5c25;
     border: 1px solid #0e5c25;
     padding: 5px 11px;
     border-radius: 15px;
+    height: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .status-canceled,
@@ -392,6 +424,14 @@ aside {
 
 .next-payment-date {
     font-weight: 600;
+}
+
+.hclm-update-payment-method-link{
+    color: #e76f51;
+    text-decoration: none !important;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    font-size: 14px;
 }
 
 .action-button-container {

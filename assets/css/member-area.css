@@ -69,7 +69,7 @@ aside {
     font-weight: bold;
 }
 
-.logout-container{
+.logout-container {
     text-align: center;
     margin-bottom: 5px;
 }
@@ -84,7 +84,7 @@ aside {
     text-decoration: none !important;
 }
 
-.logout-button span{
+.logout-button span {
     font-weight: 500;
     margin-right: 5px;
 }
@@ -121,12 +121,12 @@ aside {
 }
 
 .tab-hover-card {
-    transition: box-shadow 0.2s ease;   
+    transition: box-shadow 0.2s ease;
 }
 
 .tab-hover-card:hover {
     cursor: pointer;
-    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
 
 /* PROFILE */
@@ -169,13 +169,14 @@ aside {
         opacity: 0;
         transform: translateY(-5px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-.profile-header{
+.profile-header {
     height: 100%;
 }
 
@@ -211,7 +212,7 @@ aside {
     height: 32px;
     color: white;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -238,7 +239,8 @@ aside {
     flex-direction: column;
 }
 
-.form-group label, .address-group div label {
+.form-group label,
+.address-group div label {
     font-size: 16px;
     margin-bottom: 4px;
 }
@@ -257,7 +259,7 @@ aside {
     border: 2px solid #e5e4e5 !important;
 }
 
-.form-group.address-group{
+.form-group.address-group {
     grid-column: 1 / -1;
     display: flex;
     gap: 16px;
@@ -276,6 +278,7 @@ aside {
         gap: 10px !important;
         align-items: stretch !important;
     }
+
     .address-group div {
         width: 100% !important;
     }
@@ -314,9 +317,45 @@ aside {
 /* MEMBERSHIP */
 .pms-table {
     margin: 0 !important;
+    border-radius: 10px;
 }
 
-.pms-no-payments{
+.pms-payment-history-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 1px solid #e1e1e1;
+    border-width: 1px 1px 0px 1px ;
+    border-radius: 10px;
+    overflow: hidden !important;
+}
+
+.pms-table {
+    border: none !important;
+}
+
+.pms-table thead {
+    background-color: #f3f5f6 !important;
+    border-top-right-radius: 10px !important;
+    border-top-left-radius: 10px !important;
+}
+
+.pms-table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+.pms-table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+.pms-table th, .pms-table td {
+    border-width: 0 0px 1px 0 !important;
+}
+
+.pms-table th{
+    text-align: left !important;
+}
+
+.pms-no-payments {
     margin: 0 !important;
 }
 
@@ -334,7 +373,8 @@ aside {
     border-radius: 15px;
 }
 
-.status-canceled, .status-expired {
+.status-canceled,
+.status-expired {
     background-color: #ffebee;
     color: #B91C1C;
     border: 1px solid #B91C1C;
@@ -350,7 +390,7 @@ aside {
     border-radius: 15px;
 }
 
-.next-payment-date{
+.next-payment-date {
     font-weight: 600;
 }
 
@@ -382,7 +422,7 @@ aside {
 }
 
 /* STATUS */
-.hclm-status-buttons-row{
+.hclm-status-buttons-row {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -390,7 +430,7 @@ aside {
     gap: 16px;
 }
 
-._df_button{
+._df_button {
     all: unset !important;
     padding: 7px 18px !important;
     color: #FFF !important;
@@ -452,7 +492,7 @@ aside {
     font-weight: 600;
 }
 
-.tab-card h4 i{
+.tab-card h4 i {
     margin-right: 4px;
     color: #e76f51;
 }
@@ -486,7 +526,7 @@ aside {
     border: 1px solid black;
 }
 
-content p{
+content p {
     margin-bottom: 0;
 }
 
@@ -511,7 +551,7 @@ content p{
     border-radius: 10px !important;
     flex: 1 1 200px;
     background-color: #fff;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .hclm-reports-search-bar-wrapper svg {
@@ -543,7 +583,7 @@ content p{
     font-family: inherit !important;
     background-color: #ffffff !important;
     transition: box-shadow 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     flex: 1 1 200px;
     height: 45px !important;
 }
@@ -583,17 +623,20 @@ content p{
     padding: 15px;
     align-items: center;
     gap: 20px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     position: relative;
 }
 
 .report-card .report-link {
-  position: absolute;
-  left:0; top:0; bottom:0; right:0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .report-card:hover {
-    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
@@ -634,7 +677,7 @@ content p{
     font-size: 16px;
     transition: background-color 0.3s ease;
     text-decoration: none !important;
-    position:relative;
+    position: relative;
     pointer-events: all;
     z-index: 1;
 }

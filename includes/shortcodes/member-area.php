@@ -350,7 +350,7 @@ function member_area_shortcode() {
                                             <i class="fas fa-sync-alt"></i>
                                             Renouveler
                                             </a>
-                                        </div>';
+                                        </div>
                                     <?php }
 
                                 } 
@@ -368,7 +368,7 @@ function member_area_shortcode() {
                                             <i class="fas fa-sync-alt"></i>
                                             Renouveler
                                             </a>
-                                        </div>';
+                                        </div>
                                     <?php }
                                 } 
                                 
@@ -391,7 +391,9 @@ function member_area_shortcode() {
 
                 <div class="tab-card membership">
                     <h4><i class="fas fa-history"></i> Historique des paiements</h4>
-                    <?php echo do_shortcode('[pms-payment-history]'); ?>
+                    <div class="pms-payment-history-wrapper">
+                        <?php echo do_shortcode('[pms-payment-history]'); ?>
+                    </div>
                 </div>
             </section>
             <section id="statuses" class="tab-content">

@@ -321,10 +321,10 @@ function member_area_shortcode() {
                         $expiration_timestamp = $has_valid_expiration ? strtotime($subscription->expiration_date) : null;
                         $has_auto_renew = !empty($subscription->billing_next_payment);
 
-                        // We assume active if:
-                        // - status is "active"
-                        // - AND (expiration is still valid OR auto-renewal is active)
-                        $is_active = ($subscription->status === 'active') && ($has_valid_expiration ? $expiration_timestamp >= $now : $has_auto_renew);
+                        // We assume the subscription is active if:
+                        // - status is "active" or "canceled" (canceled means auto-renewal was disabled, but access is still granted until expiration)
+                        // - AND (expiration date is still valid OR auto-renewal is active)
+                        $is_active = ($subscription->status === 'active' || $subscription->status === 'canceled') && ($has_valid_expiration ? $expiration_timestamp >= $now : $has_auto_renew);
                         ?>
 
                         <!-- Display subscription details -->
@@ -414,6 +414,13 @@ function member_area_shortcode() {
                                     <?php }
                                 }
 
+                                // If auto-renewal was canceled, show an explanation
+                                if ($subscription->status === 'canceled') { ?>
+                                    <div>
+                                        Vous avez annulé le renouvellement automatique. Votre adhésion reste active jusqu'à la date d'expiration fixée.
+                                    </div>
+                                <?php }
+
                                 // Show renewal button if available
                                 if (pms_get_renew_url()) { ?>
                                     <div class="action-button-container">
@@ -442,24 +449,7 @@ function member_area_shortcode() {
                                     </div>
                                 <?php }
 
-                            } 
-                            
-                            // If the subscription is canceled, show status and renewal option
-                            elseif ($subscription->status === 'canceled') { ?>
-                                <div>
-                                    Statut :&nbsp;<span class="status-expired">Annulé</span>
-                                </div>
-
-                                <?php if (pms_get_renew_url()) { ?>
-                                    <div>Vous avez avez annulé votre adhésion. Vous pouvez la renouveler en cliquant sur le bouton ci-dessous.</div>
-                                    <div class="action-button-container">
-                                        <a href="<?php echo pms_get_renew_url() ?>" class="btn-subscription-action">
-                                        <i class="fas fa-sync-alt"></i>
-                                        Renouveler
-                                        </a>
-                                    </div>
-                                <?php }
-                            } 
+                            }
                             
                             // Default case, show pending status and display an information message
                             else { ?>

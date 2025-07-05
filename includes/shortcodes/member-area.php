@@ -1,6 +1,7 @@
 <?php
 
 require_once plugin_dir_path(__FILE__) . 'utils/get-pdf-cover.php';
+require_once plugin_dir_path(__FILE__) . 'utils/get-renewal-expiration-date.php';
 
 /**
  * Displays the HCLM member area.
@@ -162,7 +163,7 @@ function member_area_shortcode() {
                 if ($profile_updated) {
                     delete_transient('hclm_profile_updated_' . get_current_user_id());
                     ?>
-                    <div class="update-message">
+                    <div class="update-message" id="profile-update-message">
                         <i class="fas fa-check-circle"></i>
                         Profil mis à jour avec succès !
                     </div>
@@ -255,14 +256,43 @@ function member_area_shortcode() {
             </section>
             <section id="membership" class="tab-content">
                 <?php 
+                // Update message handling
+                $message = null;
+
+                // If the user has updated the payment method, set the message accordingly.
+                if (isset($_GET['pmsscsmsg']) && base64_decode($_GET['pmsscsmsg']) === 'Payment method updated successfully.') {
+                    $message = 'Moyen de paiement mis à jour avec succès !';
+                } 
+
+                // If the user has renewed the subscription, set the message accordingly.
+                elseif (isset($_GET['pms_gateway_payment_action']) && base64_decode($_GET['pms_gateway_payment_action']) === 'renew_subscription') {
+                    $message = 'Votre adhésion a bien été renouvelée.';
+                }
+
+                // If the user has confirmed the cancellation of automatic renewal, set the message accordingly and hide the popup.
+                elseif (isset($_POST['pms_confirm_cancel_subscription'])) {
+                    $message = 'Le renouvellement automatique a bien été annulé.'; ?>
+                    <style>.pms-action-popup-overlay { display: none !important; } </style> <?
+                }
+
+                // Display the message if it exists
+                if ($message) { ?>
+                    <div class="update-message" id="membership-update-message">
+                        <i class="fas fa-check-circle"></i>
+                        <?php echo esc_html($message); ?>
+                    </div>
+                <?php }
+
+
                 // Retrieve member's subscription details
                 $subscriptions = pms_get_member_subscriptions(array( 'user_id' => get_current_user_id()));
-                $subscription = !empty($subscriptions) ? $subscriptions[0] : null;
-                ?>
-
+                $subscription = !empty($subscriptions) ? $subscriptions[0] : null; ?>
+            
                 <h3>Votre adhésion à HCLM</h3>
                 <div class="tab-card">
-                    <?php if ($subscription) { ?>
+                    <?php if ($subscription) {
+                        $renew_expiration_date = get_renewal_expiration_date($subscription);
+                        ?>
                         <h4>Cotisation annuelle</h4>
 
                         <?php
@@ -270,20 +300,20 @@ function member_area_shortcode() {
                         if (isset($_GET['pms-action'])) { ?>
                             <div class="pms-action-popup-overlay">
                                 <div class="pms-action-popup">
-                                    <?php switch ($_GET['pms-action']) {
-                                        case 'update_payment_method': ?>
-                                            <?php break;
-                                        case 'cancel_subscription': ?>
-                                            <span>En annulant le renouvellement automatique, votre adhésion prendra fin à la fin de l'année et ne sera pas reconduite sans action de votre part.</span>
-                                            <?php break;
-                                        //@TODO : default case and renew case
-                                    } ?>
+                                    <?php 
+                                    // Display an information message based on the action
+                                    if ($_GET['pms-action'] === 'cancel_subscription') { ?>
+                                        <div>En annulant le renouvellement automatique, votre adhésion prendra fin à la fin de l'année et ne sera pas reconduite sans action de votre part.</div>
+                                    <?php }
+                                    if ($_GET['pms-action'] === 'renew_subscription') { ?>
+                                        <div>L'adhésion sera valable jusqu'au <?php echo esc_html($renew_expiration_date); ?>.</div>
+                                    <?php }
 
-                                    <?php echo do_shortcode('[pms-account]'); ?>
+                                    // Display the form by including the PMS shortcode
+                                    echo do_shortcode('[pms-account]'); ?>
                                 </div>
                             </div>
                         <?php }
-
 
                         // Determine if the subscription is active, expired, or canceled
                         $now = time();
@@ -451,7 +481,7 @@ function member_area_shortcode() {
                 <div class="tab-card membership">
                     <h4><i class="fas fa-history"></i> Historique des paiements</h4>
                     <div class="pms-payment-history-wrapper">
-                        <?php echo do_shortcode('[pms-payment-history]'); ?>
+                        <?php echo do_shortcode('[pms-payment-history number_per_page="200"]'); ?>
                     </div>
                 </div>
             </section>

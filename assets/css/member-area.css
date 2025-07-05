@@ -471,16 +471,14 @@ aside {
     background: rgba(0, 0, 0, 0.6) !important;
     z-index: 99999;
     justify-content: center !important;
-    align-items: start !important;
-    padding-top: 95px;
+    align-items: center !important;
 }
 
 .pms-action-popup {
     background: #fff;
     padding: 28px 28px 20px 28px;
     border-radius: 10px;
-    width: 90%;
-    max-width: 500px;
+    width: 600px;
     position: relative;
 }
 

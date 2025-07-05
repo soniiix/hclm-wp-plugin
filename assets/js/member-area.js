@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener("DOMContentLoaded", function () {
     /* PROFILE UPDATE MESSAGE */
-    const message = document.querySelector(".update-message");
+    const message = document.querySelector("#profile-update-message");
     if (message) {
         showProfile();
         setTimeout(() => {
@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(() => {
                 message.remove();
             }, 600);
-        }, 5000);
+        }, 8000);
     }
 
     // Handle profile picture upload
@@ -226,6 +226,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const pmsFormTitle = document.querySelector('.pms-field-type-heading h3');
         const pmsStripeWrapper = document.querySelector('#pms-stripe-connect');
         const pmsRedirectBackButton = document.getElementsByName('pms_redirect_back')[0];
+        const pmsSuccessMessage = document.querySelector('.pms_success-messages-wrapper');
+        const pmsSubscriptionDuration = document.querySelector('.pms-subscription-plan-duration');
+        const pmsSubscriptionPlan = document.querySelector('.pms-subscription-plan');
+        const pmsSubscriptionAutoRenew = document.querySelector('.pms-subscription-plan-auto-renew');
+        if (pmsSuccessMessage) pmsSuccessMessage.style.display = 'none';
+        if (pmsSubscriptionDuration) pmsSubscriptionDuration.style.setProperty('display', 'none', 'important');
+        if (pmsSubscriptionPlan) {
+            pmsSubscriptionPlan.style.marginBottom = '13px';
+            popupSpan = document.querySelector('.pms-action-popup div');
+            if (popupSpan) pmsSubscriptionPlan.appendChild(popupSpan);
+        }
+        if (pmsSubscriptionAutoRenew) pmsSubscriptionAutoRenew.style.marginBottom = '2em';
         let pmsSubmitButton = null;
 
         if (pmsForm) {
@@ -251,6 +263,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 case "cancel_subscription":
                     pmsSubmitButton = document.getElementsByName('pms_confirm_cancel_subscription')[0];
                     break;
+                case "renew_subscription":
+                    pmsSubmitButton = document.getElementsByName('pms_renew_subscription')[0];
+                    if (pmsSubmitButton) pmsSubmitButton.value = "Renouveler l'adhésion";
+                    break;
             }
 
             // Customize the buttons : change the text and style
@@ -271,5 +287,20 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
         showMembership();
+    }
+
+    if (params.has('pmsscsmsg')) {
+        showMembership();
+    }
+
+    const membershipMessage = document.querySelector("#membership-update-message");
+    if (membershipMessage) {
+        showMembership();
+        setTimeout(() => {
+            membershipMessage.classList.add("fade-out");
+            setTimeout(() => {
+                membershipMessage.remove();
+            }, 600);
+        }, 8000);
     }
 });

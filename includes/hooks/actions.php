@@ -182,10 +182,17 @@ add_action('admin_head', function() {
     </style>';
 });
 
-// Remove the WooCommerce marketing menu item
 add_action('admin_menu', function() {
-    remove_menu_page('woocommerce-marketing');
+    remove_menu_page('woocommerce-marketing'); // Remove the WooCommerce marketing menu item
+    remove_menu_page('wpr-addons'); // Remove the WPR Addons menu item
+    remove_menu_page('edit-comments.php'); // Remove the comments menu item
 }, 99);
+
+// Remove the comments tab from the admin bar
+add_action( 'wp_before_admin_bar_render', function(){
+    global $wp_admin_bar;
+    $wp_admin_bar->remove_menu('comments');
+});
 
 // Initialize the session if it is not already started. It is necessary for the login error handling.
 add_action('init', function () {
@@ -200,12 +207,6 @@ add_action('template_redirect', function() {
         wp_redirect(home_url(), 301);
         exit;
     }
-});
-
-// Remove the comments tab from the admin bar
-add_action( 'wp_before_admin_bar_render', function(){
-    global $wp_admin_bar;
-    $wp_admin_bar->remove_menu('comments');
 });
 
 // Show a success message after login

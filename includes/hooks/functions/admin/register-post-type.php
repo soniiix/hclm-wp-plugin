@@ -50,12 +50,40 @@ function register_newsletter_post_type() {
 }
 add_action('init', 'register_newsletter_post_type');
 
+// Add a custom post type for communications
+function register_communication_post_type() {
+    register_post_type('communication', [
+        'labels' => [
+            'name' => 'Communications',
+            'singular_name' => 'Communication',
+            'add_new_item' => 'Ajouter une communication',
+            'edit_item' => 'Modifier la communication',
+            'search_items' => 'Rechercher des communications',
+            'not_found' => 'Aucune communication trouvée',
+            'not_found_in_trash' => 'Aucune communication dans la corbeille'
+        ],
+        'public' => true,
+        'has_archive' => false,
+        'rewrite' => ['slug' => 'communications'],
+        'supports' => ['title'],
+        'show_ui' => true,
+        'show_in_rest' => false,
+        'show_in_menu' => 'hclm-manage',
+    ]);
+}
+add_action('init', 'register_communication_post_type');
+
 // Remove useless meta boxes
 add_action('do_meta_boxes', function () {
     remove_meta_box('astra_settings_meta_box', 'visite_automnale', 'normal');
     remove_meta_box('astra_settings_meta_box', 'bulletin', 'side');
+    remove_meta_box('astra_settings_meta_box', 'communication', 'side');
     remove_meta_box('wpr-secondary-image', 'visite_automnale', 'side');
     remove_meta_box('wpr-secondary-image', 'bulletin', 'side');
+    remove_meta_box('wpr-secondary-image', 'communication', 'side');
+    remove_meta_box('pms_post_content_restriction', 'visite_automnale', 'normal');
+    remove_meta_box('pms_post_content_restriction', 'bulletin', 'normal');
+    remove_meta_box('pms_post_content_restriction', 'communication', 'normal');
 });
 
 ?>

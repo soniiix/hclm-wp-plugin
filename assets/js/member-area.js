@@ -227,10 +227,27 @@ document.addEventListener("DOMContentLoaded", function () {
         const pmsStripeWrapper = document.querySelector('#pms-stripe-connect');
         const pmsRedirectBackButton = document.getElementsByName('pms_redirect_back')[0];
         const pmsSuccessMessage = document.querySelector('.pms_success-messages-wrapper');
+        const pmsErrorMessage = document.querySelector('.pms-payment-error');
         const pmsSubscriptionDuration = document.querySelector('.pms-subscription-plan-duration');
         const pmsSubscriptionPlan = document.querySelector('.pms-subscription-plan');
         const pmsSubscriptionAutoRenew = document.querySelector('.pms-subscription-plan-auto-renew');
         if (pmsSuccessMessage) pmsSuccessMessage.style.display = 'none';
+        if (pmsErrorMessage) {
+            errorIcon = document.createElement('i');
+            errorIcon.classList.add('far', 'fa-times-circle');
+            pmsErrorMessageParagraph = pmsErrorMessage.querySelector('p:first-child');
+            pmsErrorMessageParagraph.insertBefore(errorIcon, pmsErrorMessageParagraph.firstChild);
+            if (!pmsForm) {
+                const closeBtn = document.createElement('div');
+                closeBtn.className = ('pms-action-popup-close-btn pms-error');
+                closeBtn.textContent = 'Fermer';
+                closeBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    pmsPopupOverlay.style.display = 'none';
+                });
+                document.querySelector('.pms-action-popup').appendChild(closeBtn);
+            }
+        }
         if (pmsSubscriptionDuration) pmsSubscriptionDuration.style.setProperty('display', 'none', 'important');
         if (pmsSubscriptionPlan) {
             pmsSubscriptionPlan.style.marginBottom = '13px';

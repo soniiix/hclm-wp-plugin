@@ -495,10 +495,44 @@ aside {
     box-shadow: none !important;
     padding-left: 13px !important;
     padding-right: 13px !important;
+    cursor: pointer;
+}
+
+.pms-action-popup-close-btn.pms-error{
+    width: fit-content !important;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .pms-action-popup-close-btn:hover {
     background-color: #f0f0f0 !important;
+}
+
+.pms-payment-error {
+    background-color: #ffebee !important;
+    color: #B91C1C !important;
+    padding: 15px 16px !important;
+    border-radius: 10px;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    border: none !important;
+    margin-top: 15px;
+}
+
+.pms-payment-error p {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pms-payment-error i {
+    color: #B91C1C;
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+.pms-payment-error p:last-child {
+    display: none !important;
 }
 
 /* STATUS */

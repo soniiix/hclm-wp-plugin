@@ -23,6 +23,7 @@ require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/visits-list.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/products-list.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/events-slider.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/search-bar.php';
+require_once plugin_dir_path(__FILE__) . 'includes/shortcodes/communications-list.php';
 
 // Save shortcodes
 add_shortcode('hclm_login_button', 'login_button_shortcode');
@@ -36,5 +37,6 @@ add_shortcode('hclm_fall_visits', 'fall_visits_shortcode');
 add_shortcode('hclm_products', 'products_list_shortcode');
 add_shortcode('hclm_events_slider', 'events_slider_shortcode');
 add_shortcode('hclm_search-bar', 'search_bar_shortcode');
+add_shortcode('hclm_communications', 'hclm_communications_shortcode');
 
 ?>

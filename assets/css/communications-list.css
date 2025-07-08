@@ -1,0 +1,61 @@
+.hclm-communications-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(335px, 1fr));
+    gap: 24px;
+    margin-right: auto;
+}
+
+@media (max-width: 500px) {
+    .hclm-communications-wrapper {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+.hclm-communication-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.hclm-communication-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.hclm-communication-year {
+    display: inline-block;
+    background-color: #e76f51;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500 !important;
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin-bottom: 6px;
+}
+
+.hclm-communication-title {
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    color: #333;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.hclm-communication-select-wrapper select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+.hclm-communication-select-wrapper select:focus {
+    border-color: #e76f51;
+    outline: none;
+}

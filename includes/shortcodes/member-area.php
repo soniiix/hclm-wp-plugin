@@ -303,7 +303,7 @@ function member_area_shortcode() {
                                     <?php 
                                     // Display an information message based on the action
                                     if ($_GET['pms-action'] === 'cancel_subscription') { ?>
-                                        <div>En annulant le renouvellement automatique, votre adhésion prendra fin à la fin de l'année et ne sera pas reconduite sans action de votre part.</div>
+                                        <div>En annulant le renouvellement automatique, votre adhésion prendra fin à la fin de l'année civile et ne sera pas reconduite sans action de votre part.</div>
                                     <?php }
                                     if ($_GET['pms-action'] === 'renew_subscription') { ?>
                                         <div>L'adhésion sera valable jusqu'au <?php echo esc_html($renew_expiration_date); ?>.</div>

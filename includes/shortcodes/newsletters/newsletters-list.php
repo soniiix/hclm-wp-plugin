@@ -29,7 +29,7 @@ function newsletters_list_shortcode() {
         $bulletin_num = preg_replace('/[^0-9]/', '', $post->post_title); // Exctract the number from the title
 
         $pdf_url = get_post_meta($post->ID, 'pdf_url', true);
-        $cover_url = get_the_post_thumbnail_url($post->ID, 'medium');
+        $cover_url = get_the_post_thumbnail_url($post->ID, 'large');
         $summary_url = get_post_meta($post->ID, 'summary_url', true);
 
         if (!$summary_url) continue;
@@ -38,20 +38,33 @@ function newsletters_list_shortcode() {
             <div 
                 class="newsletter-card" 
                 data-target="#popup-b' . $bulletin_num . '"
+                tabindex="0"
+                role="button"
+                aria-haspopup="dialog"
+                aria-controls="popup-b' . $bulletin_num .'"
+                title="Ouvrir le bulletin n°' . $bulletin_num .'"
             >
                 <img src="' . esc_url($cover_url) . '" alt="Couverture du bulletin n°' . esc_html($bulletin_num) . '">
                 <h3 class="newsletter-name">Bulletin n°' . esc_html($bulletin_num) . '</h3>
             </div>
 
-            <div id="popup-b' . $bulletin_num . '" class="newsletter-popup hidden">
+            <div 
+                id="popup-b' . $bulletin_num . '" 
+                class="newsletter-popup hidden"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="popup-title-' . $bulletin_num .'"
+                aria-describedby="popup-desc-' . $bulletin_num . '"
+                tabindex="-1"
+            >
                 <div class="popup-overlay"></div>
                 <div class="popup-content">
-                    <button class="popup-close">
+                    <button class="popup-close" title="Femer le popup" aria-label="Fermer le popup">
                         <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#FFF"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#FFF" d="M195.2 195.2a64 64 0 0 1 90.496 0L512 421.504 738.304 195.2a64 64 0 0 1 90.496 90.496L602.496 512 828.8 738.304a64 64 0 0 1-90.496 90.496L512 602.496 285.696 828.8a64 64 0 0 1-90.496-90.496L421.504 512 195.2 285.696a64 64 0 0 1 0-90.496z"></path></g></svg>
                     </button>
 
-                    <div class="popup-title">Bulletin n°' . $bulletin_num . '</div>
-                    <div class="popup-description">
+                    <div class="popup-title" id="popup-title-' . $bulletin_num . '">Bulletin n°' . $bulletin_num . '</div>
+                    <div class="popup-description" id="popup-desc-' . $bulletin_num . '">
                         Voici la table des matières de ce bulletin. Pour consulter l\'intégralité du bulletin, cliquez sur le bouton ci-dessous.
                     </div>
 

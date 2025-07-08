@@ -74,6 +74,10 @@ main.content {
     background-position: center;
 }
 
+.visit-image:hover {
+    cursor: pointer;
+}
+
 .visit-content {
     padding: 15px;
     display: flex;

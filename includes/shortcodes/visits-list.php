@@ -41,7 +41,9 @@ function fall_visits_shortcode() {
         $link = get_permalink();
         ?>
         <div class="visit-card">
-            <div class="visit-image" style="background-image: url('<?= esc_url($img); ?>')"></div>
+            <a href="<?= esc_url($link); ?>" class="visit-link" target="_blank" rel="noopener noreferrer">
+                <div class="visit-image" style="background-image: url('<?= esc_url($img); ?>')"></div>
+            </a>
             <div class="visit-content">
                 <h3 class="visit-title"><?= get_the_title(); ?></h3>
                 <p class="visit-date"><?= get_the_date('d/m/Y'); ?></p>

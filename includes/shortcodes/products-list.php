@@ -78,7 +78,9 @@ function products_list_shortcode() {
         $link = get_permalink();
         ?>
         <div class="product-card">
-            <div class="product-image" style="background-image: url('<?= esc_url($img); ?>')"></div>
+            <a href="<?= esc_url($link); ?>" class="product-link" target="_blank" rel="noopener noreferrer">
+                <div class="product-image" style="background-image: url('<?= esc_url($img); ?>')"></div>
+            </a>
             <div class="product-content">
                 <h3 class="product-title"><?= wp_trim_words(get_the_title(), 11); ?></h3>
                 <div class="product-subcontent">

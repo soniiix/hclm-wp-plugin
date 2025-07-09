@@ -1,10 +1,61 @@
+:root {
+    --orange: #e76f51;
+}
+
+
+/* =========================== */
+/*    LAYOUT - MAIN CONTENT    */
+/* =========================== */
 .hclm-member-area {
     display: flex;
     height: 100%;
     font-size: 16px;
 }
 
-/* Sidebar */
+.content {
+    flex: 1;
+    padding: 24px 50px;
+}
+
+@media (max-width: 600px) {
+    .content {
+        padding: 24px;
+    }
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content h3 {
+    font-weight: 500;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    border: 2px solid #e0e0e0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.03);
+}
+
+.tab-hover-card {
+    transition: box-shadow 0.2s ease;
+}
+
+.tab-hover-card:hover {
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+
+/* =========================== */
+/*           SIDEBAR           */
+/* =========================== */
 .sidebar {
     min-height: 75vh;
     display: flex;
@@ -65,7 +116,7 @@ aside {
 
 .sidebar li.active {
     background-color: #f6f6f6;
-    color: #e76f51;
+    color: var(--orange);
     font-weight: bold;
 }
 
@@ -77,7 +128,7 @@ aside {
 .logout-button {
     padding: 13px 25px;
     color: #FFF !important;
-    background-color: #e76f51;
+    background-color: var(--orange);
     border-radius: 10px;
     font-size: 16px;
     transition: background-color 0.3s ease;
@@ -144,48 +195,85 @@ aside {
     }
 }
 
-/* Main content */
-.content {
-    flex: 1;
-    padding: 24px 50px;
+
+/* =========================== */
+/*         DASHBOARD           */
+/* =========================== */
+.dashboard-two-columns {
+    display: flex;
+    gap: 1rem;
+    align-items: stretch;
 }
 
-@media (max-width: 600px) {
-    .content {
-        padding: 24px;
+@media (max-width: 940px) {
+    .dashboard-two-columns {
+        flex-direction: column;
     }
 }
 
-.tab-content {
-    display: none;
+.dashboard-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
 }
 
-.tab-content h3 {
-    font-weight: 500;
+.left-col {
+    flex: 1;
+}
+.last-report-col {
+    flex: 1;
 }
 
-.tab-content.active {
-    display: block;
+.tab-card h4 {
+    font-size: 18px;
+    margin-bottom: 25px;
+    font-weight: 600;
 }
 
-.tab-card {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 25px;
-    border: 2px solid #e0e0e0;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.03);
+.tab-card h4 i {
+    margin-right: 4px;
+    color: var(--orange);
 }
 
-.tab-hover-card {
-    transition: box-shadow 0.2s ease;
+.span-2 {
+    grid-column: span 2;
 }
 
-.tab-hover-card:hover {
-    cursor: pointer;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+.card-last-report {
+    flex: 1;
+    text-align: center;
+    min-height: 315px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* PROFILE */
+.card-last-report h4 {
+    margin-bottom: 0 !important;
+}
+
+.report-thumbnail {
+    height: 165px;
+    margin: 10px auto;
+}
+
+.report-thumbnail img {
+    height: 100%;
+    max-width: 100%;
+    border: 1px solid black;
+}
+
+content p {
+    margin-bottom: 0;
+}
+
+
+/* =========================== */
+/*           PROFILE           */
+/* =========================== */
 .profile-section {
     display: flex;
     gap: 40px;
@@ -260,7 +348,7 @@ aside {
     position: absolute;
     bottom: -10px;
     right: -10px;
-    background-color: #e76f51;
+    background-color: var(--orange);
     border: none;
     border-radius: 100%;
     padding: 4px;
@@ -348,7 +436,7 @@ aside {
 
 .input-with-icon input:focus {
     outline: none !important;
-    border-color: #e76f51 !important;
+    border-color: var(--orange) !important;
 }
 
 .edit-icon {
@@ -359,14 +447,14 @@ aside {
 }
 
 .edit-icon:hover {
-    color: #e76f51;
+    color: var(--orange);
 }
 
 .btn-save {
     grid-column: 1 / -1;
     margin-top: 1rem;
     padding: 12px 20px;
-    background-color: #e76f51;
+    background-color: var(--orange);
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -376,7 +464,9 @@ aside {
 }
 
 
-/* MEMBERSHIP */
+/* =========================== */
+/*         MEMBERSHIP          */
+/* =========================== */
 .pms-table {
     margin: 0 !important;
     border-radius: 10px;
@@ -508,7 +598,7 @@ aside {
 }
 
 .hclm-update-payment-method-link{
-    color: #e76f51;
+    color: var(--orange);
     text-decoration: none !important;
     font-weight: 500;
     transition: color 0.2s ease;
@@ -527,8 +617,8 @@ aside {
     color: #FFF !important;
     background-color: transparent;
     border-radius: 10px;
-    border: 2px solid #e76f51;
-    color: #e76f51 !important;
+    border: 2px solid var(--orange);
+    color: var(--orange) !important;
     font-size: 16px;
     transition: background-color 0.3s ease;
     text-decoration: none !important;
@@ -568,7 +658,7 @@ aside {
 }
 
 .pms-action-popup-close-btn {
-    color: #e76f51 !important;
+    color: var(--orange) !important;
     font-weight: 500 !important;
     border-radius: 10px;
     transition: background-color 0.2s, color 0.2s !important;
@@ -616,7 +706,10 @@ aside {
     display: none !important;
 }
 
-/* STATUS */
+
+/* =========================== */
+/*          STATUSES           */
+/* =========================== */
 .hclm-status-buttons-row {
     display: flex;
     flex-direction: row;
@@ -648,8 +741,8 @@ aside {
     all: unset !important;
     padding: 7px 18px !important;
     color: #FFF !important;
-    background-color: #e76f51 !important;
-    border: 2px solid #e76f51 !important;
+    background-color: var(--orange) !important;
+    border: 2px solid var(--orange) !important;
     border-radius: 10px !important;
     color: #fff !important;
     font-size: 16px !important;
@@ -679,80 +772,9 @@ aside {
 }
 
 
-/* DASHBOARD */
-.dashboard-two-columns {
-    display: flex;
-    gap: 1rem;
-    align-items: stretch;
-}
-
-@media (max-width: 940px) {
-    .dashboard-two-columns {
-        flex-direction: column;
-    }
-}
-
-.dashboard-col {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 1rem;
-}
-
-.left-col {
-    flex: 1;
-}
-.last-report-col {
-    flex: 1;
-}
-
-.tab-card h4 {
-    font-size: 18px;
-    margin-bottom: 25px;
-    font-weight: 600;
-}
-
-.tab-card h4 i {
-    margin-right: 4px;
-    color: #e76f51;
-}
-
-.span-2 {
-    grid-column: span 2;
-}
-
-.card-last-report {
-    flex: 1;
-    text-align: center;
-    min-height: 315px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.card-last-report h4 {
-    margin-bottom: 0 !important;
-}
-
-.report-thumbnail {
-    height: 165px;
-    margin: 10px auto;
-}
-
-.report-thumbnail img {
-    height: 100%;
-    max-width: 100%;
-    border: 1px solid black;
-}
-
-content p {
-    margin-bottom: 0;
-}
-
-/* REPORTS */
-
+/* =========================== */
+/*           REPORTS           */
+/* =========================== */
 .filters {
     display: flex;
     flex-wrap: wrap;
@@ -792,7 +814,7 @@ content p {
 }
 
 .hclm-reports-search-bar-wrapper:focus-within {
-    border: 1px solid #e76f51 !important;
+    border: 1px solid var(--orange) !important;
     outline: none !important;
 }
 
@@ -810,7 +832,7 @@ content p {
 }
 
 .filters select:focus {
-    border-color: #e76f51 !important;
+    border-color: var(--orange) !important;
     outline: none !important;
 }
 
@@ -885,7 +907,7 @@ content p {
 
 .report-date i {
     margin-right: 4px;
-    color: #e76f51;
+    color: var(--orange);
 }
 
 .btn-download {
@@ -893,8 +915,8 @@ content p {
     color: #FFF !important;
     background-color: transparent;
     border-radius: 10px;
-    border: 2px solid #e76f51;
-    color: #e76f51 !important;
+    border: 2px solid var(--orange);
+    color: var(--orange) !important;
     font-size: 16px;
     transition: background-color 0.3s ease;
     text-decoration: none !important;
@@ -904,7 +926,7 @@ content p {
 }
 
 .btn-download:hover {
-    background-color: #e76f51 !important;
+    background-color: var(--orange) !important;
     color: white !important;
 }
 

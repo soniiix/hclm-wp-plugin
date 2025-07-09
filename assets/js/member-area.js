@@ -1,5 +1,28 @@
-/* SIDEBAR HANDLING */
+/**
+ * Shows the specified section in the member area. Switches the active tab and displays the corresponding content section.
+ * @param {string} sectionId - The ID of the section to show (e.g., 'profile', 'reports', 'membership').
+ */
+function showSection(sectionId) {
+    const tabs = document.querySelectorAll('.sidebar li');
+    const sections = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.classList.toggle('active', tab.getAttribute('data-tab') === sectionId);
+    });
+
+    sections.forEach(section => {
+        section.classList.toggle('active', section.id === sectionId);
+    });
+}
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
+    /* =========================== */
+    /*          SIDEBAR            */
+    /* =========================== */
+
+    /* SIDEBAR TOGGLE */
     const tabs = document.querySelectorAll('.sidebar li');
     const sections = document.querySelectorAll('.tab-content');
 
@@ -41,10 +64,14 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
-});
 
-/* EDITABLE FIELDS (PROFILE SECTION) */
-document.addEventListener('DOMContentLoaded', () => {
+
+
+    /* =========================== */
+    /*          PROFILE            */
+    /* =========================== */
+
+    /* ENABLE EDITING FORM INPUTS */
     document.querySelectorAll('.edit-icon').forEach(icon => {
         icon.addEventListener('click', () => {
             const input = icon.previousElementSibling;
@@ -56,49 +83,50 @@ document.addEventListener('DOMContentLoaded', () => {
             icon.style.display = 'none';
         });
     });
-});
 
-function showReports(){
-    const tabs = document.querySelectorAll('.sidebar li');
-    const sections = document.querySelectorAll('.tab-content');
+    /* PROFILE UPDATE MESSAGE */
+    const message = document.querySelector("#profile-update-message");
+    if (message) {
+        showSection('profile');
+        setTimeout(() => {
+            message.classList.add("fade-out");
+            setTimeout(() => {
+                message.remove();
+            }, 600);
+        }, 8000);
+    }
 
-    tabs.forEach(tab => {
-        tab.classList.toggle('active', tab.getAttribute('data-tab') === "reports");
-    });
+    /* PROFILE PICTURE UPLOAD */
+    const profilePictureInput = document.querySelector('.profile-picture-input');
+    const editPictureBtn = document.querySelector('.edit-picture-btn');
+    const profilePicture = document.querySelector('.profile-picture');
 
-    sections.forEach(section => {
-        section.classList.toggle('active', section.id === "reports");
-    });
-}
+    if (profilePictureInput && editPictureBtn) {
+        editPictureBtn.addEventListener('click', () => {
+            profilePictureInput.click();
+        });
 
-function showProfile(){
-    const tabs = document.querySelectorAll('.sidebar li');
-    const sections = document.querySelectorAll('.tab-content');
+        profilePictureInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
 
-    tabs.forEach(tab => {
-        tab.classList.toggle('active', tab.getAttribute('data-tab') === "profile");
-    });
+            console.log(reader);
+            reader.readAsDataURL(file);
 
-    sections.forEach(section => {
-        section.classList.toggle('active', section.id === "profile");
-    });
-}
+            console.log(profilePicture);
+            reader.onloadend = () => {
+                profilePicture.src = reader.result;
+            }
+        });
+    }
 
-function showMembership(){
-    const tabs = document.querySelectorAll('.sidebar li');
-    const sections = document.querySelectorAll('.tab-content');
 
-    tabs.forEach(tab => {
-        tab.classList.toggle('active', tab.getAttribute('data-tab') === "membership");
-    });
 
-    sections.forEach(section => {
-        section.classList.toggle('active', section.id === "membership");
-    });
-}
+    /* =========================== */
+    /*          REPORTS            */
+    /* =========================== */
 
-/* REPORTS FILTERING AND SORTING */
-document.addEventListener('DOMContentLoaded', () => {
+    /* REPORTS FILTERING AND SORTING */
     const noResultsMessage = document.getElementById('no-results-message');
     const yearSelect = document.getElementById('filter-year');
     const typeSelect = document.getElementById('filter-type');
@@ -166,51 +194,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     filterAndSortReports();
-});
 
-document.addEventListener("DOMContentLoaded", function () {
-    /* PROFILE UPDATE MESSAGE */
-    const message = document.querySelector("#profile-update-message");
-    if (message) {
-        showProfile();
-        setTimeout(() => {
-            message.classList.add("fade-out");
-            setTimeout(() => {
-                message.remove();
-            }, 600);
-        }, 8000);
-    }
 
-    // Handle profile picture upload
-    const profilePictureInput = document.querySelector('.profile-picture-input');
-    const editPictureBtn = document.querySelector('.edit-picture-btn');
-    const profilePicture = document.querySelector('.profile-picture');
 
-    if (profilePictureInput && editPictureBtn) {
-        editPictureBtn.addEventListener('click', () => {
-            profilePictureInput.click();
-        });
-
-        profilePictureInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-
-            console.log(reader);
-            reader.readAsDataURL(file);
-
-            console.log(profilePicture);
-            reader.onloadend = () => {
-                profilePicture.src = reader.result;
-            }
-    });
-    }
-
-    /* MEMBERSHIP PAYMENT HISTORY */
+    /* =========================== */
+    /*         MEMBERSHIP          */
+    /* =========================== */
+    
+    /* CUSTOMIZE PAYMENT TABLE */
     const subscriptionTh = document.querySelector('.pms-payment-subscription-plan');
     if (subscriptionTh) {
         subscriptionTh.textContent = 'Intitulé';
     }
-
+    
     /* MEMBERSHIP PMS ACTION HANDLING */
     const params = new URLSearchParams(window.location.search);
     if (params.has("pms-action")) {
@@ -305,16 +301,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
         }
-        showMembership();
+        showSection('membership');
     }
 
     if (params.has('pmsscsmsg')) {
-        showMembership();
+        showSection('membership');
     }
 
     const membershipMessage = document.querySelector("#membership-update-message");
     if (membershipMessage) {
-        showMembership();
+        showSection('membership');
         setTimeout(() => {
             membershipMessage.classList.add("fade-out");
             setTimeout(() => {

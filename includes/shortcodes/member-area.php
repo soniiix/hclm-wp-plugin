@@ -140,7 +140,7 @@ function member_area_shortcode() {
                     </div>
                     
                     <div class="dashboard-col last-report-col">
-                        <div class="tab-card tab-hover-card card-last-report" onclick="showReports();" title="Voir les comptes rendus">
+                        <div class="tab-card tab-hover-card card-last-report" onclick="showSection('reports');" title="Voir les comptes rendus">
                             <h4><i class="fas fa-file-alt"></i> Dernier compte rendu</h4>
                             <div class="report-thumbnail">
                                 <?php

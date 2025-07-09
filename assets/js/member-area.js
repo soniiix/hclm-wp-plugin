@@ -16,9 +16,11 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             const sidebar = document.querySelector('.sidebar');
+
+            const paymentsRows = document.querySelectorAll('tr');
             
-            // Apply 80vh height for reports and suggestions tabs if they are active
-            if (target === 'reports' || target === 'suggestions') {
+            // Apply 80vh height for reports and suggestions tabs if they are active, and if membership tab is active and there are more than 4 rows in payments table
+            if (target === 'reports' || target === 'suggestions' || (target === 'membership' && (paymentsRows && paymentsRows.length > 4))) {
                 sidebar.classList.add('sidebar-80vh');
             } else {
                 sidebar.classList.remove('sidebar-80vh');
@@ -31,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     ? header.getBoundingClientRect().bottom > 0
                     : false;
 
-                if ((target === 'reports' || target === 'suggestions') && !headerVisible) {
+                if ((target === 'reports' || target === 'suggestions' || (target === 'membership' && (paymentsRows && paymentsRows.length > 4))) && !headerVisible) {
                     sidebar.classList.add('sidebar-90vh');
                 } else {
                     sidebar.classList.remove('sidebar-90vh');

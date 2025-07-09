@@ -422,7 +422,7 @@ function member_area_shortcode() {
                                 <?php }
 
                                 // Show renewal button if available AND expiration date is past due
-                                if (pms_get_renew_url() && $has_valid_expiration && $expiration_timestamp < $now) { ?>
+                                if (pms_get_renew_url()) { ?>
                                     <div class="action-button-container">
                                         <a href="<?php echo pms_get_renew_url() ?>" class="btn-subscription-action" title="Renouveler l'adhésion">
                                             <i class="fas fa-sync-alt"></i>

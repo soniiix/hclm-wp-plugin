@@ -106,7 +106,7 @@ function member_area_shortcode() {
                     ?>
                 </h3>
                 <div class="dashboard-two-columns">
-                    <div class="dashboard-col">
+                    <div class="dashboard-col left-col">
                         <div class="tab-card">
                             <p>Bienvenue dans l'espace adhérent. Ici, vous retrouverez toutes les informations importantes liées à votre adhésion.</p>
                             <?php if (!current_user_can('administrator')){ ?>
@@ -139,7 +139,7 @@ function member_area_shortcode() {
                         </div>
                     </div>
                     
-                    <div class="dashboard-col">
+                    <div class="dashboard-col last-report-col">
                         <div class="tab-card tab-hover-card card-last-report" onclick="showReports();" title="Voir les comptes rendus">
                             <h4><i class="fas fa-file-alt"></i> Dernier compte rendu</h4>
                             <div class="report-thumbnail">

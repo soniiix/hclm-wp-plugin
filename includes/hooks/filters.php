@@ -102,4 +102,9 @@ add_filter( 'pms_stripe_connect_elements_styling', function($args) {
     return $args;
 });
 
+// Set a custom tablet breakpoint
+add_filter( 'astra_tablet_breakpoint', function() {
+    return 1170;
+});
+
 ?>

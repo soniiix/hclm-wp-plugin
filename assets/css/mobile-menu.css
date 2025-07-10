@@ -1,0 +1,204 @@
+/* =========================== */
+/*           BUTTON            */
+/* =========================== */
+.hclm-mobile-menu-btn {
+    height: 47.64px;
+    width: 47.64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e76f51;
+    border-radius: 10px;
+    -webkit-tap-highlight-color: transparent;
+    margin-left: -5px;
+    position: relative;
+    z-index: 99991;
+}
+
+.hclm-mobile-menu-btn:hover {
+    cursor: pointer;
+}
+
+.hclm-mobile-menu.active .hclm-mobile-menu-btn:hover,
+.hclm-mobile-menu.active .hclm-mobile-menu-btn:focus,
+.hclm-mobile-menu.active .hclm-mobile-menu-btn:active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.hclm-mobile-menu.active .hclm-mobile-menu-btn ul.buns li.bun {
+    transform: rotate(45deg) translateZ(0);
+}
+
+.hclm-mobile-menu.active .hclm-mobile-menu-btn ul.buns li.bun:last-child {
+    transform: rotate(-45deg) translateZ(0);
+}
+
+ul.buns {
+    width: 24px;
+    height: 24px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    color: #fff;
+}
+
+ul.buns li.bun {
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    border-radius: 10px;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s;
+}
+
+ul.buns li.bun:first-child {
+    top: 6px;
+}
+
+ul.buns li.bun:last-child {
+    top: 16px;
+}
+
+.hclm-mobile-menu.active .hclm-mobile-menu-btn ul.buns li.bun:first-child {
+    transform: translateY(5px) rotate(45deg);
+}
+.hclm-mobile-menu.active .hclm-mobile-menu-btn ul.buns li.bun:last-child {
+    transform: translateY(-5px) rotate(-45deg);
+}
+
+
+/* =========================== */
+/*           MENU              */
+/* =========================== */
+.hclm-mobile-menu-content {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100vh;
+    background-color: #e76f51;
+    z-index: 99990;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    transition: right 0.2s ease-in-out;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    color: #fff;
+    padding-top: 80px;
+}
+
+.hclm-mobile-menu.active .hclm-mobile-menu-content {
+    right: 0;
+}
+
+/* =========================== */
+/*         MENU LIST           */
+/* =========================== */
+.hclm-mobile-menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    margin-bottom: 20px !important;
+}
+
+.hclm-mobile-menu-list > li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.hclm-mobile-menu-list > li > a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.2s ease-in-out;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hclm-mobile-menu-list > li > a:hover,
+.hclm-mobile-menu-list > li > a:focus,
+.hclm-mobile-menu-list > li > a:active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.hclm-mobile-menu.active .hclm-mobile-menu-content .hclm-submenu-icon {
+    height: 22px;
+    width: 22px;
+    color: #fff !important;
+    display: block !important;
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.hclm-mobile-menu-list > li.open > a .hclm-submenu-icon {
+    transform: rotate(180deg);
+}
+
+.hclm-mobile-menu-list li ul.sub-menu {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    display: none;
+    overflow: hidden;
+}
+
+.hclm-mobile-menu-list li.open > ul.sub-menu {
+    display: block;
+}
+
+.hclm-mobile-menu-list li ul.sub-menu li a {
+    padding: 12px 35px;
+    font-size: 0.9rem;
+    color: #fff;
+    display: block;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.hclm-mobile-menu-list li ul.sub-menu li a:hover,
+.hclm-mobile-menu-list li ul.sub-menu li a:focus,
+.hclm-mobile-menu-list li ul.sub-menu li a:active {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff !important;
+}
+
+
+.hclm-mobile-menu-content .hclm-mobile-menu-btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+.hclm-mobile-menu-content .hclm-mobile-menu-btn-container a {
+    color: #e76f51 !important;
+    background-color: #fff !important;
+    padding: 0px 20px !important;
+    border-radius: 10px;
+}
+
+.hclm-mobile-menu-content .hclm-mobile-menu-btn-container a.logout-button {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hclm-mobile-menu-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 20px;
+}

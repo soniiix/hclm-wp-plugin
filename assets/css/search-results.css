@@ -13,6 +13,13 @@ body {
     gap: 32px;
 }
 
+@media (max-width: 547px) {
+    .hclm-search-results {
+        padding-left: 15px;
+        padding-right: 15x;
+    }
+}
+
 /* SIDEBAR */
 .hclm-search-results-aside form{
     display: flex;
@@ -23,6 +30,12 @@ body {
     height: fit-content;
     position: sticky;
     top: 30px;
+}
+
+@media (max-width: 1010px) {
+    .hclm-search-results-aside {
+        display: none;
+    }
 }
 
 .hclm-search-results-aside-content{
@@ -81,6 +94,13 @@ body {
     border-bottom: 1px solid #ccc;
     padding-top: 8px;
     padding-bottom: 10px;
+}
+
+@media (max-width: 550px) {
+    .hclm-search-results-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 .hclm-search-results-sort{

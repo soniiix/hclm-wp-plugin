@@ -1,5 +1,7 @@
 <?php
 
+require_once plugin_dir_path(__FILE__) . '../utils/is-membership-active.php';
+
 function newsletters_list_shortcode() {
     // Load CSS style and JavaScript
     wp_enqueue_style('hclm-newsletters-list-style', plugin_dir_url(__FILE__) . '../../../assets/css/newsletters-list.css');
@@ -72,24 +74,38 @@ function newsletters_list_shortcode() {
                         <div class="_df_book" style="max-height: 600px !important;" source="' . esc_url($summary_url) . '"></div>
                     </div>';
 
-                    // Display conditional button based on user login status. If the user is not logged in, redirect them to the login page.
+                    // Display conditional button based on user login and membership status. If the user is not logged in, redirect them to the login page.
                     $current_url = home_url(add_query_arg(array(), $_SERVER['REQUEST_URI']));
                     $login_url = home_url('/connexion');
                     $redirect_url = esc_url(add_query_arg('redirect_to', urlencode($current_url), $login_url));
 
-                    $cards_html .= is_user_logged_in() 
-                        ? '
-                        <div class="newsletter-button-container">
-                            <div class="_df_button" source="' . esc_url($pdf_url) . '">
-                                <div class="newsletter-button">Consulter le bulletin entier</div>
-                            </div>
-                        </div>'
-                        : '
-                        <div class="newsletter-button-container">
-                            <a href="' . $redirect_url . '" class="newsletter-button">
-                                Consulter le bulletin entier
-                            </a>
-                        </div>';
+                    if (is_user_logged_in()) {
+                        if (!hclm_is_membership_active()) {
+                            // Connected user but membership is inactive
+                            $cards_html .= '
+                                <div class="newsletter-button-container">
+                                    <a href="/espace-adherent" class="newsletter-button newsletter-inactive">
+                                        Consulter le bulletin entier
+                                    </a>
+                                </div>';
+                        } else {
+                            // Connected user with active membership
+                            $cards_html .= '
+                                <div class="newsletter-button-container">
+                                    <div class="_df_button" source="' . esc_url($pdf_url) . '">
+                                        <div class="newsletter-button">Consulter le bulletin entier</div>
+                                    </div>
+                                </div>';
+                        }
+                    } else {
+                        // Not connected user
+                        $cards_html .= '
+                            <div class="newsletter-button-container">
+                                <a href="' . $redirect_url . '" class="newsletter-button">
+                                    Consulter le bulletin entier
+                                </a>
+                            </div>';
+                    }
                 $cards_html .= '
                 </div>
             </div> 

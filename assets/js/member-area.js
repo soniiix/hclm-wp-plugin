@@ -179,6 +179,8 @@ document.addEventListener('DOMContentLoaded', function () {
             return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
         });
 
+        if (!reportsContainer) return;
+
         reportsContainer.innerHTML = '';
         visibleCards.forEach(card => reportsContainer.appendChild(card));
 

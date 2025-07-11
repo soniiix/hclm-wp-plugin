@@ -1,6 +1,8 @@
 <?php
 get_header();
 
+require_once plugin_dir_path(__FILE__) . '../includes/shortcodes/utils/is-membership-active.php';
+
 wp_enqueue_style('hclm-fall-visit-style', plugin_dir_url(__FILE__) . '../assets/css/fall-visit.css');
 
 if (have_posts()) :
@@ -9,7 +11,7 @@ if (have_posts()) :
             <span class="hclm-post-date"><?php echo get_the_date('d/m/Y'); ?></span>
             <h3 class="hclm-post-title">Visite à <?php the_title(); ?></h3>
 
-            <?php if (is_user_logged_in()) : ?>
+            <?php if (is_user_logged_in() && hclm_is_membership_active()) : ?>
                 <div class="post-content">
                     <?php the_content(); ?>
                 </div>

@@ -2,6 +2,7 @@
 
 require_once plugin_dir_path(__FILE__) . 'utils/get-pdf-cover.php';
 require_once plugin_dir_path(__FILE__) . 'utils/get-renewal-expiration-date.php';
+require_once plugin_dir_path(__FILE__) . 'utils/is-membership-active.php';
 
 /**
  * Displays the HCLM member area.
@@ -96,66 +97,75 @@ function member_area_shortcode() {
         </aside>
         <main class="content">
             <section id="dashboard" class="tab-content active">
-                <h3>
-                    <?php
-                    if (in_array('adherent', (array) $user->roles)) {
-                        echo 'Bonjour ' . esc_html($user->get('user_firstname') . ' ' . $user->get('user_lastname')) . ',';
-                    } else {
-                        echo 'Bonjour,';
-                    }
-                    ?>
-                </h3>
-                <div class="dashboard-two-columns">
-                    <div class="dashboard-col left-col">
-                        <div class="tab-card">
-                            <p>Bienvenue dans l'espace adhérent. Ici, vous retrouverez toutes les informations importantes liées à votre adhésion.</p>
-                            <?php if (!current_user_can('administrator')){ ?>
-                                <span>En tant qu'adhérent, vous avez accès à la totalité du contenu.</span>
-                            <?php } else { ?>
-                                <span>En tant qu'administrateur, vous avez accès à <a href="<?php echo admin_url() ?>">l'interface d'administration</a>.</span>
-                            <?php } ?>
-                        </div>
-                        <div 
-                            class="tab-card tab-hover-card" 
-                            title="Voir les événements à venir" 
-                            onclick="window.location.href='<?php echo esc_url(tribe_get_events_link()); ?>'"
-                        >
-                            <h4><i class="fas fa-calendar-alt"></i> Prochain événement</h4>
-                            <?php 
-                            $next_event = tribe_get_events([
-                                'posts_per_page' => 1,
-                                'start_date'     => current_time('Y-m-d H:i:s'),
-                            ]);
-                            ?>
-                            <span>
-                                <?php if (!empty($next_event)) {
-                                    $event = $next_event[0];
-                                    echo esc_html($event->post_title) . ' le ' . tribe_get_start_date($event, false, 'j F Y');
-                                } else {
-                                    echo 'Aucun événement à venir.';
-                                }
-                                ?>
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <div class="dashboard-col last-report-col">
-                        <div class="tab-card tab-hover-card card-last-report" onclick="showSection('reports');" title="Voir les comptes rendus">
-                            <h4><i class="fas fa-file-alt"></i> Dernier compte rendu</h4>
-                            <div class="report-thumbnail">
-                                <?php
-                                $last_report = (!empty($files) && isset($files[0])) ? $files[0] : null;
-                                if ($last_report) { ?>
-                                <img src="<?php echo $last_report['cover'] ?>" alt="Aperçu du dernier compte rendu">
+                <?php if (hclm_is_membership_active() || current_user_can('administrator')) { ?>
+                    <h3>
+                        <?php
+                        if (in_array('adherent', (array) $user->roles)) {
+                            echo 'Bonjour ' . esc_html($user->get('user_firstname') . ' ' . $user->get('user_lastname')) . ',';
+                        } else {
+                            echo 'Bonjour,';
+                        }
+                        ?>
+                    </h3>
+                    <div class="dashboard-two-columns">
+                        <div class="dashboard-col left-col">
+                            <div class="tab-card">
+                                <p>Bienvenue dans l'espace adhérent. Ici, vous retrouverez toutes les informations importantes liées à votre adhésion.</p>
+                                <?php if (!current_user_can('administrator')){ ?>
+                                    <span>En tant qu'adhérent, vous avez accès à la totalité du contenu.</span>
+                                <?php } else { ?>
+                                    <span>En tant qu'administrateur, vous avez accès à <a href="<?php echo admin_url() ?>">l'interface d'administration</a>.</span>
+                                <?php } ?>
                             </div>
-                            <span>Compte rendu du <?php echo "{$last_report['day']}/{$last_report['month']}/{$last_report['year']}"; ?></span>
-                            <?php } else { ?>
+                            <div 
+                                class="tab-card tab-hover-card" 
+                                title="Voir les événements à venir" 
+                                onclick="window.location.href='<?php echo esc_url(tribe_get_events_link()); ?>'"
+                            >
+                                <h4><i class="fas fa-calendar-alt"></i> Prochain événement</h4>
+                                <?php 
+                                $next_event = tribe_get_events([
+                                    'posts_per_page' => 1,
+                                    'start_date'     => current_time('Y-m-d H:i:s'),
+                                ]);
+                                ?>
+                                <span>
+                                    <?php if (!empty($next_event)) {
+                                        $event = $next_event[0];
+                                        echo esc_html($event->post_title) . ' le ' . tribe_get_start_date($event, false, 'j F Y');
+                                    } else {
+                                        echo 'Aucun événement à venir.';
+                                    }
+                                    ?>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-col last-report-col">
+                            <div class="tab-card tab-hover-card card-last-report" onclick="showSection('reports');" title="Voir les comptes rendus">
+                                <h4><i class="fas fa-file-alt"></i> Dernier compte rendu</h4>
+                                <div class="report-thumbnail">
+                                    <?php
+                                    $last_report = (!empty($files) && isset($files[0])) ? $files[0] : null;
+                                    if ($last_report) { ?>
+                                    <img src="<?php echo $last_report['cover'] ?>" alt="Aperçu du dernier compte rendu">
                                 </div>
-                                <span>Aucun compte rendu disponible.</span>
-                            <?php } ?>
+                                <span>Compte rendu du <?php echo "{$last_report['day']}/{$last_report['month']}/{$last_report['year']}"; ?></span>
+                                <?php } else { ?>
+                                    </div>
+                                    <span>Aucun compte rendu disponible.</span>
+                                <?php } ?>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php } else { ?>
+                    <div class="hclm-restricted-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Votre adhésion est inactive</h4>
+                        <p>Bonjour <?php echo esc_html($user->get('user_firstname') . ' ' . $user->get('user_lastname')) ?>, merci de renouveler votre adhésion pour continuer à profiter de l'ensemble du contenu d'HCLM.</p>
+                        <button onclick="showSection('membership');" class="hclm-btn-primary">Renouveler mon adhésion</button>
+                    </div>
+                <?php } ?>
             </section>
             <section id="profile" class="tab-content">
                 <?php
@@ -476,99 +486,125 @@ function member_area_shortcode() {
                 </div>
             </section>
             <section id="statuses" class="tab-content">
-                <h3>Statuts de l'association</h2>
-                <div class="tab-card">
-                    <p>Les statuts de l'association HCLM sont disponibles ci-dessous.</p>
-                    <?php $status_pdf_url = wp_upload_dir()['baseurl'] . '/hclm/documents/statuts-hclm.pdf'; ?>
-                    <div class="hclm-status-buttons-row">
-                        <a 
-                            href="<?php echo esc_url($status_pdf_url); ?>" 
-                            class="btn-download btn-download-with-icon"
-                            target="_blank" 
-                            download
-                            aria-label="Télécharger les statuts de l'association HCLM"
-                        >
-                            Télécharger 
-                            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20" width="20" xmlns="http://www.w3.org/2000/svg" style="margin-top: 1px;"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path><path d="M7 11l5 5l5 -5"></path><path d="M12 4l0 12"></path></svg>
-                        </a>
-                        <div 
-                            class="_df_button" 
-                            source="<?php echo esc_url($status_pdf_url); ?>"
-                        >
-                            Consulter le fichier PDF
+                <?php if (hclm_is_membership_active() || current_user_can('administrator')) { ?>
+                    <h3>Statuts de l'association</h2>
+                    <div class="tab-card">
+                        <p>Les statuts de l'association HCLM sont disponibles ci-dessous.</p>
+                        <?php $status_pdf_url = wp_upload_dir()['baseurl'] . '/hclm/documents/statuts-hclm.pdf'; ?>
+                        <div class="hclm-status-buttons-row">
+                            <a 
+                                href="<?php echo esc_url($status_pdf_url); ?>" 
+                                class="btn-download btn-download-with-icon"
+                                target="_blank" 
+                                download
+                                aria-label="Télécharger les statuts de l'association HCLM"
+                            >
+                                Télécharger 
+                                <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20" width="20" xmlns="http://www.w3.org/2000/svg" style="margin-top: 1px;"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path><path d="M7 11l5 5l5 -5"></path><path d="M12 4l0 12"></path></svg>
+                            </a>
+                            <div 
+                                class="_df_button" 
+                                source="<?php echo esc_url($status_pdf_url); ?>"
+                            >
+                                Consulter le fichier PDF
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php } else { ?>
+                    <div class="hclm-restricted-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Accès réservé aux adhérents actifs</h4>
+                        <p>Pour consulter cette section, vous devez avoir une adhésion en cours de validité. Merci de la renouveler pour continuer.</p>
+                        <button onclick="showSection('membership');" class="hclm-btn-primary">Renouveler mon adhésion</button>
+                    </div>
+                <?php } ?>
             </section>
             <section id="reports" class="tab-content">
-                <h3>Comptes rendus</h3>
-                
-                <div class="filters">
-                    <div class="hclm-reports-search-bar-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" height="20" width="20">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                        </svg>
-                        <input type="text" id="search-input" placeholder="Rechercher un compte rendu..." class="hclm-reports-search-bar"/>
+                <?php if (hclm_is_membership_active() || current_user_can('administrator')){ ?>
+                    <h3>Comptes rendus</h3>
+                    
+                    <div class="filters">
+                        <div class="hclm-reports-search-bar-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" height="20" width="20">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                            <input type="text" id="search-input" placeholder="Rechercher un compte rendu..." class="hclm-reports-search-bar"/>
+                        </div>
+
+                        <select id="filter-year">
+                            <option value="">Toutes les années</option>
+                        </select>
+
+                        <?php if (current_user_can('administrator')): ?>
+                        <select id="filter-type">
+                            <option value="">Tous les types</option>
+                            <option value="AG">Assemblée Générale</option>
+                            <option value="CA">Conseil d'Administration</option>
+                        </select>
+                        <?php endif; ?>
+
+                        <select id="sort-date">
+                            <option value="desc">Du plus récent au plus ancien</option>
+                            <option value="asc">Du plus ancien au plus récent</option>
+                        </select>
                     </div>
 
-                    <select id="filter-year">
-                        <option value="">Toutes les années</option>
-                    </select>
-
-                    <?php if (current_user_can('administrator')): ?>
-                    <select id="filter-type">
-                        <option value="">Tous les types</option>
-                        <option value="AG">Assemblée Générale</option>
-                        <option value="CA">Conseil d'Administration</option>
-                    </select>
-                    <?php endif; ?>
-
-                    <select id="sort-date">
-                        <option value="desc">Du plus récent au plus ancien</option>
-                        <option value="asc">Du plus ancien au plus récent</option>
-                    </select>
-                </div>
-
-                <div class="reports-list">
-                    <?php if (empty($files)): ?>
-                        <p>Aucun compte rendu trouvé.</p>
-                    <?php else: ?>
-                        <?php foreach ($files as $report): ?>
-                            <div class="report-card" 
-                                data-year="<?php echo esc_attr($report['year']); ?>" 
-                                data-type="<?php echo esc_attr($report['type']); ?>" 
-                                data-date="<?php echo "{$report['day']}/{$report['month']}/{$report['year']}"; ?>"
-                            >
-                                <a href="<?php echo esc_url($report['url']); ?>" target="_blank" title="Voir le compte rendu PDF" class="report-link"></a>
-                                <img src="<?php echo $report['cover'] ?: esc_url(home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
-                                <div class="report-info">
-                                    <h4 class="report-title">
-                                        <?php if ($report['type'] === 'CA'): ?>
-                                            Conseil d'Administration
-                                        <?php elseif ($report['type'] === 'AG'): ?>
-                                            Assemblée Générale
-                                        <?php endif; ?>
-                                    </h4>
-                                    <p class="report-date">
-                                        <i class="fas fa-calendar-alt"></i>
-                                        <?php echo "{$report['day']}/{$report['month']}/{$report['year']}"; ?>
-                                    </p>
-                                    <a class="btn-download" href="<?php echo esc_url($report['url']); ?>" target="_blank" download>Télécharger</a>
+                    <div class="reports-list">
+                        <?php if (empty($files)): ?>
+                            <p>Aucun compte rendu trouvé.</p>
+                        <?php else: ?>
+                            <?php foreach ($files as $report): ?>
+                                <div class="report-card" 
+                                    data-year="<?php echo esc_attr($report['year']); ?>" 
+                                    data-type="<?php echo esc_attr($report['type']); ?>" 
+                                    data-date="<?php echo "{$report['day']}/{$report['month']}/{$report['year']}"; ?>"
+                                >
+                                    <a href="<?php echo esc_url($report['url']); ?>" target="_blank" title="Voir le compte rendu PDF" class="report-link"></a>
+                                    <img src="<?php echo $report['cover'] ?: esc_url(home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
+                                    <div class="report-info">
+                                        <h4 class="report-title">
+                                            <?php if ($report['type'] === 'CA'): ?>
+                                                Conseil d'Administration
+                                            <?php elseif ($report['type'] === 'AG'): ?>
+                                                Assemblée Générale
+                                            <?php endif; ?>
+                                        </h4>
+                                        <p class="report-date">
+                                            <i class="fas fa-calendar-alt"></i>
+                                            <?php echo "{$report['day']}/{$report['month']}/{$report['year']}"; ?>
+                                        </p>
+                                        <a class="btn-download" href="<?php echo esc_url($report['url']); ?>" target="_blank" download>Télécharger</a>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
 
-                <p id="no-results-message" style="display: none; font-style: italic;">Aucun compte rendu trouvé.</p>
-
+                    <p id="no-results-message" style="display: none; font-style: italic;">Aucun compte rendu trouvé.</p>
+                <?php } else { ?>
+                    <div class="hclm-restricted-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Accès réservé aux adhérents actifs</h4>
+                        <p>Pour consulter cette section, vous devez avoir une adhésion en cours de validité. Merci de la renouveler pour continuer.</p>
+                        <button onclick="showSection('membership');" class="hclm-btn-primary">Renouveler mon adhésion</button>
+                    </div>
+                <?php } ?>
             </section>
             <section id="suggestions" class="tab-content">
-                <h3>Suggestions / Remarques</h3>
-                <div class="tab-card">
-                    <div class="mb-5"><span>Pour toute suggestion ou remarque concernant le site, merci de bien vouloir remplir le formulaire ci-dessous.</span></div>
-                    <?php echo do_shortcode('[forminator_form id="2040"]') ?>
-                </div>
+                <?php if (hclm_is_membership_active()) { ?>
+                    <h3>Suggestions / Remarques</h3>
+                    <div class="tab-card">
+                        <div class="mb-5"><span>Pour toute suggestion ou remarque concernant le site, merci de bien vouloir remplir le formulaire ci-dessous.</span></div>
+                        <?php echo do_shortcode('[forminator_form id="2040"]') ?>
+                    </div>
+                <?php } else { ?>
+                    <div class="hclm-restricted-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Accès réservé aux adhérents actifs</h4>
+                        <p>Pour consulter cette section, vous devez avoir une adhésion en cours de validité. Merci de la renouveler pour continuer.</p>
+                        <button onclick="showSection('membership');" class="hclm-btn-primary">Renouveler mon adhésion</button>
+                    </div>
+                <?php } ?>
             </section>
         </main>
     </div>

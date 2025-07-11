@@ -297,7 +297,7 @@ add_action('wp_footer', function() {
                     if (message) {
                         setTimeout(() => {
                             message.remove();
-                        }, 3000);
+                        }, 5000);
                     }
                 }
             });

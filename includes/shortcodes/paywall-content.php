@@ -5,12 +5,18 @@ require_once plugin_dir_path(__FILE__) . 'utils/is-membership-active.php';
 function paywall_content_shortcode($atts, $content = null) {
     wp_enqueue_style('hclm-paywall-content-style', plugin_dir_url(__FILE__) . '../../assets/css/paywall-content.css');
     
+    // Retrieve post thumbnail
+    $thumbnail = '';
+    if (has_post_thumbnail()) {
+        $thumbnail = get_the_post_thumbnail(null, 'medium_large');
+    }
+
     if (is_user_logged_in()) {
         if (!hclm_is_membership_active()) {
             return '
                 <div class="article-preview">
                     <div class="article-fadeout">
-                        ' . do_shortcode($content) . '
+                        ' . $thumbnail . do_shortcode($content) . '
                     </div>
                     <div class="paywall-box">
                         <div class="paywall-header">
@@ -30,7 +36,7 @@ function paywall_content_shortcode($atts, $content = null) {
         return '
             <div class="article-preview">
                 <div class="article-fadeout">
-                    ' . do_shortcode($content) . '
+                    ' . $thumbnail . do_shortcode($content) . '
                 </div>
                 <div class="paywall-box">
                     <div class="paywall-header">

@@ -60,3 +60,14 @@
     background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, white 100%);
     pointer-events: none;
 }
+
+.article-fadeout img {
+    float: left;
+    margin-right: 1.5em;
+    width: 500px;
+    height: 400px;
+    margin-right: 20px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}

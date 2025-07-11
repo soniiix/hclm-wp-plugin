@@ -37,7 +37,7 @@ function fall_visits_shortcode() {
     echo '<div class="visits-grid">';
     while ($query->have_posts()) {
         $query->the_post();
-        $img = get_the_post_thumbnail_url(get_the_ID(), 'medium');
+        $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
         $link = get_permalink();
         ?>
         <div class="visit-card">

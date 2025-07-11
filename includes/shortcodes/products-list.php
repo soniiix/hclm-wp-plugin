@@ -74,7 +74,7 @@ function products_list_shortcode() {
     while ($query->have_posts()) {
         $query->the_post();
         $product = wc_get_product(get_the_ID());
-        $img = get_the_post_thumbnail_url(get_the_ID(), 'medium');
+        $img = get_the_post_thumbnail_url(get_the_ID(), 'large');
         $link = get_permalink();
         ?>
         <div class="product-card">

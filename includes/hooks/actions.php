@@ -3,16 +3,11 @@
 require_once plugin_dir_path(__FILE__) . '/functions/handle-login.php';
 require_once plugin_dir_path(__FILE__) . '/functions/hide-page.php';
 require_once plugin_dir_path(__FILE__) . '/functions/update-user-profile.php';
-require_once plugin_dir_path(__FILE__) . '/functions/show-more-user-data.php';
 require_once plugin_dir_path(__FILE__) . '/functions/admin/menu.php';
 require_once plugin_dir_path(__FILE__) . '/functions/admin/register-post-type.php';
 
 // Handle login form submission
 add_action('template_redirect', 'handle_login');
-
-// Display additional user information on the admin page 
-add_action( 'show_user_profile', 'show_more_user_data' );
-add_action( 'edit_user_profile', 'show_more_user_data' );
 
 // Redirect to the home page depending on whether the user is logged in or not
 add_action('template_redirect', function () {
@@ -128,7 +123,7 @@ add_action( 'pms_register_form_validation', function() {
 		pms_errors()->add( 'first_name', __( 'Veuillez saisir un prénom.', 'paid-member-subscriptions' ) );
 
 	if(empty( $_POST['last_name']))
-		pms_errors()->add( 'last_name', __( 'Veuillez saisir un nom.', 'paid-member-subscriptions' ) );
+		pms_errors()->add( 'last_name', 'Veuillez saisir un nom.' );
 });
 
 // Hide the login field in the PMS registration form and fill it with the email value

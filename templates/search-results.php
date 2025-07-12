@@ -212,7 +212,7 @@ $query = new WP_Query($args);
 
                 $slug = get_post_field('post_name', get_post());
                 // Exclude specific pages from the results
-                $slugs_to_exclude = ['connexion', 'en-construction'];
+                $slugs_to_exclude = ['connexion', 'en-construction', 'mentions-legales', 'politique-de-confidentialite'];
                 if (in_array($slug, $slugs_to_exclude)) {
                     continue;
                 }

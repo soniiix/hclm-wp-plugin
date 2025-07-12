@@ -18,7 +18,7 @@ add_filter('wp_nav_menu_objects', function ($items, $args) {
 // Rename the product tabs
 add_filter( 'woocommerce_product_tabs', 'woo_rename_tabs', 98 );
 function woo_rename_tabs( $tabs ) {
-	$tabs['description']['title'] = __( 'Sommaire' ); // Rename the description tab
+	$tabs['description']['title'] = 'Sommaire'; // Rename the description tab
 	return $tabs;
 }
 

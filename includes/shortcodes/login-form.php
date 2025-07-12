@@ -12,13 +12,23 @@ function login_form_shortcode() {
 
     $error = '';
 
-    if (!empty($_GET['login_error']) && !empty($_SESSION['hclm_login_failed'])) {
+    $has_real_error = false;
+
+    // Check if transient for login error exists before displaying the error message
+    if (!empty($_GET['login_error']) && $_GET['login_error'] === '1') {
+        $transient_key = 'hclm_login_error_' . md5($_SERVER['REMOTE_ADDR']);
+        if (get_transient($transient_key)) {
+            $has_real_error = true;
+            delete_transient($transient_key);
+        }
+    }
+
+    if ($has_real_error) {
         $error = '
         <p class="hclm-login-form-error" role="alert">
             <i class="far fa-times-circle"></i>
             Identifiants incorrects. Veuillez réessayer.
         </p>';
-        unset($_SESSION['hclm_login_failed']);
     }
 
     // Load CSS style

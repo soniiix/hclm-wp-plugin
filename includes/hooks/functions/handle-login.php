@@ -19,7 +19,7 @@ function handle_login() {
         $user = wp_signon($creds, false);
 
         if (is_wp_error($user)) {
-            $_SESSION['hclm_login_failed'] = true;
+            set_transient('hclm_login_error_' . md5($_SERVER['REMOTE_ADDR']), true, 120); // Store the transient for 2 minutes
             wp_redirect(add_query_arg('login_error', '1', wp_get_referer()));
             exit;
         } else {
@@ -32,7 +32,7 @@ function handle_login() {
                 wp_redirect(admin_url());
             } else {
                 $redirect = !empty($_POST['redirect_to']) ? esc_url_raw($_POST['redirect_to']) : home_url('/accueil');
-                if (!empty($_POST['redirect_to'])) {
+                if (!empty($_POST['redirect_to']) && $_POST['redirect_to'] !== home_url('/accueil')) {
                     $redirect = add_query_arg('redirected', '1', $redirect);
                 }
                 $redirect = add_query_arg('login_success', '1', $redirect);

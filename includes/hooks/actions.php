@@ -194,13 +194,6 @@ add_action( 'wp_before_admin_bar_render', function(){
     $wp_admin_bar->remove_menu('comments');
 });
 
-// Initialize the session if it is not already started. It is necessary for the login error handling.
-add_action('init', function () {
-    if (!session_id()) {
-        session_start();
-    }
-});
-
 // Hide attachment pages and redirect to the home page
 add_action('template_redirect', function() {
     if (is_attachment()) {

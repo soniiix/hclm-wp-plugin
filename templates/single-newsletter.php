@@ -30,8 +30,8 @@ $pdf_url = get_post_meta(get_the_ID(), 'pdf_url', true);
 
 <div class="newsletter_display_section">
     <span class="slug_text"><a href="/bulletins">Bulletins ></a></span>
-    <h2 class="page-subtitle"><?php echo $title; ?></h2>
-    <div class="_df_book" style="max-height: 600px !important;" source="<?php echo $pdf_url ?>"></div>
+    <h2 class="page-subtitle"><?php echo esc_html($title); ?></h2>
+    <div class="_df_book" style="max-height: 600px !important;" source="<?php echo esc_url($pdf_url) ?>"></div>
 </div>
 
 <?php

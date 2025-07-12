@@ -154,7 +154,7 @@ add_action( 'wp_footer', function() {
 add_action('manage_pages_custom_column', function($column_name, $post_id) {
     if ($column_name === 'modified') {
         $modified_date = get_post_modified_time('d/m/Y H:i', false, $post_id);
-        echo $modified_date;
+        echo esc_html($modified_date);
     }
 }, 10, 2);
 

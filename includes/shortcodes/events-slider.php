@@ -30,9 +30,9 @@ function events_slider_shortcode() {
                 <div class="event-card">
                     <h3><?php echo esc_html($event->post_title); ?></h3>
                     <p>
-                        <span><i class="fas fa-calendar-day"></i><?php echo tribe_get_start_date($event, false, 'j F Y'); ?></span>
+                        <span><i class="fas fa-calendar-day"></i><?php echo esc_html(tribe_get_start_date($event, false, 'j F Y')); ?></span>
                         <?php if($venue_name) { ?>
-                            <span><i class="fas fa-map-marker-alt"></i><?php echo $venue_name; ?></span>
+                            <span><i class="fas fa-map-marker-alt"></i><?php echo esc_html($venue_name); ?></span>
                         <?php } ?>
                     </p>
                     <a href="<?php echo esc_url(get_permalink($event)); ?>" class="event-link">En savoir plus</a>

@@ -37,7 +37,7 @@ function hclm_mobile_menu_shortcode() {
 
                 <?php if (is_user_logged_in()) { ?>
                     <div class="hclm-mobile-menu-btn-container">
-                        <a href="<?php echo wp_logout_url(home_url('/connexion')); ?>" class="logout-button" aria-label="Déconnexion">
+                        <a href="<?php echo esc_url(wp_logout_url(home_url('/connexion'))); ?>" class="logout-button" aria-label="Déconnexion">
                             <i class="fas fa-sign-out-alt"></i>
                         </a>
                     </div>

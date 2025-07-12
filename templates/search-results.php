@@ -267,7 +267,7 @@ $query = new WP_Query($args);
                                 <a href="<?php echo esc_url($result['url']); ?>">
                                     <?php if ($result['thumbnail']) { ?>
                                         <div class="hclm-result-thumbnail">
-                                            <?php echo $result['thumbnail']; ?>
+                                            <?php echo wp_kses_post($result['thumbnail']); ?>
                                         </div>
                                     <?php } ?>
                                     <div class="hclm-result-content">
@@ -277,7 +277,7 @@ $query = new WP_Query($args);
                                             if ($result['date']) {
                                                 echo '<span class="hclm-result-event-date">' . esc_html($result['date']) . '&nbsp;•&nbsp;</span>';
                                             }
-                                            echo $result['excerpt']; ?>
+                                            echo wp_kses_post($result['excerpt']); ?>
                                         </p>
                                     </div>
                                     <div class="hclm-result-arrow">

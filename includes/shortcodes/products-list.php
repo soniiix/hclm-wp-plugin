@@ -79,13 +79,13 @@ function products_list_shortcode() {
         ?>
         <div class="product-card">
             <a href="<?= esc_url($link); ?>" class="product-link" target="_blank" rel="noopener noreferrer">
-                <div class="product-image" style="background-image: url('<?= esc_url($img); ?>')"></div>
+                <div class="product-image" style="background-image: url('<?= esc_url($img); ?>')" aria-label="Voir les détails de l'ouvrage <?php echo esc_html(get_the_title()); ?>"></div>
             </a>
             <div class="product-content">
-                <h3 class="product-title"><?= wp_trim_words(get_the_title(), 11); ?></h3>
+                <h3 class="product-title"><?= esc_html(wp_trim_words(get_the_title(), 11)); ?></h3>
                 <div class="product-subcontent">
-                    <span class="product-price"><?php echo $product->get_price(); ?>&nbsp;€</span>
-                    <p class="product-stock <?= $product->get_stock_status(); ?>">
+                    <span class="product-price"><?php echo esc_html($product->get_price()); ?>&nbsp;€</span>
+                    <p class="product-stock <?= esc_html($product->get_stock_status()); ?>">
                         <?= ($product->get_stock_status() == "outofstock") 
                             ? "<i class='far fa-times-circle'></i>&nbsp;Épuisé" 
                             : "<i class='far fa-check-circle'></i>&nbsp;En stock"; ?>

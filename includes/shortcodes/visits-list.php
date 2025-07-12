@@ -45,7 +45,7 @@ function fall_visits_shortcode() {
                 <div class="visit-image" style="background-image: url('<?= esc_url($img); ?>')"></div>
             </a>
             <div class="visit-content">
-                <h3 class="visit-title"><?= get_the_title(); ?></h3>
+                <h3 class="visit-title"><?= esc_html(get_the_title()); ?></h3>
                 <p class="visit-date"><?= get_the_date('d/m/Y'); ?></p>
                 <a href="<?= esc_url($link); ?>" class="visit-button">Voir les détails</a>
             </div>

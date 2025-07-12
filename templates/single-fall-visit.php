@@ -20,7 +20,7 @@ if (have_posts()) :
                 $pdf_url = get_field('pdf_url');
                 if ($pdf_url) :
                     ?>
-                    <div class="_df_book dfbook_fall_visit" style="max-height: 600px !important;" source="<?php echo $pdf_url ?>"></div>
+                    <div class="_df_book dfbook_fall_visit" style="max-height: 600px !important;" source="<?php echo esc_url($pdf_url) ?>"></div>
                 <?php endif; ?>
 
             <?php else : ?>

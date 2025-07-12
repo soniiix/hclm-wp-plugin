@@ -13,6 +13,12 @@ if (!is_user_logged_in()) {
     exit;
 }
 
+// If the user does not have an active membership, redirect to the member area that displays the warning message
+if (!hclm_is_membership_active()) {
+    wp_redirect('/espace-adherent');
+    exit;
+}
+
 // Load CSS style
 wp_enqueue_style('hclm-newsletters-style', plugin_dir_url(__FILE__) . '../assets/css/newsletters.css');
 

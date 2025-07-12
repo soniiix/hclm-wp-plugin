@@ -1,7 +1,5 @@
 <?php 
 
-require_once plugin_dir_path(__FILE__) . '/newsletter-index.php';
-
 function hclm_admin_menu () {
     add_menu_page(
         'HCLM - Gestion',

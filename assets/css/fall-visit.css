@@ -26,12 +26,6 @@ main.content {
     
 }
 
-.post-content {
-    font-size: 1rem;
-    line-height: 1.7;
-    margin-bottom: 25px;
-}
-
 @media (max-width: 600px) {
     main.content {
         margin-top: 20px;

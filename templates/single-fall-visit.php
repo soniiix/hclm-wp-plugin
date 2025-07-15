@@ -11,12 +11,7 @@ if (have_posts()) :
             <span class="hclm-post-date"><?php echo get_the_date('d/m/Y'); ?></span>
             <h3 class="hclm-post-title">Visite à <?php the_title(); ?></h3>
 
-            <?php if (is_user_logged_in() && (hclm_is_membership_active() || current_user_can('administrator'))) : ?>
-                <div class="post-content">
-                    <?php the_content(); ?>
-                </div>
-
-                <?php
+            <?php if (is_user_logged_in() && (hclm_is_membership_active() || current_user_can('administrator'))) :
                 $pdf_url = get_field('pdf_url');
                 if ($pdf_url) :
                     ?>
@@ -26,7 +21,7 @@ if (have_posts()) :
             <?php else : ?>
                 <div class="post-excerpt">
                     <?php
-                    $extract = get_field('extrait');
+                    $extract = get_the_content();
                     if ($extract) {
                         echo do_shortcode('[hclm_paywall_content]' . wpautop($extract) . '[/hclm_paywall_content]');
                     } else {

@@ -15,7 +15,7 @@ function register_visit_post_type() {
         'public' => true,                  
         'has_archive' => false, 
         'rewrite' => ['slug' => 'visites-automnales'],
-        'supports' => ['title', 'thumbnail'],
+        'supports' => ['title', 'editor', 'thumbnail'],
         'show_ui' => true,
         'show_in_rest' => false,
         'show_in_menu' => 'hclm-manage'

@@ -11,7 +11,7 @@ if (have_posts()) :
             <span class="hclm-post-date"><?php echo get_the_date('d/m/Y'); ?></span>
             <h3 class="hclm-post-title">Visite à <?php the_title(); ?></h3>
 
-            <?php if (is_user_logged_in() && hclm_is_membership_active()) : ?>
+            <?php if (is_user_logged_in() && (hclm_is_membership_active() || current_user_can('administrator'))) : ?>
                 <div class="post-content">
                     <?php the_content(); ?>
                 </div>

@@ -12,7 +12,7 @@ function paywall_content_shortcode($atts, $content = null) {
     }
 
     if (is_user_logged_in()) {
-        if (!hclm_is_membership_active()) {
+        if (!hclm_is_membership_active() && !current_user_can('administrator')) {
             return '
                 <div class="article-preview">
                     <div class="article-fadeout">

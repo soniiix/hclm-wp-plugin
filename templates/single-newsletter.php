@@ -14,7 +14,7 @@ if (!is_user_logged_in()) {
 }
 
 // If the user does not have an active membership, redirect to the member area that displays the warning message
-if (!hclm_is_membership_active()) {
+if (!hclm_is_membership_active() && !current_user_can('administrator')) {
     wp_redirect('/espace-adherent');
     exit;
 }

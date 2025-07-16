@@ -46,11 +46,20 @@ add_filter('template_include', function($template){
     return $template;
 });
 
-// Remove the "Posts" column from the users list in the admin area
-add_filter( 'manage_users_columns', function($columns) {
-    unset( $columns['posts'] ); 
+// Customize the users list in the admin area
+add_filter('manage_users_columns', function($columns) {
+    unset($columns['posts']);                   // Remove the "Posts" column
+    $columns['num_adherent'] = 'N° Adhérent';   // Add a custom column for member number
     return $columns;
 });
+
+// Display the member number in the custom column
+add_filter('manage_users_custom_column', function($value, $column_name, $user_id) {
+    if ($column_name === 'num_adherent') {
+        return get_user_meta($user_id, 'num_adherent', true);
+    }
+    return $value;
+}, 10, 3);
 
 // Remove the "Comments" column from the pages list in the admin area
 // Add a "Modifié le" column

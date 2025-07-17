@@ -294,4 +294,9 @@ add_action('wp_footer', function() {
     }
 });
 
+// Remove the color picker from the user profile admin page.
+add_action('admin_head-profile.php', function() {
+    remove_action('admin_color_scheme_picker', 'admin_color_scheme_picker');
+});
+
 ?>

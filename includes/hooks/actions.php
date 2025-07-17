@@ -181,6 +181,7 @@ add_action('admin_menu', function() {
     remove_menu_page('woocommerce-marketing'); // Remove the WooCommerce marketing menu item
     remove_menu_page('wpr-addons'); // Remove the WPR Addons menu item
     remove_menu_page('edit-comments.php'); // Remove the comments menu item
+    remove_menu_page('filebird-settings'); // Remove the  FileBird settings menu item
 }, 99);
 
 // Remove the comments tab from the admin bar
@@ -298,5 +299,34 @@ add_action('wp_footer', function() {
 add_action('admin_head-profile.php', function() {
     remove_action('admin_color_scheme_picker', 'admin_color_scheme_picker');
 });
+
+// Automatically assign a member number to new users
+add_action('user_register', 'hclm_post_user_creation', 10, 1);
+function hclm_post_user_creation($user_id) {
+    $user = get_user_by('id', $user_id);
+
+    // If the user already has a member number, do nothing
+    if (get_user_meta($user_id, 'num_adherent', true)) {
+        return;
+    }
+
+    // Retrieve the current highest member number
+    $last_users = get_users([
+        'meta_key' => 'num_adherent',
+        'orderby' => 'meta_value_num',
+        'order' => 'DESC',
+        'number' => 1,
+        'fields' => ['ID']
+    ]);
+
+    $last_num = 0;
+    if (!empty($last_users)) {
+        $last_num = (int) get_user_meta($last_users[0]->ID, 'num_adherent', true);
+    }
+    $new_num = $last_num + 1;
+
+    // Assign the new member number to the user
+    update_user_meta($user_id, 'num_adherent', $new_num);
+}
 
 ?>

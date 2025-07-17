@@ -2,13 +2,29 @@
 
 function handle_login() {
     if (isset($_POST['hclm_login_submit'])) {
-        // Get the login input, which can be either email or username
-        $login_input = sanitize_text_field($_POST['user_email']);
+        // Get the login input, which can be email, username, or member number
+        $login_input = sanitize_text_field($_POST['user_login']);
+        $user_login = $login_input;
+
         if (is_email($login_input)) {
             $user_obj = get_user_by('email', $login_input);
-            $user_login = $user_obj ? $user_obj->user_login : $login_input;
-        } else {
-            $user_login = $login_input;
+            if ($user_obj) {
+                $user_login = $user_obj->user_login;
+            }
+        } elseif (is_numeric($login_input)) {
+            // Assuming the input is a member number, we search for the user by meta key
+            $users = get_users([
+                'meta_key'   => 'num_adherent',
+                'meta_value' => $login_input,
+                'number'     => 1,
+                'fields'     => ['ID']
+            ]);
+            if (!empty($users)) {
+                $user_obj = get_user_by('id', $users[0]->ID);
+                if ($user_obj) {
+                    $user_login = $user_obj->user_login;
+                }
+            }
         }
 
         $creds = array(

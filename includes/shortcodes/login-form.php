@@ -39,15 +39,15 @@ function login_form_shortcode() {
             <span id="form-title" class="sr-only">Connexion à l\'espace adhérent</span>
             <input type="hidden" name="redirect_to" value="' . esc_url($_GET['redirect_to'] ?? home_url('/accueil')) . '">
             <p>
-                <label for="email">Email</label>
+                <label for="login">Email ou numéro d\'adhérent</label>
                 <br>
-                <input id="email" type="text" name="user_email" autocomplete="email" required>
+                <input id="login" type="text" name="user_login" autocomplete="email" required>
             </p>
             <p class="hclm-login-form-password">
                 <label for="password">Mot de passe</label>
                 <br>
                 <input id="password" type="password" name="user_password" required autocomplete="current-password">
-                <a href="' . esc_url(home_url('/contact')) . '">Mot de passe oublié ?</a>
+                <a href="' . esc_url(wp_lostpassword_url()) . '">Mot de passe oublié ?</a>
             </p>
             <input type="submit" name="hclm_login_submit" value="Me connecter">
             <div class="hclm-login-form-signup-action">

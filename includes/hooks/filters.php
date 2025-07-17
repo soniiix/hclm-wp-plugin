@@ -116,4 +116,14 @@ add_filter( 'astra_tablet_breakpoint', function() {
     return 1220;
 });
 
+// Change Wordpress default mail sender email address
+add_filter('wp_mail_from', function ($old) {
+	return 'noreply@hclm49.fr';
+});
+
+// Change Wordpress default mail sender name
+add_filter('wp_mail_from_name', function ($old) {
+    return 'HCLM';
+});
+
 ?>

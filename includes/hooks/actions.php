@@ -296,8 +296,11 @@ add_action('wp_footer', function() {
 });
 
 // Remove the color picker from the user profile admin page.
-add_action('admin_head-profile.php', function() {
-    remove_action('admin_color_scheme_picker', 'admin_color_scheme_picker');
+add_filter('admin_head',function() {
+        $screen = get_current_screen();
+        if(in_array($screen->id,array('profile','user-edit'))) {
+            remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker');
+        }
 });
 
 // Automatically assign a member number to new users

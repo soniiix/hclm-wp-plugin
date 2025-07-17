@@ -332,4 +332,29 @@ function hclm_post_user_creation($user_id) {
     update_user_meta($user_id, 'num_adherent', $new_num);
 }
 
+// Customize the user profile page in the admin area
+add_action('admin_head', function() { ?>
+    <style>
+        /* Unnecessary user fields */
+        tr.user-url-wrap, tr.user-comment-shortcuts-wrap, tr.user-admin-bar-front-wrap, tr.pms-re-edit-user,
+        /* Elementor AI */
+        tr.elementor-ai-profile-row, tr.elementor-ai-profile-status-row,
+        label[for="elementor_enable_ai"], #elementor_enable_ai, input[name="elementor_enable_ai"],
+        tr:has(label[for="elementor_enable_ai"]) {
+            display: none !important;
+        }
+    </style>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Hide the <h2> whose text contains "Elementor - IA"
+        document.querySelectorAll('h2').forEach(function(h2) {
+            console.log(h2);
+            if (h2 && h2.textContent.trim().includes('Elementor - IA')) {
+                h2.style.display = 'none';
+            }
+        });
+    });
+    </script>
+<?php });
+
 ?>

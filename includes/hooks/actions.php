@@ -26,8 +26,8 @@ add_action( 'template_redirect', function() {
     }
 });
 
-// Add a plugin-specific tab in the wordpress menu
-add_action('admin_menu', 'hclm_admin_menu');
+// Customize the admin menu
+add_action('admin_menu', 'hclm_admin_menu', 99);
 
 // Remove zoom on hover for product images
 add_action( 'wp', function () {
@@ -176,13 +176,6 @@ add_action('admin_head', function() {
         }
     </style>';
 });
-
-add_action('admin_menu', function() {
-    remove_menu_page('woocommerce-marketing'); // Remove the WooCommerce marketing menu item
-    remove_menu_page('wpr-addons'); // Remove the WPR Addons menu item
-    remove_menu_page('edit-comments.php'); // Remove the comments menu item
-    remove_menu_page('filebird-settings'); // Remove the  FileBird settings menu item
-}, 99);
 
 // Remove the comments tab from the admin bar
 add_action( 'wp_before_admin_bar_render', function(){

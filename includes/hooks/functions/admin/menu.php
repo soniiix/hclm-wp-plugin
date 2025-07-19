@@ -16,13 +16,14 @@ function hclm_admin_menu () {
     );
 
     // Remove unnecessary menu items
-    remove_menu_page('woocommerce-marketing');                  // Remove the WooCommerce marketing menu item
-    remove_menu_page('wpr-addons');                             // Remove the WPR Addons menu item
-    remove_menu_page('edit-comments.php');                      // Remove the comments menu item
-    remove_menu_page('filebird-settings');                      // Remove the  FileBird menu item
-    remove_menu_page('edit.php');                               // Remove the posts menu item
-    remove_menu_page('edit.php?post_type=elementor_library');   // Remove the Elementor library menu item
-    remove_menu_page('shopengine-settings');                    // Remove the ShopEngine menu item
+    remove_menu_page('woocommerce-marketing');                                  // Remove the WooCommerce marketing menu item
+    remove_menu_page('wpr-addons');                                             // Remove the WPR Addons menu item
+    remove_menu_page('edit-comments.php');                                      // Remove the comments menu item
+    remove_menu_page('filebird-settings');                                      // Remove the  FileBird menu item
+    remove_menu_page('edit.php');                                               // Remove the posts menu item
+    remove_menu_page('edit.php?post_type=elementor_library');                   // Remove the Elementor library menu item
+    remove_menu_page('shopengine-settings');                                    // Remove the ShopEngine menu item
+    remove_submenu_page('edit.php?post_type=da_image', 'da_upgrade_to_pro');    // Remove the Draw Attention upgrade submenu item
 
     // Rename specific menu items
     global $menu;
@@ -36,6 +37,40 @@ function hclm_admin_menu () {
         if ($item[2] === 'members') {
             $menu[$key][0] = 'Rôles'; // Rename the Members menu item
         }
+    }
+
+    // Call the function to restrict admin menus based on user roles
+    hclm_restrict_admin_menus();
+}
+
+/**
+ * Restrict admin menus based on user roles.
+ */
+function hclm_restrict_admin_menus() {
+    if (!is_user_logged_in()) return;
+
+    // Get the current user
+    $user = wp_get_current_user();
+
+    if (in_array('secretaire', $user->roles)) {
+        remove_menu_page('astra');                                                             // Remove Astra menu item
+        remove_menu_page('woocommerce');                                                       // Remove WooCommerce menu item
+        remove_menu_page('admin.php?page=wc-settings&tab=checkout');
+        remove_menu_page('admin.php?page=wc-settings&tab=checkout&from=PAYMENTS_MENU_ITEM');   // Remove WooCommerce Payments menu item
+        remove_submenu_page('edit.php?post_type=product', 'product-reviews');                  // Remove WooCommerce product reviews submenu item
+        remove_menu_page('elementor');                                                         // Remove Elementor menu item
+        remove_menu_page('edit.php?post_type=dflip');                                          // Remove DearFlip PDF menu item
+        remove_menu_page('themes.php');                                                        // Remove Themes menu item
+        remove_menu_page('tools.php');                                                         // Remove Tools menu item
+        remove_menu_page('options-general.php');                                               // Remove Settings menu item
+        remove_menu_page('edit.php?post_type=acf-field-group');                                // Remove ACF menu item
+        remove_menu_page('members');                                                           // Remove Members menu item
+        remove_menu_page('wpie-new-export');                                                   // Remove WP Imp Exp menu item
+        remove_submenu_page('forminator', 'forminator_cross_sell');                            // Remove Forminator "More free plugins" submenu item
+    }
+
+    if (in_array('tresorier', $user->roles)) {
+        //@TODO: Add specific restrictions for the 'tresorier' role
     }
 }
 

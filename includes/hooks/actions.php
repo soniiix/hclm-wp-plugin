@@ -27,7 +27,7 @@ add_action( 'template_redirect', function() {
 });
 
 // Customize the admin menu
-add_action('admin_menu', 'hclm_admin_menu', 99);
+add_action('admin_menu', 'hclm_admin_menu', 999);
 
 // Remove zoom on hover for product images
 add_action( 'wp', function () {
@@ -329,7 +329,7 @@ function hclm_post_user_creation($user_id) {
 add_action('admin_head', function() { ?>
     <style>
         /* Unnecessary user fields */
-        tr.user-url-wrap, tr.user-comment-shortcuts-wrap, tr.user-admin-bar-front-wrap, tr.pms-re-edit-user,
+        tr.user-url-wrap, tr.user-comment-shortcuts-wrap, tr.user-admin-bar-front-wrap,
         /* Elementor AI */
         tr.elementor-ai-profile-row, tr.elementor-ai-profile-status-row,
         label[for="elementor_enable_ai"], #elementor_enable_ai, input[name="elementor_enable_ai"],
@@ -339,11 +339,23 @@ add_action('admin_head', function() { ?>
     </style>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Hide the <h2> whose text contains "Elementor - IA"
+        // Hide the <h2> whose text contains "Elementor - IA" or "Rôles"
         document.querySelectorAll('h2').forEach(function(h2) {
-            console.log(h2);
-            if (h2 && h2.textContent.trim().includes('Elementor - IA')) {
+            if (h2 && (h2.textContent.trim().includes('Elementor - IA') || h2.textContent.trim().includes('Rôles'))) {
                 h2.style.display = 'none';
+            }
+        });
+        // Styling the PMS roles field
+        const pmsRolesField = document.querySelector('.pms-re-edit-user td div ');
+        if (pmsRolesField) { 
+            pmsRolesField.classList.add('wp-tab-panel');
+            pmsRolesField.querySelector('ul').style.margin = '14px 0 14px 0';
+        }
+        // Hide the default WordPress roles field
+        document.querySelectorAll('tr').forEach(function(tr) {
+            const th = tr.querySelector('th');
+            if (th && th.textContent.trim().includes('Rôles utilisateur')) {
+                tr.style.display = 'none';
             }
         });
     });

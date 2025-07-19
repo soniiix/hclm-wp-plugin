@@ -362,4 +362,17 @@ add_action('admin_head', function() { ?>
     </script>
 <?php });
 
+// Remove the "New" menu from the admin bar for users with a specific role
+add_action( 'wp_before_admin_bar_render', function() {
+    if (!is_user_logged_in()) return;
+
+    // Get the current user
+    $user = wp_get_current_user();
+
+    if (in_array('secretaire', $user->roles)) {
+        global $wp_admin_bar;
+        $wp_admin_bar->remove_menu( 'new-content' );
+    }
+});
+
 ?>

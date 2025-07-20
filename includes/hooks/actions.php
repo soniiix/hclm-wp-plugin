@@ -13,9 +13,11 @@ add_action('template_redirect', 'handle_login');
 // Redirect to the home page depending on whether the user is logged in or not
 add_action('template_redirect', function () {
     if (!current_user_can('administrator')) {
-        hide_page('espace-adherent', false, '/connexion'); // If not logged in
-        hide_page('adherer', true);          // If logged in
-        hide_page('connexion', true);        // If logged in
+        hide_page('espace-adherent', false, '/connexion');  // If not logged in
+        hide_page('connexion', true);                       // If logged in
+        if (!current_user_can('tresorier')) {
+            hide_page('adherer', true);                     // If logged in and not a tresorier
+        }
     }
 });
 
@@ -363,16 +365,13 @@ add_action('admin_head', function() { ?>
     </script>
 <?php });
 
-// Remove the "New" menu from the admin bar for users with a specific role
+// Remove the "New" menu from the admin bar for users with 'secretaire' or 'tresorier' roles
 add_action( 'wp_before_admin_bar_render', function() {
     if (!is_user_logged_in()) return;
 
-    // Get the current user
-    $user = wp_get_current_user();
-
-    if (in_array('secretaire', $user->roles)) {
+    if (hclm_current_user_has_role(['secretaire', 'tresorier'])) {
         global $wp_admin_bar;
-        $wp_admin_bar->remove_menu( 'new-content' );
+        $wp_admin_bar->remove_menu('new-content');
     }
 });
 

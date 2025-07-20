@@ -2,7 +2,7 @@
 
 // Hide the admin bar for members
 add_filter('show_admin_bar', function ($show) {
-    return current_user_can('administrator') ? $show : false;
+    return hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire']) ? $show : false;
 });
 
 // Hide the "Adhérer" menu link if the user is logged in

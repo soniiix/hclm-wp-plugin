@@ -50,7 +50,7 @@ function hclm_restrict_admin_menus() {
     if (!is_user_logged_in()) return;
 
     // For both 'secretaire' and 'tresorier' roles
-    if (hclm_check_role(get_current_user_id(), ['secretaire', 'tresorier'])) {
+    if (hclm_current_user_has_role(['secretaire', 'tresorier'])) {
         remove_menu_page('astra');                                                // Remove Astra menu item
         remove_menu_page('woocommerce');                                          // Remove WooCommerce menu item
         remove_menu_page('admin.php?page=wc-settings&tab=checkout&from=PAYMENTS_MENU_ITEM');
@@ -66,13 +66,13 @@ function hclm_restrict_admin_menus() {
     }
 
     // For 'secretaire' role only
-    if (hclm_check_role(get_current_user_id(), ['secretaire'])) {
+    if (hclm_current_user_has_role(['secretaire'])) {
         remove_menu_page('members');                                               // Remove Members menu item
         remove_menu_page('wpie-new-export');                                       // Remove WP Imp Exp menu item
     }
 
     // For 'tresorier' role only
-    if (hclm_check_role(get_current_user_id(), ['tresorier'])) {
+    if (hclm_current_user_has_role(['tresorier'])) {
         remove_menu_page('edit.php?post_type=da_image');                           // Remove Draw Attention menu item
         remove_menu_page('edit.php?post_type=tribe_events');                       // Remove The Events Calendar menu item
     }

@@ -5,6 +5,7 @@ require_once plugin_dir_path(__FILE__) . '/functions/hide-page.php';
 require_once plugin_dir_path(__FILE__) . '/functions/update-user-profile.php';
 require_once plugin_dir_path(__FILE__) . '/functions/admin/menu.php';
 require_once plugin_dir_path(__FILE__) . '/functions/admin/register-post-type.php';
+require_once plugin_dir_path(__FILE__) . '/functions/check-role.php';
 
 // Handle login form submission
 add_action('template_redirect', 'handle_login');

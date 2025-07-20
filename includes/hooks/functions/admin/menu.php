@@ -44,33 +44,37 @@ function hclm_admin_menu () {
 }
 
 /**
- * Restrict admin menus based on user roles.
+ * Remove specific admin menu and submenu items based on user roles.
  */
 function hclm_restrict_admin_menus() {
     if (!is_user_logged_in()) return;
 
-    // Get the current user
-    $user = wp_get_current_user();
-
-    if (in_array('secretaire', $user->roles)) {
-        remove_menu_page('astra');                                                             // Remove Astra menu item
-        remove_menu_page('woocommerce');                                                       // Remove WooCommerce menu item
-        remove_menu_page('admin.php?page=wc-settings&tab=checkout');
-        remove_menu_page('admin.php?page=wc-settings&tab=checkout&from=PAYMENTS_MENU_ITEM');   // Remove WooCommerce Payments menu item
-        remove_submenu_page('edit.php?post_type=product', 'product-reviews');                  // Remove WooCommerce product reviews submenu item
-        remove_menu_page('elementor');                                                         // Remove Elementor menu item
-        remove_menu_page('edit.php?post_type=dflip');                                          // Remove DearFlip PDF menu item
-        remove_menu_page('themes.php');                                                        // Remove Themes menu item
-        remove_menu_page('tools.php');                                                         // Remove Tools menu item
-        remove_menu_page('options-general.php');                                               // Remove Settings menu item
-        remove_menu_page('edit.php?post_type=acf-field-group');                                // Remove ACF menu item
-        remove_menu_page('members');                                                           // Remove Members menu item
-        remove_menu_page('wpie-new-export');                                                   // Remove WP Imp Exp menu item
-        remove_submenu_page('forminator', 'forminator_cross_sell');                            // Remove Forminator "More free plugins" submenu item
+    // For both 'secretaire' and 'tresorier' roles
+    if (hclm_check_role(get_current_user_id(), ['secretaire', 'tresorier'])) {
+        remove_menu_page('astra');                                                // Remove Astra menu item
+        remove_menu_page('woocommerce');                                          // Remove WooCommerce menu item
+        remove_menu_page('admin.php?page=wc-settings&tab=checkout&from=PAYMENTS_MENU_ITEM');
+        remove_menu_page('admin.php?page=wc-settings&tab=checkout');              // Remove WooCommerce Payments menu item
+        remove_submenu_page('edit.php?post_type=product', 'product-reviews');     // Remove WooCommerce product reviews submenu item
+        remove_menu_page('elementor');                                            // Remove Elementor menu item
+        remove_menu_page('edit.php?post_type=dflip');                             // Remove DearFlip PDF menu item
+        remove_menu_page('themes.php');                                           // Remove Themes menu item
+        remove_menu_page('tools.php');                                            // Remove Tools menu item
+        remove_menu_page('options-general.php');                                  // Remove Settings menu item
+        remove_menu_page('edit.php?post_type=acf-field-group');                   // Remove ACF menu item
+        remove_submenu_page('forminator', 'forminator_cross_sell');               // Remove Forminator "More free plugins" submenu item
     }
 
-    if (in_array('tresorier', $user->roles)) {
-        //@TODO: Add specific restrictions for the 'tresorier' role
+    // For 'secretaire' role only
+    if (hclm_check_role(get_current_user_id(), ['secretaire'])) {
+        remove_menu_page('members');                                               // Remove Members menu item
+        remove_menu_page('wpie-new-export');                                       // Remove WP Imp Exp menu item
+    }
+
+    // For 'tresorier' role only
+    if (hclm_check_role(get_current_user_id(), ['tresorier'])) {
+        remove_menu_page('edit.php?post_type=da_image');                           // Remove Draw Attention menu item
+        remove_menu_page('edit.php?post_type=tribe_events');                       // Remove The Events Calendar menu item
     }
 }
 

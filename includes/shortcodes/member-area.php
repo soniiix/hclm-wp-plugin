@@ -62,11 +62,11 @@ function member_area_shortcode() {
                         <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
                         <span class="label">Tableau de bord</span>
                     </li>
+                    <?php if (!hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire'])){ ?>
                     <li data-tab="profile">
                         <span class="icon"><i class="fas fa-user-circle"></i></span>
                         <span class="label">Mon profil</span>
                     </li>
-                    <?php if (!hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire'])){ ?>
                     <li data-tab="membership">
                         <span class="icon"><i class="fas fa-address-card"></i></span>
                         <span class="label">Mon adhésion</span>

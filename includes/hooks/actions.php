@@ -5,17 +5,17 @@ require_once plugin_dir_path(__FILE__) . '/functions/hide-page.php';
 require_once plugin_dir_path(__FILE__) . '/functions/update-user-profile.php';
 require_once plugin_dir_path(__FILE__) . '/functions/admin/menu.php';
 require_once plugin_dir_path(__FILE__) . '/functions/admin/register-post-type.php';
-require_once plugin_dir_path(__FILE__) . '/functions/check-role.php';
+require_once plugin_dir_path(__FILE__) . '/functions/current-user-has-role.php';
 
 // Handle login form submission
 add_action('template_redirect', 'handle_login');
 
 // Redirect to the home page depending on whether the user is logged in or not
 add_action('template_redirect', function () {
-    if (!current_user_can('administrator')) {
+    if (!hclm_current_user_has_role(['administrator'])) {
         hide_page('espace-adherent', false, '/connexion');  // If not logged in
         hide_page('connexion', true);                       // If logged in
-        if (!current_user_can('tresorier')) {
+        if (!hclm_current_user_has_role(['tresorier'])) {
             hide_page('adherer', true);                     // If logged in and not a tresorier
         }
     }

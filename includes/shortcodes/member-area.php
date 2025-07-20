@@ -3,6 +3,7 @@
 require_once plugin_dir_path(__FILE__) . 'utils/get-pdf-cover.php';
 require_once plugin_dir_path(__FILE__) . 'utils/get-renewal-expiration-date.php';
 require_once plugin_dir_path(__FILE__) . 'utils/is-membership-active.php';
+require_once plugin_dir_path(__FILE__) . '../hooks/functions/current-user-has-role.php';
 
 /**
  * Displays the HCLM member area.
@@ -44,7 +45,7 @@ function member_area_shortcode() {
     }
 
     // Filter reports for non-admin users
-    if (!current_user_can('administrator')) {
+    if (!hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire'])) {
         $files = array_filter($files, function($report) {
             return $report['type'] !== 'CA';
         });
@@ -65,7 +66,7 @@ function member_area_shortcode() {
                         <span class="icon"><i class="fas fa-user-circle"></i></span>
                         <span class="label">Mon profil</span>
                     </li>
-                    <?php if (!current_user_can('administrator')){ ?>
+                    <?php if (!hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire'])){ ?>
                     <li data-tab="membership">
                         <span class="icon"><i class="fas fa-address-card"></i></span>
                         <span class="label">Mon adhésion</span>
@@ -79,7 +80,7 @@ function member_area_shortcode() {
                         <span class="icon"><i class="fas fa-file-alt"></i></span>
                         <span class="label">Comptes rendus</span>
                     </li>
-                    <?php if (!current_user_can('administrator')){ ?>
+                    <?php if (!hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire'])){ ?>
                     <li data-tab="suggestions">
                         <span class="icon"><i class="far fa-comment-dots"></i></i></span>
                         <span class="label">Vos suggestions</span>
@@ -97,7 +98,7 @@ function member_area_shortcode() {
         </aside>
         <main class="content">
             <section id="dashboard" class="tab-content active">
-                <?php if (hclm_is_membership_active() || current_user_can('administrator')) { ?>
+                <?php if (hclm_is_membership_active() || hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire'])) { ?>
                     <h3>
                         <?php
                         if (in_array('adherent', (array) $user->roles)) {
@@ -111,10 +112,21 @@ function member_area_shortcode() {
                         <div class="dashboard-col left-col">
                             <div class="tab-card">
                                 <p>Bienvenue dans l'espace adhérent. Ici, vous retrouverez toutes les informations importantes liées à votre adhésion.</p>
-                                <?php if (!current_user_can('administrator')){ ?>
+                                <?php if (!hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire'])){ ?>
                                     <span>En tant qu'adhérent, vous avez accès à la totalité du contenu.</span>
-                                <?php } else { ?>
-                                    <span>En tant qu'administrateur, vous avez accès à <a href="<?php echo admin_url() ?>">l'interface d'administration</a>.</span>
+                                <?php } else {
+                                    $roles = $user->roles;
+                                    $role_names = array(
+                                        'administrator' => 'administrateur',
+                                        'tresorier'     => 'trésorier',
+                                        'secretaire'    => 'secrétaire'
+                                    );
+                                    $display_roles = array_map(function($role) use ($role_names) {
+                                        return isset($role_names[$role]) ? $role_names[$role] : ucfirst($role);
+                                    }, $roles);
+                                    $role_label = implode(', ', $display_roles);
+                                ?>
+                                    <span>En tant que <?php echo esc_html($role_label); ?>, vous avez accès à <a href="<?php echo admin_url() ?>">l'interface d'administration</a>.</span>
                                 <?php } ?>
                             </div>
                             <div 
@@ -486,7 +498,7 @@ function member_area_shortcode() {
                 </div>
             </section>
             <section id="statuses" class="tab-content">
-                <?php if (hclm_is_membership_active() || current_user_can('administrator')) { ?>
+                <?php if (hclm_is_membership_active() || hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire'])) { ?>
                     <h3>Statuts de l'association</h2>
                     <div class="tab-card">
                         <p>Les statuts de l'association HCLM sont disponibles ci-dessous.</p>
@@ -520,7 +532,7 @@ function member_area_shortcode() {
                 <?php } ?>
             </section>
             <section id="reports" class="tab-content">
-                <?php if (hclm_is_membership_active() || current_user_can('administrator')){ ?>
+                <?php if (hclm_is_membership_active() || hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire'])) { ?>
                     <h3>Comptes rendus</h3>
                     
                     <div class="filters">
@@ -535,7 +547,7 @@ function member_area_shortcode() {
                             <option value="">Toutes les années</option>
                         </select>
 
-                        <?php if (current_user_can('administrator')): ?>
+                        <?php if (hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire'])): ?>
                         <select id="filter-type">
                             <option value="">Tous les types</option>
                             <option value="AG">Assemblée Générale</option>

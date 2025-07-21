@@ -71,7 +71,7 @@ function newsletters_list_shortcode() {
                     </div>
 
                     <div class="popup-flipbook">
-                        <div class="_df_book" style="max-height: 600px !important;" source="' . esc_url($summary_url) . '"></div>
+                        <div class="_df_book" style="max-height: 500px !important;" source="' . esc_url($summary_url) . '"></div>
                     </div>';
 
                     // Display conditional button based on user login and membership status. If the user is not logged in, redirect them to the login page.

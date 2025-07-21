@@ -80,7 +80,7 @@ function newsletters_list_shortcode() {
                     $redirect_url = esc_url(add_query_arg('redirect_to', urlencode($current_url), $login_url));
 
                     if (is_user_logged_in()) {
-                        if (!hclm_is_membership_active() && !hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire'])) {
+                        if (!hclm_is_membership_active() && !hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire', 'editor'])) {
                             // Connected user but membership is inactive
                             $cards_html .= '
                                 <div class="newsletter-button-container">

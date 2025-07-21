@@ -14,7 +14,7 @@ if (!is_user_logged_in()) {
 }
 
 // If the user does not have an active membership, redirect to the member area that displays the warning message
-if (!hclm_is_membership_active() && !hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire'])) {
+if (!hclm_is_membership_active() && !hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire', 'editor'])) {
     wp_redirect('/espace-adherent');
     exit;
 }

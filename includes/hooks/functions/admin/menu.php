@@ -67,14 +67,23 @@ function hclm_restrict_admin_menus() {
 
     // For 'secretaire' role only
     if (hclm_current_user_has_role(['secretaire'])) {
-        remove_menu_page('members');                                               // Remove Members menu item
-        remove_menu_page('wpie-new-export');                                       // Remove WP Imp Exp menu item
+        remove_menu_page('members');                                              // Remove Members menu item
+        remove_menu_page('wpie-new-export');                                      // Remove WP Imp Exp menu item
     }
 
     // For 'tresorier' role only
     if (hclm_current_user_has_role(['tresorier'])) {
-        remove_menu_page('edit.php?post_type=da_image');                           // Remove Draw Attention menu item
-        remove_menu_page('edit.php?post_type=tribe_events');                       // Remove The Events Calendar menu item
+        remove_menu_page('edit.php?post_type=da_image');                          // Remove Draw Attention menu item
+        remove_menu_page('edit.php?post_type=tribe_events');                      // Remove The Events Calendar menu item
+    }
+
+    // For 'editor' role only
+    if (hclm_current_user_has_role(['editor'])) {
+        remove_menu_page('astra');                                                // Remove Astra menu item
+        remove_menu_page('elementor');                                            // Remove Elementor menu item
+        remove_menu_page('paid-member-subscriptions');                            // Remove Paid Member Subscriptions menu item
+        remove_menu_page('edit.php?post_type=acf-field-group');                   // Remove ACF menu item
+        remove_menu_page('members');                                              // Remove Members menu item
     }
 }
 

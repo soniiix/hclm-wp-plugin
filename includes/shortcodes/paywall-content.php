@@ -12,7 +12,7 @@ function paywall_content_shortcode($atts, $content = null) {
     }
 
     if (is_user_logged_in()) {
-        if (!hclm_is_membership_active() && !hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire'])) {
+        if (!hclm_is_membership_active() && !hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire', 'editor'])) {
             return '
                 <div class="article-preview">
                     <div class="article-fadeout">

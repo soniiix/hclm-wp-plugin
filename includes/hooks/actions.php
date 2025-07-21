@@ -12,7 +12,7 @@ add_action('template_redirect', 'handle_login');
 
 // Redirect to the home page depending on whether the user is logged in or not
 add_action('template_redirect', function () {
-    if (!hclm_current_user_has_role(['administrator'])) {
+    if (!hclm_current_user_has_role(['administrator', 'editor'])) {
         hide_page('espace-adherent', false, '/connexion');  // If not logged in
         hide_page('connexion', true);                       // If logged in
         if (!hclm_current_user_has_role(['tresorier'])) {

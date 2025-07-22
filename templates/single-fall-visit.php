@@ -12,7 +12,8 @@ if (have_posts()) :
             <h3 class="hclm-post-title">Visite à <?php the_title(); ?></h3>
 
             <?php if (is_user_logged_in() && (hclm_is_membership_active() || hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire', 'editor']))):
-                $pdf_url = get_field('pdf_url');
+                $base_url = wp_upload_dir()['baseurl'] . '/hclm/visites-automnales/'; // Base URL for fall visits
+                $pdf_url = $base_url . get_field('pdf_name'); // Construct the PDF URL
                 if ($pdf_url) :
                     ?>
                     <div class="_df_book dfbook_fall_visit" style="max-height: 600px !important;" source="<?php echo esc_url($pdf_url) ?>"></div>

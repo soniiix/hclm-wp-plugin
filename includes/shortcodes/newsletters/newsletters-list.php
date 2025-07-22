@@ -38,6 +38,7 @@ function newsletters_list_shortcode() {
         if (!$summary_url) continue;
     
         $is_draft = ($post->post_status === 'draft');
+        $is_public_demo = ($bulletin_num == '72'); // Define bulletin n°72 as a demo for non-members
 
         $cards_html .= '
             <div 
@@ -90,32 +91,42 @@ function newsletters_list_shortcode() {
                         $login_url = home_url('/connexion');
                         $redirect_url = esc_url(add_query_arg('redirect_to', urlencode($current_url), $login_url));
 
-                        if (is_user_logged_in()) {
-                            if (!hclm_is_membership_active() && !hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire', 'editor'])) {
-                                // Connected user but membership is inactive
+                        if ($is_public_demo) {
+                            // Bulletin n°72 is accessible to all users
+                            $cards_html .= '
+                                <div class="newsletter-button-container">
+                                    <div class="_df_button" source="' . esc_url($pdf_url) . '">
+                                        <div class="newsletter-button">Consulter le bulletin entier</div>
+                                    </div>
+                                </div>';
+                        } else {
+                            if (is_user_logged_in()) {
+                                if (!hclm_is_membership_active() && !hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire', 'editor'])) {
+                                    // Connected user but membership is inactive
+                                    $cards_html .= '
+                                        <div class="newsletter-button-container">
+                                            <a href="/espace-adherent" class="newsletter-button newsletter-inactive">
+                                                Consulter le bulletin entier
+                                            </a>
+                                        </div>';
+                                } else {
+                                    // Connected user with active membership
+                                    $cards_html .= '
+                                        <div class="newsletter-button-container">
+                                            <div class="_df_button" source="' . esc_url($pdf_url) . '">
+                                                <div class="newsletter-button">Consulter le bulletin entier</div>
+                                            </div>
+                                        </div>';
+                                }
+                            } else {
+                                // Not connected user
                                 $cards_html .= '
                                     <div class="newsletter-button-container">
-                                        <a href="/espace-adherent" class="newsletter-button newsletter-inactive">
+                                        <a href="' . $redirect_url . '" class="newsletter-button">
                                             Consulter le bulletin entier
                                         </a>
                                     </div>';
-                            } else {
-                                // Connected user with active membership
-                                $cards_html .= '
-                                    <div class="newsletter-button-container">
-                                        <div class="_df_button" source="' . esc_url($pdf_url) . '">
-                                            <div class="newsletter-button">Consulter le bulletin entier</div>
-                                        </div>
-                                    </div>';
                             }
-                        } else {
-                            // Not connected user
-                            $cards_html .= '
-                                <div class="newsletter-button-container">
-                                    <a href="' . $redirect_url . '" class="newsletter-button">
-                                        Consulter le bulletin entier
-                                    </a>
-                                </div>';
                         }
                     }
                 $cards_html .= '

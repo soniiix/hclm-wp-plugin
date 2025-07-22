@@ -18,9 +18,9 @@ function newsletters_shortcode() {
                 Chaque bulletin comporte au moins un article sur chacune des huit communes constitutives de l'actuel collège.
                 <br><br>
                 Vous trouverez ci-dessous tous les bulletins.
-                <?php if(!is_user_logged_in()) {
-                    echo "Pour les non adhérents, HCLM vous propose de consulter la table des matières de chaque bulletin. Pour consulter l'intégralité d'un bulletin, vous devez être adhérent et vous connecter.";
-                } ?>
+                <?php if(!is_user_logged_in()) { ?>
+                    Pour les non adhérents, HCLM vous propose de consulter la table des matières de chaque bulletin. Pour consulter l'intégralité d'un bulletin, vous devez être adhérent et vous connecter. À titre de démonstration, le <u style="text-decoration-thickness: 2px; text-underline-offset: 3px;">bulletin n°72</u> est accessible en version complète.
+                <?php } ?>
             </span>
         </div>
         

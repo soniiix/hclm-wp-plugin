@@ -21,10 +21,21 @@ add_action('template_redirect', function () {
     }
 });
 
-// Remove the default WooCommerce shop page
+// Redirections
 add_action( 'template_redirect', function() {
-    if (is_shop()) {
-        wp_redirect(home_url('/ouvrages')); // Redirect to the custom shop page
+    // Hide the default WooCommerce pages and redirect to the custom shop page
+    if (is_shop() || is_product_category() || is_product_tag()) {
+        wp_redirect(home_url('/ouvrages'));
+        exit;
+    }
+    // Hide attachment and ShopEngine template pages and redirect to the home page
+    if (is_attachment() || (strpos($_SERVER['REQUEST_URI'], '/shopengine-template/new-template-1746775812/') !== false)) {
+        wp_redirect(home_url(), 301);
+        exit;
+    }
+    // Hide Draw Attention generated pages and redirect to the "Nos Communes" page
+    if (isset($_GET['da_image']) || (isset($_GET['post_type']) && $_GET['post_type'] === 'da_image')) {
+        wp_redirect(home_url('/nos-communes'));
         exit;
     }
 });
@@ -184,14 +195,6 @@ add_action('admin_head', function() {
 add_action( 'wp_before_admin_bar_render', function(){
     global $wp_admin_bar;
     $wp_admin_bar->remove_menu('comments');
-});
-
-// Hide attachment pages and redirect to the home page
-add_action('template_redirect', function() {
-    if (is_attachment()) {
-        wp_redirect(home_url(), 301);
-        exit;
-    }
 });
 
 // Show a success message after login

@@ -22,10 +22,11 @@ if (!hclm_is_membership_active() && !hclm_current_user_has_role(['administrator'
 // Load CSS style
 wp_enqueue_style('hclm-newsletters-style', plugin_dir_url(__FILE__) . '../assets/css/newsletters.css');
 
-// Retrieve the current newsletter
+// Retrieve the current newsletter data
 $title = get_the_title();
-$summary_url = get_post_meta(get_the_ID(), 'summary_url', true);
-$pdf_url = get_post_meta(get_the_ID(), 'pdf_url', true);
+$bulletin_num = preg_replace('/[^0-9]/', '', $post->post_title); // Exctract the newsletter number from the title
+$base_url = wp_upload_dir()['baseurl'] . '/hclm/bulletins/'; // Base URL for newsletters
+$pdf_url = $base_url . 'B' . $bulletin_num . '/B' . $bulletin_num . '.pdf'; // Construct the PDF URL
 ?>
 
 <div class="newsletter_display_section">

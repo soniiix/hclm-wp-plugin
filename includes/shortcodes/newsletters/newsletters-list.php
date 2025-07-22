@@ -31,9 +31,12 @@ function newsletters_list_shortcode() {
     foreach ($newsletters as $post) {
         $bulletin_num = preg_replace('/[^0-9]/', '', $post->post_title); // Exctract the number from the title
 
-        $pdf_url = get_post_meta($post->ID, 'pdf_url', true);
+        $base_url = wp_upload_dir()['baseurl'] . '/hclm/bulletins/'; // Base URL for newsletters
+
+        // Get the URLs for the PDF and cover image
+        $pdf_url = $base_url . 'B' . $bulletin_num . '/B' . $bulletin_num . '.pdf';
         $cover_url = get_the_post_thumbnail_url($post->ID, 'large');
-        $summary_url = get_post_meta($post->ID, 'summary_url', true);
+        $summary_url = $base_url . 'B' . $bulletin_num . '/B' . $bulletin_num . '_Sommaire.pdf';
 
         if (!$summary_url) continue;
     

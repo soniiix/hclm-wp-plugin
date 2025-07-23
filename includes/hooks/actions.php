@@ -56,14 +56,8 @@ add_action( 'wp', function () {
 }, 100 );
 
 // Update user profile
-/*
-add_action('admin_post_update_user_profile', 'hclm_update_user_profile');
-add_action('admin_post_nopriv_update_user_profile', 'hclm_update_user_profile');
-*/
-
-add_action('wp_ajax_update_user_profile', 'hclm_update_user_profile'); // connectés
-add_action('wp_ajax_nopriv_update_user_profile', 'hclm_update_user_profile'); // non-connectés si besoin
-
+add_action('wp_ajax_update_user_profile', 'hclm_update_user_profile');
+add_action('wp_ajax_nopriv_update_user_profile', 'hclm_update_user_profile');
 
 // Display custom fields in the PMS registration form
 add_action( 'pms_register_form_after_fields', 'custom_pms_extra_fields' );

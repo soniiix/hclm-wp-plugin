@@ -7,6 +7,13 @@ require_once plugin_dir_path(__FILE__) . '/functions/admin/menu.php';
 require_once plugin_dir_path(__FILE__) . '/functions/admin/register-post-type.php';
 require_once plugin_dir_path(__FILE__) . '/functions/current-user-has-role.php';
 
+error_log('Plugin chargé');
+
+add_action('admin_post_update_user_profile', function () {
+    error_log('admin_post_update_user_profile exécuté');
+});
+
+
 // Handle login form submission
 add_action('template_redirect', 'handle_login');
 
@@ -21,7 +28,7 @@ add_action('template_redirect', function () {
     }
 });
 
-// Redirections
+// Redirects
 add_action( 'template_redirect', function() {
     // Hide the default WooCommerce pages and redirect to the custom shop page
     if (is_shop() || is_product_category() || is_product_tag()) {
@@ -49,8 +56,14 @@ add_action( 'wp', function () {
 }, 100 );
 
 // Update user profile
+/*
 add_action('admin_post_update_user_profile', 'hclm_update_user_profile');
 add_action('admin_post_nopriv_update_user_profile', 'hclm_update_user_profile');
+*/
+
+add_action('wp_ajax_update_user_profile', 'hclm_update_user_profile'); // connectés
+add_action('wp_ajax_nopriv_update_user_profile', 'hclm_update_user_profile'); // non-connectés si besoin
+
 
 // Display custom fields in the PMS registration form
 add_action( 'pms_register_form_after_fields', 'custom_pms_extra_fields' );

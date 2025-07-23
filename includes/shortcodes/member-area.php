@@ -193,7 +193,7 @@ function member_area_shortcode() {
                 <?php } ?>
                 <h3>Vos informations</h3>
                 <div class="tab-card">
-                    <form class="profile-section" method="post" action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" enctype="multipart/form-data">
+                    <form class="profile-section" method="post" action="<?php echo esc_url( admin_url('admin-ajax.php') ); ?>" enctype="multipart/form-data">
                         <?php wp_nonce_field('update_user_profile_nonce', 'update_user_profile_nonce_field'); ?>
                         <input type="hidden" name="action" value="update_user_profile">
 

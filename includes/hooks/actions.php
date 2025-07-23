@@ -198,10 +198,10 @@ add_action('admin_head', function() {
     </style>';
 });
 
-// Remove the comments tab from the admin bar
 add_action( 'wp_before_admin_bar_render', function(){
     global $wp_admin_bar;
-    $wp_admin_bar->remove_menu('comments');
+    $wp_admin_bar->remove_menu('comments'); // Remove the comments tab from the admin bar
+    $wp_admin_bar->remove_menu('view-store'); // Remove the Woo Commerce view store tab from the admin bar
 });
 
 // Show a success message after login

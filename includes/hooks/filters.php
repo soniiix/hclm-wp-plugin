@@ -53,6 +53,19 @@ add_filter('manage_users_columns', function($columns) {
     return $columns;
 });
 
+// Remove Yoast SEO columns from the admin area
+add_filter('manage_edit-tribe_events_columns', 'hclm_remove_yoast_seo_columns', 10, 1);           // The Events Calendar
+add_filter('manage_edit-bulletin_columns', 'hclm_remove_yoast_seo_columns', 10, 1);               // Newsletters
+add_filter('manage_edit-visite_automnale_columns', 'hclm_remove_yoast_seo_columns', 10, 1);       // Fall Visits
+add_filter('manage_edit-communication_columns', 'hclm_remove_yoast_seo_columns', 10, 1);          // Communications
+add_filter('manage_edit-product_columns', 'hclm_remove_yoast_seo_columns', 10, 1);                // Woo Commerce Products
+add_filter('manage_edit-post_columns', 'hclm_remove_yoast_seo_columns', 10, 1 );
+add_filter('manage_edit-page_columns', 'hclm_remove_yoast_seo_columns', 10, 1 );
+function hclm_remove_yoast_seo_columns( $columns ) {
+	unset($columns['wpseo-score']); // Remove Yoast SEO score column
+ 	return $columns;
+}
+
 // Display the member number in the custom column
 add_filter('manage_users_custom_column', function($value, $column_name, $user_id) {
     if ($column_name === 'num_adherent') {

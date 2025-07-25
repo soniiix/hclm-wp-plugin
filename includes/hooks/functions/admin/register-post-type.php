@@ -78,12 +78,15 @@ add_action('do_meta_boxes', function () {
     remove_meta_box('astra_settings_meta_box', 'visite_automnale', 'normal');
     remove_meta_box('astra_settings_meta_box', 'bulletin', 'side');
     remove_meta_box('astra_settings_meta_box', 'communication', 'side');
+    remove_meta_box('astra_settings_meta_box', 'tribe_events', 'side');
     remove_meta_box('wpr-secondary-image', 'visite_automnale', 'side');
     remove_meta_box('wpr-secondary-image', 'bulletin', 'side');
     remove_meta_box('wpr-secondary-image', 'communication', 'side');
+    remove_meta_box('wpr-secondary-image', 'tribe_events', 'side');
     remove_meta_box('pms_post_content_restriction', 'visite_automnale', 'normal');
     remove_meta_box('pms_post_content_restriction', 'bulletin', 'normal');
     remove_meta_box('pms_post_content_restriction', 'communication', 'normal');
+    remove_meta_box('pms_post_content_restriction', 'tribe_events', 'normal');
 });
 
 ?>

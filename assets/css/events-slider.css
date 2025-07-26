@@ -1,8 +1,19 @@
+/* =========================== */
+/*       EVENTS HEADER         */
+/* =========================== */
 .hclm-events-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 0.5rem;
+    margin-bottom: 30px;
+}
+
+@media screen and (max-width: 580px) {
+    .hclm-events-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
 }
 
 .hclm-events-header h2 {
@@ -11,33 +22,30 @@
     font-weight: 600;
 }
 
-.slider-nav {
+.view-calendar-link {
+    margin: 0;
+    font-weight: 500 !important;
+    background-color: #fbeee6 !important;
+    border-radius: 10px !important;
+    padding: 6px 18px !important;
+    transition: background 0.2s;
+    text-decoration: none !important;
+    color: #e76f51;
+    font-size: 17px;
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 4px;
+    align-items: center;
+    gap: 6px;
 }
 
-.slider-nav button {
-    background-color: #e76f51 !important;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: 8px 21px !important;
-    font-weight: 300 !important;
+.view-calendar-link:hover {
+    background-color: #ffe5db !important;
 }
 
-.hclm-events-slider {
-    display: flex;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    gap: 1rem;
-    padding: 1.5rem 0;
-    width: 100%;
-}
 
+/* =========================== */
+/*          EVENT CARD         */
+/* =========================== */
 .event-card {
-    width: calc((100% - 1rem) / 3);
     background: #f6f6f6;
     border-radius: 10px;
     flex-shrink: 0;
@@ -46,6 +54,7 @@
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
     overflow: hidden;
     padding: 0;
+    height: 100%;
 }
 
 .hclm-event-thumb-container {
@@ -78,34 +87,18 @@
     margin-top: 0;
     font-size: 20px !important;
     font-weight: 500 !important;
+    margin-bottom: 15px !important;
 }
 
 .event-card p{
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
 }
 
 .event-card i{
     margin-right: 8px;
     color: #e76f51;
-}
-
-.view-calendar {
-    margin: 0;
-    font-weight: 500 !important;
-}
-
-.view-calendar a{
-    text-decoration: none !important;
-    color: #e76f51;
-    font-size: 17px;
-}
-
-.view-calendar a:hover{
-    text-decoration: none !important;
-    border-bottom: 2px solid #e76f51;
-
 }
 
 .event-link{
@@ -116,83 +109,85 @@
     width: fit-content;
 }
 
-.slider-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    position: relative;
+
+/* =========================== */
+/*           SWIPER            */
+/* =========================== */
+.swiper {
+    padding-bottom: 5px !important;
 }
 
-.slider-controls-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    margin-top: 18px;
+.swiper-slide {
+  height: auto !important;
 }
 
-.slider-arrow {
-    background: #fff;
-    border: 2px solid #e76f51;
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    transition: background 0.2s;
-}
-
-.slider-arrow:hover {
-    background: #ffe5db;
-}
-
-.slider-bullets {
+.swiper-pagination {
     display: none;
 }
 
-.slider-bullets .bullet {
-    width: 35px;
-    height: 5px;
-    border-radius: 10px;
-    background: #e0e0e0;
-    transition: background 0.2s;
+.swiper-pagination-bullet {
+    width: 35px !important;
+    height: 5px !important;
+    border-radius: 10px !important;
+    background: #e0e0e0 !important;
 }
 
-.slider-bullets .bullet.active {
-    background: #e76f51;
+.swiper-pagination-bullet-active {
+    background: #e76f51 !important;
 }
 
-.slider-bullets .bullet:hover {
-    cursor: pointer;
-}
-
-/* Tablet : 2 event cards */
-@media screen and (max-width: 1023px) {
-    .event-card {
-        width: calc((100% - 1rem) / 2);
-    }
-}
-
-/* Mobile : 1 event card */
+/* Display pagination on mobile */
 @media screen and (max-width: 600px) {
-    .slider-bullets {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
+    .swiper-pagination {
+        position: unset !important;
+        display: flex !important;
+        justify-content: start !important;
+        margin-top: 20px;
     }
+}
 
-    .slider-controls-row {
-        justify-content: start;
-    }
+.swiper-button-next,
+.swiper-button-prev {
+    background: #fbeee6;
+    border-radius: 50%;
+    width: 44px !important;
+    height: 44px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    position: unset !important;
+    margin-top: unset !important;
+}
 
-    .slider-arrow {
-        display: none;
-    }
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    display: none !important;
+}
 
-    .event-card {
-        width: 100%;
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background: #ffe5db;
+}
+
+.swiper-button-next svg, 
+.swiper-button-prev svg {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.swiper-buttons-row {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 18px;
+    margin-top: 20px !important;
+}
+
+/* Hide navigation arrows on mobile */
+@media screen and (max-width: 600px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none !important;
     }
 }

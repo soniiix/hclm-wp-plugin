@@ -87,6 +87,7 @@ add_action('do_meta_boxes', function () {
     remove_meta_box('pms_post_content_restriction', 'bulletin', 'normal');
     remove_meta_box('pms_post_content_restriction', 'communication', 'normal');
     remove_meta_box('pms_post_content_restriction', 'tribe_events', 'normal');
+    remove_meta_box('tribe_events_event_options', 'tribe_events', 'side');
 });
 
 ?>

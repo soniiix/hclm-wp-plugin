@@ -90,6 +90,10 @@
     margin-bottom: 15px !important;
 }
 
+.event-content a {
+    text-decoration: none !important;
+}
+
 .event-card p{
     display: flex;
     flex-direction: column;

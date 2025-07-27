@@ -38,7 +38,9 @@ function events_slider_shortcode() {
                                     <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr($event->post_title); ?>" class="hclm-event-thumb" />
                                 </a>
                                 <div class="event-content">
-                                    <h3><?php echo esc_html($event->post_title); ?></h3>
+                                    <a href="<?php echo esc_url(get_permalink($event)); ?>">
+                                        <h3><?php echo esc_html($event->post_title); ?></h3>
+                                    </a>
                                     <p>
                                         <span><i class="fas fa-calendar-day"></i><?php echo esc_html(tribe_get_start_date($event, false, 'j F Y')); ?></span>
                                         <?php if($venue_name) { ?>

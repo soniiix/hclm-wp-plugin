@@ -44,7 +44,7 @@ function handle_login() {
             wp_set_current_user($user->ID);
             wp_set_auth_cookie($user->ID);
 
-            if (user_can($user, 'administrator')) {
+            if (hclm_current_user_has_role(['administrator', 'tresorier', 'secretaire', 'editor'])) {
                 wp_redirect(admin_url());
             } else {
                 $redirect = !empty($_POST['redirect_to']) ? esc_url_raw($_POST['redirect_to']) : home_url('/accueil');

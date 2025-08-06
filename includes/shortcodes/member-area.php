@@ -487,7 +487,7 @@ function member_area_shortcode() {
                         <?php
                     
                     } else {
-                        echo "<span>Aucune adhésion n'est enregistrée pour ce compte. Veuillez adhérer en <a href='/adherer'>cliquant ici</a>.</span>";
+                        echo "<span>Aucune adhésion n'est enregistrée pour ce compte. Veuillez patienter que l'administrateur la valide.</span>";
                     }?>
                 </div>
 

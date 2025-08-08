@@ -295,8 +295,8 @@ function member_area_shortcode() {
                 // If the user has confirmed the cancellation of automatic renewal, set the message accordingly and hide the popup.
                 elseif (isset($_POST['pms_confirm_cancel_subscription'])) {
                     $message = 'Le renouvellement automatique a bien été annulé.'; ?>
-                    <style>.pms-action-popup-overlay { display: none !important; } </style> <?
-                }
+                    <style>.pms-action-popup-overlay { display: none !important; } </style>
+                <?php }
 
                 // Display the message if it exists
                 if ($message) { ?>

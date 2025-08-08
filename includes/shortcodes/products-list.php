@@ -59,10 +59,10 @@ function products_list_shortcode() {
             <span>Trier</span>
             <div>
                 <select name="sort" onchange="this.form.submit()">
-                    <option value="date_desc" <?= ($_GET['sort'] ?? '') === 'date_desc' ? 'selected' : '' ?>>Du plus récent au plus ancien</option>
-                    <option value="date_asc" <?= ($_GET['sort'] ?? '') === 'date_asc' ? 'selected' : '' ?>>Du plus ancien au plus récent</option>
-                    <option value="price_asc" <?= ($_GET['sort'] ?? '') === 'price_asc' ? 'selected' : '' ?>>Par prix (croissant)</option>
-                    <option value="price_desc" <?= ($_GET['sort'] ?? '') === 'price_desc' ? 'selected' : '' ?>>Par prix (décroissant)</option>
+                    <option value="date_desc" <?php echo ($_GET['sort'] ?? '') === 'date_desc' ? 'selected' : '' ?>>Du plus récent au plus ancien</option>
+                    <option value="date_asc" <?php echo ($_GET['sort'] ?? '') === 'date_asc' ? 'selected' : '' ?>>Du plus ancien au plus récent</option>
+                    <option value="price_asc" <?php echo ($_GET['sort'] ?? '') === 'price_asc' ? 'selected' : '' ?>>Par prix (croissant)</option>
+                    <option value="price_desc" <?php echo ($_GET['sort'] ?? '') === 'price_desc' ? 'selected' : '' ?>>Par prix (décroissant)</option>
                 </select>
             </div>
         </form>
@@ -78,20 +78,20 @@ function products_list_shortcode() {
         $link = get_permalink();
         ?>
         <div class="product-card">
-            <a href="<?= esc_url($link); ?>" class="product-link" target="_blank" rel="noopener noreferrer">
-                <div class="product-image" style="background-image: url('<?= esc_url($img); ?>')" aria-label="Voir les détails de l'ouvrage <?php echo esc_html(get_the_title()); ?>"></div>
+            <a href="<?php echo esc_url($link); ?>" class="product-link" target="_blank" rel="noopener noreferrer">
+                <div class="product-image" style="background-image: url('<?php echo esc_url($img); ?>')" aria-label="Voir les détails de l'ouvrage <?php echo esc_html(get_the_title()); ?>"></div>
             </a>
             <div class="product-content">
-                <h3 class="product-title"><?= esc_html(wp_trim_words(get_the_title(), 11)); ?></h3>
+                <h3 class="product-title"><?php echo esc_html(wp_trim_words(get_the_title(), 11)); ?></h3>
                 <div class="product-subcontent">
                     <span class="product-price"><?php echo esc_html($product->get_price()); ?>&nbsp;€</span>
-                    <p class="product-stock <?= esc_html($product->get_stock_status()); ?>">
-                        <?= ($product->get_stock_status() == "outofstock") 
+                    <p class="product-stock <?php echo esc_html($product->get_stock_status()); ?>">
+                        <?php echo ($product->get_stock_status() == "outofstock") 
                             ? "<i class='far fa-times-circle'></i>&nbsp;Épuisé" 
                             : "<i class='far fa-check-circle'></i>&nbsp;En stock"; ?>
                     </p>
 
-                    <a href="<?= esc_url($link); ?>" class="product-button">Voir les détails</a>
+                    <a href="<?php echo esc_url($link); ?>" class="product-button">Voir les détails</a>
                 </div>
                 
             </div>

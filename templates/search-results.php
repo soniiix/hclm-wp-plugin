@@ -144,11 +144,11 @@ $query = new WP_Query($args);
                             <label for="hclm-advanced-search-filter-input">Type de contenu</label>
                             <select id="hclm-advanced-search-filter-input" name="type">
                                 <option value="">Tout</option>
-                                <option value="newsletters" <?= ($_GET['type'] ?? '') === 'newsletters' ? 'selected' : '' ?>>Bulletins</option>
-                                <option value="pages" <?= ($_GET['type'] ?? '') === 'pages' ? 'selected' : '' ?>>Pages</option>
-                                <option value="events" <?= ($_GET['type'] ?? '') === 'events' ? 'selected' : '' ?>>Événements</option>
-                                <option value="fall-visits" <?= ($_GET['type'] ?? '') === 'fall-visits' ? 'selected' : '' ?>>Visites automnales</option>
-                                <option value="products" <?= ($_GET['type'] ?? '') === 'products' ? 'selected' : '' ?>>Ouvrages</option>
+                                <option value="newsletters" <?php echo ($_GET['type'] ?? '') === 'newsletters' ? 'selected' : '' ?>>Bulletins</option>
+                                <option value="pages" <?php echo ($_GET['type'] ?? '') === 'pages' ? 'selected' : '' ?>>Pages</option>
+                                <option value="events" <?php echo ($_GET['type'] ?? '') === 'events' ? 'selected' : '' ?>>Événements</option>
+                                <option value="fall-visits" <?php echo ($_GET['type'] ?? '') === 'fall-visits' ? 'selected' : '' ?>>Visites automnales</option>
+                                <option value="products" <?php echo ($_GET['type'] ?? '') === 'products' ? 'selected' : '' ?>>Ouvrages</option>
                             </select>
                         </div>
                         <div class="hclm-popup-advanced-search-filter-group">

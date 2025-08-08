@@ -27,8 +27,8 @@ function fall_visits_shortcode() {
             <span>Trier</span>
             <div>
                 <select name="order" onchange="this.form.submit()">
-                    <option value="desc" <?= ($_GET['order'] ?? '') === 'desc' ? 'selected' : '' ?>>Du plus récent au plus ancien</option>
-                    <option value="asc" <?= ($_GET['order'] ?? '') === 'asc' ? 'selected' : '' ?>>Du plus ancien au plus récent</option>
+                    <option value="desc" <?php echo ($_GET['order'] ?? '') === 'desc' ? 'selected' : '' ?>>Du plus récent au plus ancien</option>
+                    <option value="asc" <?php echo ($_GET['order'] ?? '') === 'asc' ? 'selected' : '' ?>>Du plus ancien au plus récent</option>
                 </select>
             </div>
         </form>
@@ -41,13 +41,13 @@ function fall_visits_shortcode() {
         $link = get_permalink();
         ?>
         <div class="visit-card">
-            <a href="<?= esc_url($link); ?>" class="visit-link" target="_blank" rel="noopener noreferrer">
-                <div class="visit-image" style="background-image: url('<?= esc_url($img); ?>')"></div>
+            <a href="<?php echo esc_url($link); ?>" class="visit-link" target="_blank" rel="noopener noreferrer">
+                <div class="visit-image" style="background-image: url('<?php echo esc_url($img); ?>')"></div>
             </a>
             <div class="visit-content">
-                <h3 class="visit-title"><?= esc_html(get_the_title()); ?></h3>
-                <p class="visit-date"><?= get_the_date('d/m/Y'); ?></p>
-                <a href="<?= esc_url($link); ?>" class="visit-button">Voir les détails</a>
+                <h3 class="visit-title"><?php echo esc_html(get_the_title()); ?></h3>
+                <p class="visit-date"><?php echo get_the_date('d/m/Y'); ?></p>
+                <a href="<?php echo esc_url($link); ?>" class="visit-button">Voir les détails</a>
             </div>
         </div>
         <?php

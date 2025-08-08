@@ -7,13 +7,6 @@ require_once plugin_dir_path(__FILE__) . '/functions/admin/menu.php';
 require_once plugin_dir_path(__FILE__) . '/functions/admin/register-post-type.php';
 require_once plugin_dir_path(__FILE__) . '/functions/current-user-has-role.php';
 
-error_log('Plugin chargé');
-
-add_action('admin_post_update_user_profile', function () {
-    error_log('admin_post_update_user_profile exécuté');
-});
-
-
 // Handle login form submission
 add_action('template_redirect', 'handle_login');
 

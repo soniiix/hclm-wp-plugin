@@ -88,7 +88,7 @@ function member_area_shortcode() {
                     <?php } ?>
                 </ul>
                 <div class="logout-container">
-                    <a href="<?php echo wp_logout_url(home_url('/connexion')); ?>" class="logout-button" aria-label="Déconnexion">
+                    <a href="<?php echo esc_url(wp_logout_url(home_url('/connexion'))); ?>" class="logout-button" aria-label="Déconnexion">
                         <span>Déconnexion</span>
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
@@ -127,7 +127,7 @@ function member_area_shortcode() {
                                     }, $roles);
                                     $role_label = implode(', ', $display_roles);
                                 ?>
-                                    <span>En tant <?php echo esc_html($role_label); ?>, vous avez accès à <a href="<?php echo admin_url() ?>">l'interface d'administration</a>.</span>
+                                    <span>En tant <?php echo esc_html($role_label); ?>, vous avez accès à <a href="<?php echo esc_url(admin_url()) ?>">l'interface d'administration</a>.</span>
                                 <?php } ?>
                             </div>
                             <div 
@@ -145,7 +145,7 @@ function member_area_shortcode() {
                                 <span>
                                     <?php if (!empty($next_event)) {
                                         $event = $next_event[0];
-                                        echo esc_html($event->post_title) . ' le ' . tribe_get_start_date($event, false, 'j F Y');
+                                        echo esc_html($event->post_title) . ' le ' . esc_html(tribe_get_start_date($event, false, 'j F Y'));
                                     } else {
                                         echo 'Aucun événement à venir.';
                                     }
@@ -161,9 +161,9 @@ function member_area_shortcode() {
                                     <?php
                                     $last_report = (!empty($files) && isset($files[0])) ? $files[0] : null;
                                     if ($last_report) { ?>
-                                    <img src="<?php echo $last_report['cover'] ?>" alt="Aperçu du dernier compte rendu">
+                                    <img src="<?php echo esc_url($last_report['cover']) ?>" alt="Aperçu du dernier compte rendu">
                                 </div>
-                                <span>Compte rendu du <?php echo "{$last_report['day']}/{$last_report['month']}/{$last_report['year']}"; ?></span>
+                                <span>Compte rendu du <?php echo esc_html("{$last_report['day']}/{$last_report['month']}/{$last_report['year']}"); ?></span>
                                 <?php } else { ?>
                                     </div>
                                     <span>Aucun compte rendu disponible.</span>
@@ -422,14 +422,14 @@ function member_area_shortcode() {
                                     <?php } ?>
 
                                     <div>
-                                        Vous avez opté pour le renouvellement automatique. Le prochain paiement de <?php echo $billing_amount ?> € sera prélevé le 
+                                        Vous avez opté pour le renouvellement automatique. Le prochain paiement de <?php echo esc_html($billing_amount) ?> € sera prélevé le 
                                         <span class='next-payment-date'>
                                             <?php echo esc_html(ucfirst(date_i18n(get_option('date_format'), strtotime($next_payment_date)))) ?>
                                         </span>.
                                     </div>
                                     <?php if (pms_get_cancel_url()) { ?>
                                         <div class="action-button-container">
-                                            <a href="<?php echo pms_get_cancel_url() ?>" class="btn-subscription-action">
+                                            <a href="<?php echo esc_url(pms_get_cancel_url()) ?>" class="btn-subscription-action">
                                             <i class="fas fa-ban"></i>
                                             Annuler le renouvellement
                                             </a>
@@ -447,7 +447,7 @@ function member_area_shortcode() {
                                 // Show renewal button if available AND expiration date is past due
                                 if (pms_get_renew_url() && $has_valid_expiration && $expiration_timestamp < $now) { ?>
                                     <div class="action-button-container">
-                                        <a href="<?php echo pms_get_renew_url() ?>" class="btn-subscription-action" title="Renouveler l'adhésion">
+                                        <a href="<?php echo esc_url(pms_get_renew_url()) ?>" class="btn-subscription-action" title="Renouveler l'adhésion">
                                             <i class="fas fa-sync-alt"></i>
                                             Renouveler
                                         </a>
@@ -465,7 +465,7 @@ function member_area_shortcode() {
                                 <?php if (pms_get_renew_url()) { ?>
                                     <div>Veuillez renouveler votre adhésion en cliquant sur le bouton ci-dessous.</div>
                                     <div class="action-button-container">
-                                        <a href="<?php echo pms_get_renew_url() ?>" class="btn-subscription-action">
+                                        <a href="<?php echo esc_url(pms_get_renew_url()) ?>" class="btn-subscription-action">
                                         <i class="fas fa-sync-alt"></i>
                                         Renouveler
                                         </a>
@@ -570,10 +570,10 @@ function member_area_shortcode() {
                                 <div class="report-card" 
                                     data-year="<?php echo esc_attr($report['year']); ?>" 
                                     data-type="<?php echo esc_attr($report['type']); ?>" 
-                                    data-date="<?php echo "{$report['day']}/{$report['month']}/{$report['year']}"; ?>"
+                                    data-date="<?php echo esc_attr("{$report['day']}/{$report['month']}/{$report['year']}"); ?>"
                                 >
                                     <a href="<?php echo esc_url($report['url']); ?>" target="_blank" title="Voir le compte rendu PDF" class="report-link"></a>
-                                    <img src="<?php echo $report['cover'] ?: esc_url(home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
+                                    <img src="<?php echo esc_url($report['cover'] ?: home_url('/wp-content/uploads/hclm/images/b70.jpg')); ?>" alt="Aperçu PDF">
                                     <div class="report-info">
                                         <h4 class="report-title">
                                             <?php if ($report['type'] === 'CA'): ?>
@@ -584,7 +584,7 @@ function member_area_shortcode() {
                                         </h4>
                                         <p class="report-date">
                                             <i class="fas fa-calendar-alt"></i>
-                                            <?php echo "{$report['day']}/{$report['month']}/{$report['year']}"; ?>
+                                            <?php echo esc_html("{$report['day']}/{$report['month']}/{$report['year']}"); ?>
                                         </p>
                                         <a class="btn-download" href="<?php echo esc_url($report['url']); ?>" target="_blank" download>Télécharger</a>
                                     </div>

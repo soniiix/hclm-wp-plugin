@@ -46,7 +46,7 @@ function events_slider_shortcode() {
                                         <?php if($venue_name) { ?>
                                             <span><i class="fas fa-map-marker-alt"></i><?php echo esc_html($venue_name); ?></span>
                                         <?php } ?>
-                                        <?php echo wp_trim_words(wp_strip_all_tags(tribe_events_get_the_excerpt($event)), 16, '...'); ?>
+                                        <?php echo esc_html(wp_trim_words(wp_strip_all_tags(tribe_events_get_the_excerpt($event)), 16, '...')); ?>
                                     </p>
                                     <a href="<?php echo esc_url(get_permalink($event)); ?>" class="event-link">En savoir plus</a>
                                 </div>

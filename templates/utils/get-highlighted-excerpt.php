@@ -15,7 +15,7 @@ function get_highlighted_excerpt(string $text, string $query, $char_count = 120)
         return wp_trim_words($text, (int) ($char_count / 5), '...');
     }
 
-    $text = strip_tags($text);
+    $text = wp_strip_all_tags($text);
     $query = trim($query);
 
     // Find the position of the search term in the text

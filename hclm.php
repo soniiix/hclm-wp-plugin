@@ -5,6 +5,8 @@ Description: Plugin personnalisé pour intégrer diverses fonctionnalités au si
 Version: 1.0
 Author: Quentin COUZINET
 Author URI: https://cznquentin.vercel.app
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 defined('ABSPATH') || exit;
